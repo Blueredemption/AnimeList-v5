@@ -1,4 +1,4 @@
-package com.example.animelistv5;
+package org.coopereisnor.animeApplication;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-module com.example.animelistv5 {
+module org.coopereisnor.animelist {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -10,7 +10,9 @@ module com.example.animelistv5 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
+    requires org.jsoup;
 
-    opens com.example.animelistv5 to javafx.fxml;
-    exports com.example.animelistv5;
+    opens org.coopereisnor.animeApplication to javafx.fxml;
+    exports org.coopereisnor.animeApplication;
 }
