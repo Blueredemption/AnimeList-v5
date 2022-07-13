@@ -10,8 +10,8 @@ import org.coopereisnor.settingsDao.SettingsDao;
 
 public class Main {
     public static void main(String[] args){
-        //testFileIO();
-        testMALScrape();
+        testFileIO();
+        //testMALScrape();
     }
 
     public static void testFileIO(){

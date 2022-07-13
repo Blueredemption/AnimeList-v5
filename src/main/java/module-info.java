@@ -3,6 +3,7 @@ module org.coopereisnor.animelist {
     requires javafx.fxml;
     requires javafx.web;
 
+    requires javafx.swing;
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires validatorfx;
@@ -15,4 +16,6 @@ module org.coopereisnor.animelist {
 
     opens org.coopereisnor.animeApplication to javafx.fxml;
     exports org.coopereisnor.animeApplication;
+    exports org.coopereisnor.animeApplication.controllers;
+    opens org.coopereisnor.animeApplication.controllers to javafx.fxml;
 }

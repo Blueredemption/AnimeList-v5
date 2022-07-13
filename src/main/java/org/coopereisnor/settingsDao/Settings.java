@@ -3,13 +3,17 @@ package org.coopereisnor.settingsDao;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Objects;
 
 public class Settings implements java.io.Serializable {
     private ImageIcon homeImage;
     private Color textColor;
 
     public Settings(){ // constructor
-        homeImage = new ImageIcon(new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB));
+        homeImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Background.png")));
         textColor = Color.BLUE;
     }
 
