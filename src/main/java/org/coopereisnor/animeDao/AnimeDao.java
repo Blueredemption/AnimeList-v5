@@ -1,12 +1,17 @@
 package org.coopereisnor.animeDao;
 
+import org.coopereisnor.utility.UtilityMethods;
+
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class AnimeDao {
-    File root;
+    static File root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"animeObjects");
     ArrayList<Anime> collection;
 
     public AnimeDao(){ // constructor
@@ -16,7 +21,6 @@ public class AnimeDao {
 
     // Initializes the file structure for the data to be stored on the computer
     private void initialize(){
-        root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"animeObjects");
         root.mkdirs();
         loadAll();
     }
@@ -108,5 +112,10 @@ public class AnimeDao {
 
     public ArrayList<Anime> getCollection(){
         return (ArrayList)collection.clone();
+    }
+
+    // danger zone!
+    public static void purge(){
+        UtilityMethods.purge(root);
     }
 }

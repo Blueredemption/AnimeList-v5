@@ -10,8 +10,9 @@ import org.coopereisnor.settingsDao.SettingsDao;
 
 public class Main {
     public static void main(String[] args){
-        testFileIO();
+        //testFileIO();
         //testMALScrape();
+        //random();
     }
 
     public static void testFileIO(){
@@ -31,5 +32,9 @@ public class Main {
     public static void testMALScrape(){
         Occurrence occurrence = MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/1195/Zero_no_Tsukaima?q=familiar&cat=anime");
         System.out.println(occurrence);
+    }
+
+    public static void random(){
+        SettingsDao.purge();
     }
 }

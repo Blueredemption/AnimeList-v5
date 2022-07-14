@@ -1,10 +1,12 @@
 package org.coopereisnor.settingsDao;
 
+import org.coopereisnor.utility.UtilityMethods;
+
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 
 public class SettingsDao {
-    File root;
+    static File root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"settings");
     Settings settings;
 
     public SettingsDao(){ // constructor
@@ -13,7 +15,6 @@ public class SettingsDao {
 
     // Initializes the file structure for the data to be stored on the computer
     private void initialize(){
-        root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"settings");
         root.mkdirs();
         load(new File(root.toPath() +File.separator +"settings.ser"));
     }
@@ -47,5 +48,14 @@ public class SettingsDao {
 
     public Settings getSettings(){
         return settings;
+    }
+
+    public File getRoot(){
+        return root;
+    }
+
+    // danger zone!
+    public static void purge() {
+        UtilityMethods.purge(root);
     }
 }

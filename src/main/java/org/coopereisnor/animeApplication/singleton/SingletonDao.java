@@ -31,7 +31,6 @@ public final class SingletonDao {
     }
 
     // sketchy application access
-
     public void setApplication(Application application) {
         INSTANCE.application = application;
     }
