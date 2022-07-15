@@ -19,6 +19,14 @@ public class OccurrenceStatistics {
         return total;
     }
 
+    public static int getTotalEpisodes(ArrayList<Occurrence> occurrences) {
+        int total = 0;
+        for(Occurrence occurrence : occurrences){
+            total += occurrence.getEpisodes();
+        }
+        return total;
+    }
+
     public static int getTotalTimeInSeconds(ArrayList<Occurrence> occurrences){
         int total = 0;
         for(Occurrence occurrence : occurrences){
@@ -29,6 +37,13 @@ public class OccurrenceStatistics {
         return total;
     }
 
+    public static int getEarliestYear(ArrayList<Occurrence> occurrences) {
+        int earliestYear = Integer.MAX_VALUE;
+        for(Occurrence occurrence : occurrences){
+            if (earliestYear > occurrence.getPremieredYear() && occurrence.getPremieredYear() > 0) earliestYear = occurrence.getPremieredYear();
+        }
+        return earliestYear;
+    }
 
 
     // utility methods

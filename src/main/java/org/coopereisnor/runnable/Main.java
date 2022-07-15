@@ -35,6 +35,40 @@ public class Main {
     }
 
     public static void random(){
-        SettingsDao.purge();
+        AnimeDao animeDao = new AnimeDao();
+
+        Anime anime = animeDao.createNewAnime();
+        anime.setName("Naruto");
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/20/Naruto"));
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/1735/Naruto__Shippuuden"));
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.setName("Hunter x Hunter");
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/11061/Hunter_x_Hunter_2011?q=Hunter&cat=anime"));
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.setName("That Time I Got Reincarnated as a Slime");
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/37430/Tensei_shitara_Slime_Datta_Ken"));
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/39551/Tensei_shitara_Slime_Datta_Ken_2nd_Season"));
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/41487/Tensei_shitara_Slime_Datta_Ken_2nd_Season_Part_2"));
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/20507/Noragami"));
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/30503/Noragami_Aragoto"));
+        anime.setName("Noragami");
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/205/Samurai_Champloo?q=samura&cat=anime"));
+        anime.setName("Samurai Champloo");
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/853/Ouran_Koukou_Host_Club"));
+        anime.setName("Ouran High School Host Club");
+        animeDao.save(anime);
     }
 }

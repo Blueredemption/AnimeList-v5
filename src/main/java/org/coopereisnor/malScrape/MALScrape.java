@@ -228,6 +228,8 @@ public class MALScrape {
             return -1;
         }else if(string.contains("hr")){
             return (int)(Double.parseDouble(str.substring(0, 1))*60*60) + (int)(Double.parseDouble(str.substring(1))*60);
+        }else if(string.contains("sec")){
+            return (int)(Double.parseDouble(str.substring(0, 1)));
         }else{
             return (int)(Double.parseDouble(str)*60);
         }

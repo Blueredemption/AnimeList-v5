@@ -4,10 +4,7 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class AnimeDao {

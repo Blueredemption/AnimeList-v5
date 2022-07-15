@@ -14,24 +14,25 @@ import java.util.Objects;
 public class Application extends javafx.application.Application {
     private static String title = "AnimeList-v5";
     private Stage stage;
-
+    private int width = 1280;
+    private int height = 800;
     @Override
     public void start(Stage stage) throws IOException {
         SingletonDao.getInstance().setApplication(this);
 
         this.stage = stage;
-        stage.setMinWidth(1000);
-        stage.setMinHeight(700);
-        stage.setMaxWidth(3000);
-        stage.setMaxHeight(2100);
+        stage.setMinWidth(width);
+        stage.setMinHeight(height);
+        stage.setWidth(width);
+        stage.setHeight(height);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("home.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
+        Scene scene = new Scene(fxmlLoader.load());
         File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
         scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
 
-        stage.setTitle(title + "  –  Home");
+        stage.setTitle(title + "  –  Viewing: Home");
         stage.setScene(scene);
         stage.show();
     }
@@ -40,7 +41,7 @@ public class Application extends javafx.application.Application {
         try{
             Parent pane = FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml)));
             stage.getScene().setRoot(pane);
-            stage.setTitle(title + "  –  " +extraText);
+            stage.setTitle(title + "  –  Viewing: " +extraText);
         }catch(IOException ex){
             ex.printStackTrace();
         }
