@@ -7,7 +7,7 @@
     -fx-background-color: #070c41;
 }
 
-.button {
+.button, .toggle-button {
     -fx-background-color:
             #000000,
             linear-gradient(#262f80, #142140),
@@ -20,7 +20,7 @@
     -fx-font-weight: bold;
 }
 
-.button:hover {
+.button:hover, .toggle-button:hover {
     -fx-background-color:
             #000000,
             linear-gradient(#3c47b2, #22396e),
@@ -28,7 +28,7 @@
             linear-gradient(#3336b0, #1f2064);
 }
 
-.button:pressed {
+.button:pressed .toggler-button:hover {
     -fx-background-color:
             #000000,
             linear-gradient(#3e4dd3, #1f3362),
