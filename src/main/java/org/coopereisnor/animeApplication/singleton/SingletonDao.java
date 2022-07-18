@@ -11,6 +11,9 @@ public final class SingletonDao {
     private SettingsDao settingsDao;
     private Application application;
 
+    private String sortBy = "Started";
+    private String listFXML = "list.fxml";
+
     private final static SingletonDao INSTANCE = new SingletonDao();
 
     private SingletonDao() {
@@ -37,5 +40,21 @@ public final class SingletonDao {
 
     public Application getApplication(){
         return INSTANCE.application;
+    }
+
+    public String getSortBy() {
+        return INSTANCE.sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        INSTANCE.sortBy = sortBy;
+    }
+
+    public String getListFXML() {
+        return INSTANCE.listFXML;
+    }
+
+    public void setListFXML(String listFXML) {
+        INSTANCE.listFXML = listFXML;
     }
 }

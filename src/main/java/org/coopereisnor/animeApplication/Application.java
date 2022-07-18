@@ -14,8 +14,8 @@ import java.util.Objects;
 public class Application extends javafx.application.Application {
     private static String title = "AnimeList-v5";
     private Stage stage;
-    private int width = 1280;
-    private int height = 800;
+    private int width = 1212;
+    private int height = 798;
     @Override
     public void start(Stage stage) throws IOException {
         SingletonDao.getInstance().setApplication(this);

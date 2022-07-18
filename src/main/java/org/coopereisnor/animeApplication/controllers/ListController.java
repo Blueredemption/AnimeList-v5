@@ -1,21 +1,27 @@
 package org.coopereisnor.animeApplication.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
-import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.statistics.OccurrenceStatistics;
+import org.coopereisnor.utility.UtilityMethods;
+
+import java.util.Random;
 
 public class ListController {
     private AnimeDao animeDao = SingletonDao.getInstance().getAnimeDao();
-    private SettingsDao settings = SingletonDao.getInstance().getSettingsDao();
+    private SettingsDao settingsDao = SingletonDao.getInstance().getSettingsDao();
     private Application application = SingletonDao.getInstance().getApplication();
 
     @FXML
@@ -25,18 +31,39 @@ public class ListController {
     private ScrollPane scrollPane;
 
     @FXML
+    private FlowPane imageFlowPane;
+
+    @FXML
+    private Button listViewButton;
+
+    @FXML
+    private Button imageViewButton;
+
+    @FXML
     private VBox insideScrollPane;
+
+    @FXML
+    ToggleButton toggleButton;
+
+    @FXML
+    private ComboBox comboBox;
+
+    @FXML
+    private FlowPane flowPane;
 
     @FXML
     public void initialize() {
         Common.configureNavigation(gridPane, this.getClass());
         Common.setFasterScrollBar(scrollPane);
-        loadComponents();
-
+        Common.configureListImageButtons(listViewButton, imageViewButton);
+        if(SingletonDao.getInstance().getListFXML().equals("list.fxml")) loadListComponents();
+        else loadImageComponents();
+        loadSortComponents();
+        loadFilterComponents();
 
     }
 
-    public void loadComponents(){
+    public void loadListComponents(){
         int counter = 0;
         for(int i = 0; i < 20; i++){
             for(Anime anime : animeDao.getCollection()){
@@ -82,11 +109,13 @@ public class ListController {
                 containerPane.add(label, 1, 0);
                 GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
-                double watched = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
-                double total = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
+                // todo replace this later, just want different numbers for effect right now
+                double randomNum = (new Random()).nextDouble(10);
+                randomNum = ((double)((int)(randomNum*10)))/10.0;
 
-                label = new Label(anime.getOccurrences().size() +"");
-                label.setMinWidth(60);
+                anime.setScore(randomNum);
+                label = new Label(anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"");
+                label.setMinWidth(70);
                 label.setTextOverrun(OverrunStyle.CLIP);
                 containerPane.add(label, 2, 0);
                 GridPane.setMargin(label, new Insets(0, 5, 0, 5));
@@ -96,6 +125,9 @@ public class ListController {
                 label.setTextOverrun(OverrunStyle.CLIP);
                 containerPane.add(label, 3, 0);
                 GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+
+                double watched = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
+                double total = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
 
                 label = new Label((int)watched + "/" +(int)total);
                 label.setMinWidth(90);
@@ -119,4 +151,68 @@ public class ListController {
         }
     }
 
+    public void loadImageComponents(){
+
+        for(int i = 0; i < 20; i++) {
+            for (Anime anime : animeDao.getCollection()) {
+                Pane imagePane = new Pane();
+                // todo: dynamically select which occurrence to get image from
+                Image image = SwingFXUtils.toFXImage(UtilityMethods.toBufferedImage(anime.getOccurrences().get(0).getImageIcon().getImage()), null);
+                BackgroundImage backgroundImage = new BackgroundImage(image,
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                        new BackgroundSize(1.0, 1.0, true, true, false, false));
+                imagePane.setBackground(new Background(backgroundImage));
+                imagePane.setOnMouseClicked(event -> System.out.println("Image Clicked!"));
+
+                double width = 157;
+                double height = 225;
+                imagePane.setMinSize(width, height);
+                imagePane.setPrefSize(width, height);
+                imagePane.setMaxSize(width, height);
+                imagePane.setPadding(new Insets(5,0,0,5));
+
+                imageFlowPane.getChildren().add(imagePane);
+
+                // set the border todo: use settingsDao
+                imagePane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+
+            }
+        }
+    }
+
+    public void loadSortComponents(){
+        // todo: move this array initialization later
+        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Score", "Name", "Eps. Watched", "Eps. Total", "Season", "Year", "Progress");
+        comboBox.setItems(sortStrings);
+        comboBox.setValue(sortStrings.get(0));
+
+        // todo: move this and make this action listener work later and text state stored in singleton
+        toggleButton.setText("Descending");
+
+        toggleButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue){
+                toggleButton.setText("Ascending");
+            } else{
+                toggleButton.setText("Descending");
+            }
+        }));
+    }
+
+    public void loadFilterComponents(){
+
+        // todo: make this not this
+        for(int i = 0; i < 20; i++){
+            Button filterButton = new Button((Math.random() +"").substring(0, 1 + (int)(Math.random() * ((8 - 1) + 1))));
+            filterButton.setPrefHeight(25);
+            filterButton.setId(i%2 == 0 ? "filterButtonWant" : "filterButtonAvoid");
+            flowPane.getChildren().add(filterButton);
+        }
+
+
+        // todo: if (filterCount > 1) add, else do nothing.
+        Button filterButton = new Button("Clear All");
+        filterButton.setPrefHeight(25);
+        filterButton.setId("filterButtonClear");
+        flowPane.getChildren().add(filterButton);
+    }
 }

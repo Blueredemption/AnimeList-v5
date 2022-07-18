@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.ListController">
+<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.ListController">
     <children>
         <GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="60.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -83,15 +83,13 @@
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -119,12 +117,12 @@
                               <Insets right="5.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button layoutX="110.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List">
+                        <Button fx:id="listViewButton" layoutX="110.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List">
                            <GridPane.margin>
                               <Insets right="5.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Image" GridPane.columnIndex="1">
+                        <Button fx:id="imageViewButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Image" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -152,7 +150,7 @@
                      </rowConstraints>
                      <children>
                         <Label maxWidth="1.7976931348623157E308" prefHeight="0.0" text="Direction:" />
-                        <ToggleButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Descending" GridPane.columnIndex="1">
+                        <ToggleButton fx:id="toggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -174,11 +172,11 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                      </rowConstraints>
                      <children>
                         <Label maxWidth="1.7976931348623157E308" prefHeight="0.0" text="Attribute:" />
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="1">
+                        <ComboBox fx:id="comboBox" minHeight="-Infinity" prefHeight="24.0" prefWidth="150.0" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -194,20 +192,20 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="12" GridPane.vgrow="NEVER">
+                  <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="10" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets right="10.0" top="10.0" />
                      </GridPane.margin>
                   </ProgressBar>
-                  <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="8">
+                  <FlowPane fx:id="flowPane" hgap="3.0" prefHeight="200.0" prefWidth="200.0" vgap="3.0" GridPane.rowIndex="9" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </FlowPane>
-                  <GridPane layoutX="10.0" layoutY="241.0" GridPane.rowIndex="7">
+                  <GridPane layoutX="10.0" layoutY="241.0" GridPane.rowIndex="8">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="109.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="81.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="101.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="89.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -218,7 +216,7 @@
                               <Insets right="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" text="+" GridPane.columnIndex="1">
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="22.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="50.0" text="Add" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
@@ -274,7 +272,7 @@
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
                         </Label>
-                        <Label layoutX="698.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="60.0" text="Parts:" GridPane.columnIndex="2">
+                        <Label layoutX="698.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="70.0" text="Score:" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
