@@ -3,12 +3,21 @@ package org.coopereisnor.animeApplication.controllers;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 public class Common {
     public static void configureNavigation(GridPane gridPane, Class cls){
@@ -23,7 +32,7 @@ public class Common {
                     if(!cls.equals(ListController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene(SingletonDao.getInstance().getListFXML(), "My List"));
                 }
                 case "newButton" -> {
-                    /* Popup */
+                    Common.configureNewAnimePopup(node);
                 }
                 case "statisticsButton" -> {
                     if(!cls.equals(StatisticsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("statistics.fxml", "Statistics"));
@@ -54,7 +63,7 @@ public class Common {
                     if(cls.equals(ListController.class)) Platform.runLater(node::requestFocus);
                 }
                 case "newButton" -> {
-                    /* Popup */
+                    // do nothing
                 }
                 case "statisticsButton" -> {
                     if(cls.equals(StatisticsController.class)) Platform.runLater(node::requestFocus);
@@ -84,26 +93,29 @@ public class Common {
         });
     }
 
-    public static void configureListImageButtons(Button listViewButton, Button imageViewButton) {
-        SingletonDao singletonDao = SingletonDao.getInstance();
-        Application application = singletonDao.getApplication();
+    public static void configureNewAnimePopup(Node node){
+        ((Button)node).setOnAction(actionEvent -> {
+            try {
+                int width = 400;
+                int height = 250;
 
-        EventHandler<ActionEvent> listClick = event -> {
-            if(!singletonDao.getListFXML().equals("list.fxml")){
-                singletonDao.setListFXML("list.fxml");
-                application.changeScene(SingletonDao.getInstance().getListFXML(), "My List");
+                final Stage popup = new Stage();
+                popup.setMinWidth(width);
+                popup.setMinHeight(height);
+                popup.setWidth(width);
+                popup.setHeight(height);
+
+                popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
+
+                Scene addAnimeScene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource("addAnime.fxml"))));
+                File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
+                addAnimeScene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+                popup.setScene(addAnimeScene);
+                popup.show();
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        };
-
-        listViewButton.setOnAction(listClick);
-
-        EventHandler<ActionEvent> imageClick = event -> {
-            if(!singletonDao.getListFXML().equals("listImages.fxml")){
-                singletonDao.setListFXML("listImages.fxml");
-                application.changeScene(SingletonDao.getInstance().getListFXML(), "My List");
-            }
-        };
-
-        imageViewButton.setOnAction(imageClick);
+        });
     }
 }

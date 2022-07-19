@@ -85,6 +85,26 @@ public class Main {
         anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/853/Ouran_Koukou_Host_Club"));
         anime.setName("Ouran High School Host Club");
         animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/22789/Barakamon"));
+        anime.setName("Barakamon");
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/486/Kino_no_Tabi__The_Beautiful_World"));
+        anime.setName("Kino's Journey");
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/68/Black_Cat_TV"));
+        anime.setName("Black Cat");
+        animeDao.save(anime);
+
+        anime = animeDao.createNewAnime();
+        anime.addOccurrence(MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/6/Trigun"));
+        anime.setName("Trigun");
+        animeDao.save(anime);
     }
 
     public static void random(){

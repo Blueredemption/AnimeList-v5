@@ -80,7 +80,13 @@ public class MALScrape {
                                 occurrence.setAiredEndDate(parseDate(split[1]));
                             }catch(ArrayIndexOutOfBoundsException ex){
                                 occurrence.setAiredEndDate(null);
-                                count++; // the "second" count++ is because if there is only one "Aired", "Premiered" doesn't (probably always) exist.
+
+                                // the "second" count++ is because if there is only one "Aired", "Premiered" doesn't (probably always) exist.
+                                count++;
+                                // and as a result, there probably won't be any year or season. We don't care if season is empty, but we do care if year is.
+                                // so lets get year from the first date, if it exists.
+                                if(occurrence.getAiredStartDate() != null) occurrence.setPremieredYear(occurrence.getAiredStartDate().getYear());
+
                             }catch(ParseException ex){
                                 occurrence.setAiredEndDate(null);
                             }

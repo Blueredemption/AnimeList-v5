@@ -10,9 +10,10 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.settingsDao.SettingsDao;
 
 public class SettingsController {
-    private AnimeDao animeDao = SingletonDao.getInstance().getAnimeDao();
-    private SettingsDao settings = SingletonDao.getInstance().getSettingsDao();
-    private Application application = SingletonDao.getInstance().getApplication();
+    private final SingletonDao singletonDao = SingletonDao.getInstance();
+    private final AnimeDao animeDao = singletonDao.getAnimeDao();
+    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
+    private final Application application = singletonDao.getApplication();
 
     @FXML
     private GridPane gridPane;

@@ -13,6 +13,8 @@ public final class SingletonDao {
 
     private String sortBy = "Started";
     private String listFXML = "list.fxml";
+    private String order = "Ascending";
+    private String type = "Anime";
 
     private final static SingletonDao INSTANCE = new SingletonDao();
 
@@ -56,5 +58,21 @@ public final class SingletonDao {
 
     public void setListFXML(String listFXML) {
         INSTANCE.listFXML = listFXML;
+    }
+
+    public String getOrder() {
+        return INSTANCE.order;
+    }
+
+    public void setOrder(String order) {
+        INSTANCE.order = order;
+    }
+
+    public String getType() {
+        return INSTANCE.type;
+    }
+
+    public void setType(String type) {
+        INSTANCE.type = type;
     }
 }

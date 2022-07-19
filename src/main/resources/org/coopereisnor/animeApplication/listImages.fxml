@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.ListController">
     <children>
@@ -97,6 +98,9 @@
                             <GridPane.margin>
                                 <Insets right="10.0" />
                             </GridPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                         </Label>
                         <TextField GridPane.rowIndex="2">
                             <GridPane.margin>
@@ -112,21 +116,16 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List">
+                                <ToggleButton fx:id="viewButton" layoutX="110.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List">
                                     <GridPane.margin>
-                                        <Insets right="5.0" />
+                                        <Insets right="3.0" />
                                     </GridPane.margin>
-                                </Button>
-                                <Button fx:id="listViewButton" layoutX="110.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="List">
+                                </ToggleButton>
+                                <ToggleButton fx:id="typeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Image" GridPane.columnIndex="1">
                                     <GridPane.margin>
-                                        <Insets right="5.0" />
+                                        <Insets left="3.0" />
                                     </GridPane.margin>
-                                </Button>
-                                <Button fx:id="imageViewButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Image" GridPane.columnIndex="1">
-                                    <GridPane.margin>
-                                        <Insets left="5.0" />
-                                    </GridPane.margin>
-                                </Button>
+                                </ToggleButton>
                             </children>
                             <padding>
                                 <Insets bottom="6.0" />
@@ -139,6 +138,9 @@
                             <GridPane.margin>
                                 <Insets right="10.0" />
                             </GridPane.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                         </Label>
                         <GridPane layoutX="10.0" layoutY="15.0" GridPane.rowIndex="5">
                             <columnConstraints>
@@ -150,7 +152,7 @@
                             </rowConstraints>
                             <children>
                                 <Label maxWidth="1.7976931348623157E308" prefHeight="0.0" text="Direction:" />
-                                <ToggleButton fx:id="toggleButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
+                                <ToggleButton fx:id="orderButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" GridPane.columnIndex="1">
                                     <GridPane.margin>
                                         <Insets left="5.0" />
                                     </GridPane.margin>
@@ -215,6 +217,9 @@
                                     <GridPane.margin>
                                         <Insets right="5.0" />
                                     </GridPane.margin>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
                                 </Label>
                                 <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="22.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="50.0" text="Add" GridPane.columnIndex="1">
                                     <GridPane.margin>
@@ -242,7 +247,7 @@
                 </GridPane>
                 <VBox maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
                     <children>
-                        <ScrollPane id="scrollPane" fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <ScrollPane id="scrollPane" fx:id="scrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                      <content>
                         <FlowPane id="imageFlowPane" fx:id="imageFlowPane" hgap="5.0" prefHeight="200.0" prefWidth="200.0" vgap="5.0">
                            <padding>
