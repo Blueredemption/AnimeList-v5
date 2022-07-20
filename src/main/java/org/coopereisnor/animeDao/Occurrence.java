@@ -6,6 +6,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Occurrence implements java.io.Serializable {
     private URL url;
@@ -61,7 +62,7 @@ public class Occurrence implements java.io.Serializable {
 
         watchStatus = null;
         imageURL = null;
-        imageIcon = null;
+        imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
         episodesWatched = new ArrayList<>();
         favorite = false;
         tracked = true;

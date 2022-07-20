@@ -103,7 +103,7 @@ public class ListController {
                 double progress = Math.random();
                 EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, score, year, episodes, progress, eventHandler);
+                addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, null);
             }
         }else{
             for(Anime anime : animeDao.getCollection()){
@@ -116,13 +116,13 @@ public class ListController {
                     double progress = Math.random();
                     EventHandler eventHandler = event -> {};
 
-                    addListComponents(number, name, score, year, episodes, progress, eventHandler);
+                    addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, occurrence);
                 }
             }
         }
     }
 
-    public void addListComponents(String number, String name, String score, String year, String episodes, double progress, EventHandler eventHandler){
+    public void addListComponents(String number, String name, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -191,6 +191,10 @@ public class ListController {
         viewButton.setOnAction(eventHandler);
         viewButton.setMinWidth(100);
         viewButton.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop());
+        viewButton.setOnAction(actionEvent -> {
+            singletonDao.setCurrentAnime(anime, occurrence);
+            application.changeScene("anime.fxml", anime.getName());
+        });
         containerPane.add(viewButton, 6, 0);
         GridPane.setMargin(viewButton, new Insets(0, 5, 0, 5));
     }
@@ -203,18 +207,18 @@ public class ListController {
 
         if(singletonDao.getType().equals("Anime")){
             for (Anime anime : animeDao.getCollection()) {
-                addImageComponents(UtilityMethods.toBufferedImage(anime.getOccurrences().get(0).getImageIcon().getImage()));
+                addImageComponents(UtilityMethods.toBufferedImage(anime.getOccurrences().get(0).getImageIcon().getImage()), anime, null);
             }
         } else{
             for (Anime anime : animeDao.getCollection()) {
                 for(Occurrence occurrence : anime.getOccurrences()){
-                    addImageComponents(UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage()));
+                    addImageComponents(UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage()), anime, occurrence);
                 }
             }
         }
     }
 
-    public void addImageComponents(BufferedImage bufferedImage){
+    public void addImageComponents(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
         Pane imagePane = new Pane();
         // todo: dynamically select which occurrence to get image from
         Image image = SwingFXUtils.toFXImage(bufferedImage, null);
@@ -222,7 +226,10 @@ public class ListController {
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 new BackgroundSize(1.0, 1.0, true, true, false, false));
         imagePane.setBackground(new Background(backgroundImage));
-        imagePane.setOnMouseClicked(event -> System.out.println("Image Clicked!"));
+        imagePane.setOnMouseClicked(event -> {
+            singletonDao.setCurrentAnime(anime, occurrence);
+            application.changeScene("anime.fxml", anime.getName());
+        });
 
         double width = 157;
         double height = 225;
@@ -267,7 +274,7 @@ public class ListController {
             if(oldValue){
                 singletonDao.setType("Anime");
             } else{
-                singletonDao.setType("Occurrences");
+                singletonDao.setType("Occurrence");
             }
             loadTypeComponents();
         }));
@@ -278,7 +285,7 @@ public class ListController {
         // todo: make combobox impact the order of elements
         // todo: make order impact the order of elements
 
-        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Score", "Name", "Eps. Watched", "Eps. Total", "Year", "Progress");
+        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Score", "Name", "Eps. Watched", "Eps. Total", "Year", "Type", "Progress");
         comboBox.setItems(sortStrings);
         comboBox.setValue(sortStrings.get(0));
 

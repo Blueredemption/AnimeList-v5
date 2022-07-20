@@ -96,14 +96,8 @@ public class Common {
     public static void configureNewAnimePopup(Node node){
         ((Button)node).setOnAction(actionEvent -> {
             try {
-                int width = 400;
-                int height = 250;
-
                 final Stage popup = new Stage();
-                popup.setMinWidth(width);
-                popup.setMinHeight(height);
-                popup.setWidth(width);
-                popup.setHeight(height);
+                popup.setResizable(false);
 
                 popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
 

@@ -2,7 +2,9 @@ package org.coopereisnor.animeApplication.singleton;
 
 
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
+import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
 
 public final class SingletonDao {
@@ -15,6 +17,8 @@ public final class SingletonDao {
     private String listFXML = "list.fxml";
     private String order = "Ascending";
     private String type = "Anime";
+    private Anime currentAnime = null;
+    private Occurrence currentOccurrence = null;
 
     private final static SingletonDao INSTANCE = new SingletonDao();
 
@@ -28,51 +32,64 @@ public final class SingletonDao {
     }
 
     public AnimeDao getAnimeDao(){
-        return INSTANCE.animeDao;
+        return this.animeDao;
     }
 
     public SettingsDao getSettingsDao() {
-        return INSTANCE.settingsDao;
+        return this.settingsDao;
     }
 
     // sketchy application access
     public void setApplication(Application application) {
-        INSTANCE.application = application;
+        this.application = application;
     }
 
     public Application getApplication(){
-        return INSTANCE.application;
+        return this.application;
     }
 
     public String getSortBy() {
-        return INSTANCE.sortBy;
+        return this.sortBy;
     }
 
     public void setSortBy(String sortBy) {
-        INSTANCE.sortBy = sortBy;
+        this.sortBy = sortBy;
     }
 
     public String getListFXML() {
-        return INSTANCE.listFXML;
+        return this.listFXML;
     }
 
     public void setListFXML(String listFXML) {
-        INSTANCE.listFXML = listFXML;
+        this.listFXML = listFXML;
     }
 
     public String getOrder() {
-        return INSTANCE.order;
+        return this.order;
     }
 
     public void setOrder(String order) {
-        INSTANCE.order = order;
+        this.order = order;
     }
 
     public String getType() {
-        return INSTANCE.type;
+        return this.type;
     }
 
     public void setType(String type) {
-        INSTANCE.type = type;
+        this.type = type;
+    }
+
+    public Anime getCurrentAnime() {
+        return currentAnime;
+    }
+
+    public Occurrence getCurrentOccurrence(){
+        return currentOccurrence;
+    }
+
+    public void setCurrentAnime(Anime currentAnime, Occurrence occurrence) {
+        this.currentAnime = currentAnime;
+        this.currentOccurrence = occurrence;
     }
 }
