@@ -3,7 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -83,12 +85,12 @@
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="previousButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Previous">
+                  <Button fx:id="previousButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Previous">
                      <GridPane.margin>
                         <Insets bottom="5.0" right="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="nextButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Next" GridPane.columnIndex="2">
+                  <Button fx:id="nextButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Next" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="10.0" />
                      </GridPane.margin>
@@ -101,6 +103,53 @@
                </children>
             </GridPane>
             <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" />
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="nextButton1" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Add Occurrence" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
+                     <GridPane.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Label fx:id="nameLabel1" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Favorite" GridPane.columnIndex="3">
+                     <GridPane.margin>
+                        <Insets right="5.0" top="10.0" />
+                     </GridPane.margin>
+                  </ToggleButton>
+                  <ToggleButton mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Tracking" GridPane.columnIndex="5">
+                     <GridPane.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </GridPane.margin>
+                  </ToggleButton>
+                  <ProgressBar prefHeight="25.0" prefWidth="200.0" progress="0.0" visible="false" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </ProgressBar>
+                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="General Statistics" GridPane.columnIndex="4">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
          </children>
         </VBox>
     </children>
