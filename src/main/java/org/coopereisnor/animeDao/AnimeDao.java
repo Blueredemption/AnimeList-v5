@@ -53,6 +53,7 @@ public class AnimeDao {
     public void save(Anime anime){
         if(collection.contains(anime)){
             save(collection.indexOf(anime));
+            System.out.println("Saving Anime " +anime.getName());
         } else{
             System.out.println("Anime Does not exist in collection, cannot save!");
         }

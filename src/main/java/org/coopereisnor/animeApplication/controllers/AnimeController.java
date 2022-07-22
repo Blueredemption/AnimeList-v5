@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
@@ -53,6 +54,12 @@ public class AnimeController {
     }
 
     public void configureAnimeActions(){
+        nameLabel.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                System.out.println("Right Click on Anime name");
+            }
+        });
+
         previousButton.setOnAction(actionEvent -> {
             Anime nextAnime = Common.getNextAnime(anime, false);
             singletonDao.setCurrentAnime(nextAnime, null);
@@ -96,7 +103,7 @@ public class AnimeController {
         trackingButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             selectedOccurrence.setTracked(newValue);
             animeDao.save(anime);
-            // todo: recompile statistics related to tracking
+            singletonDao.update(true, false);
         }));
     }
 
