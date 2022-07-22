@@ -32,7 +32,7 @@ public class Occurrence implements java.io.Serializable {
     private URL imageURL;
     private ImageIcon imageIcon;
     private final ArrayList<Episode> episodesWatched;
-    private boolean favorite;
+    private boolean focused;
     private boolean tracked;
     private double score;
     private String language;
@@ -41,9 +41,9 @@ public class Occurrence implements java.io.Serializable {
 
     public Occurrence(){ // constructor
         url = null;
-        name = null;
+        name = "New Occurrence";
         type = null;
-        episodes = -1;
+        episodes = 0;
         status = null;
         airedStartDate = null;
         airedEndDate = null;
@@ -64,7 +64,7 @@ public class Occurrence implements java.io.Serializable {
         imageURL = null;
         imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
         episodesWatched = new ArrayList<>();
-        favorite = false;
+        focused = false;
         tracked = true;
         score = -1;
         language = null;
@@ -160,8 +160,8 @@ public class Occurrence implements java.io.Serializable {
         return (ArrayList)episodesWatched.clone();
     }
 
-    public boolean isFavorite() {
-        return favorite;
+    public boolean isFocused() {
+        return focused;
     }
 
     public boolean isTracked(){
@@ -247,8 +247,8 @@ public class Occurrence implements java.io.Serializable {
         this.imageIcon = imageIcon;
     }
 
-    public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
+    public void setFocused(boolean focused) {
+        this.focused = focused;
     }
 
     public void setTracked(boolean tracked){

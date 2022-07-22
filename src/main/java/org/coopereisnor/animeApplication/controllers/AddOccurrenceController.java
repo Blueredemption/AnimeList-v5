@@ -1,17 +1,13 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
-import org.coopereisnor.animeApplication.controllers.Common;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -19,7 +15,7 @@ import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
 
-public class AddAnimeController {
+public class AddOccurrenceController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
@@ -36,31 +32,25 @@ public class AddAnimeController {
     public void initialize() {
         textField.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
-                createAnimeAndNavigate(event);
+                createOccurrenceAndNavigate(event);
             }
         } );
 
         cancelButton.setOnAction(event -> ((Stage)((Node)event.getSource()).getScene().getWindow()).close());
 
-        createButton.setOnAction(this::createAnimeAndNavigate);
+        createButton.setOnAction(this::createOccurrenceAndNavigate);
     }
 
-    public void createAnimeAndNavigate(Event event){
+    public void createOccurrenceAndNavigate(Event event){
         Occurrence occurrence;
 
         if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
         else occurrence = new Occurrence();
 
-        // the first occurrence in an anime is set to focused by default
-        occurrence.setFocused(true);
+        singletonDao.getCurrentAnime().addOccurrence(occurrence);
 
-        Anime anime = animeDao.createNewAnime();
-        anime.setName(occurrence.getName().equals("New Occurrence") ? "New Anime" : occurrence.getName());
-        anime.addOccurrence(occurrence);
-        animeDao.save(anime);
-
-        singletonDao.setCurrentAnime(anime, occurrence);
-        application.changeScene("anime.fxml", anime.getName());
+        singletonDao.setCurrentAnime(singletonDao.getCurrentAnime(), occurrence);
+        application.changeScene("anime.fxml", singletonDao.getCurrentAnime().getName());
         singletonDao.compileLists();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }

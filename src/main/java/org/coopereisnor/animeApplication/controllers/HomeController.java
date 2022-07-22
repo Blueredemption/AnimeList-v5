@@ -40,12 +40,7 @@ public class HomeController {
     }
 
     public void applyImage(){
-        Image image = SwingFXUtils.toFXImage(UtilityMethods.toBufferedImage(settingsDao.getSettings().getHomeImage().getImage()), null);
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1.0, 1.0, true, true, false, false));
-        imagePane.setBackground(new Background(backgroundImage));
-
-        // set the border todo: use settingsDao
-        imagePane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+        Common.getImagePaneFor(imagePane, UtilityMethods.toBufferedImage(settingsDao.getSettings().getHomeImage().getImage()));
     }
 
 }

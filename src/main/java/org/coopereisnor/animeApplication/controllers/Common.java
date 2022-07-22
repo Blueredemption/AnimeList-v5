@@ -1,22 +1,26 @@
 package org.coopereisnor.animeApplication.controllers;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+import org.coopereisnor.animeDao.Anime;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Common {
@@ -93,6 +97,35 @@ public class Common {
         });
     }
 
+    public static Pane getImagePaneFor(Pane imagePane, BufferedImage bufferedImage){
+        Pane workingPane = imagePane != null ? imagePane : new Pane();
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                new BackgroundSize(1.0, 1.0, true, true, false, false));
+        workingPane.setBackground(new Background(backgroundImage));
+
+        // set the border todo: use settingsDao
+        workingPane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+
+        return workingPane;
+    }
+
+    public static Anime getNextAnime(Anime currentAnime, boolean right){
+        ArrayList<Anime> workingCollection = SingletonDao.getInstance().getFilteredAndSortedAnime();
+        int currentIndex = workingCollection.indexOf(currentAnime);
+        int size = workingCollection.size();
+        if(currentIndex + 1 == size && right){
+            return workingCollection.get(0);
+        }else if(currentIndex == 0 && !right){
+            return workingCollection.get(size - 1);
+        }else{
+            return right ? workingCollection.get(currentIndex + 1) : workingCollection.get(currentIndex - 1);
+        }
+    }
+
+
+    // popups
     public static void configureNewAnimePopup(Node node){
         ((Button)node).setOnAction(actionEvent -> {
             try {
@@ -111,5 +144,23 @@ public class Common {
                 throw new RuntimeException(e);
             }
         });
+    }
+
+    public static void createNewOccurrencePopup(){
+        try {
+            final Stage popup = new Stage();
+            popup.setResizable(false);
+
+            popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
+
+            Scene addOccurrenceScene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource("addOccurrence.fxml"))));
+            File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
+            addOccurrenceScene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+            popup.setScene(addOccurrenceScene);
+            popup.show();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,14 +6,16 @@ public class Anime implements java.io.Serializable {
     private final String identifier;
     private final ArrayList<Occurrence> occurrences;
     private double score;
+    private int rank;
 
     private String name;
 
     public Anime(String identifier){ // constructor
         this.identifier = identifier;
         this.occurrences = new ArrayList<>();
-        this.score = 0;
+        this.score = -1;
         this.name = "New Anime";
+        this.rank = Integer.MAX_VALUE;
     }
 
     public String getIdentifier(){
@@ -31,6 +33,17 @@ public class Anime implements java.io.Serializable {
         return score;
     }
 
+    public int getRank(){
+        return rank;
+    }
+
+    public Occurrence getFocusedOccurrence(){
+        for(Occurrence occ : occurrences){
+            if(occ.isFocused()) return occ;
+        }
+        return null;
+    }
+
     // setters
     public void setName(String name) {
         this.name = name;
@@ -38,6 +51,10 @@ public class Anime implements java.io.Serializable {
 
     public void setScore(double score){
         this.score = score;
+    }
+
+    public void setRank(int rank){
+        this.rank = rank;
     }
 
     // occurrence related

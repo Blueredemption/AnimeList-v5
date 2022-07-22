@@ -5,7 +5,11 @@ import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
+import org.coopereisnor.manipulation.AnimeAggregate;
+import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.settingsDao.SettingsDao;
+
+import java.util.ArrayList;
 
 public final class SingletonDao {
 
@@ -14,17 +18,23 @@ public final class SingletonDao {
     private Application application;
 
     private String sortBy = "Started";
+    //private ArrayList<Filter> filters = new ArrayList<Filter>();
+    private ArrayList<Anime> filteredAndSortedAnime = null;
+    private ArrayList<Pair> filteredAndSortedOccurrences = null;
     private String listFXML = "list.fxml";
     private String order = "Ascending";
     private String type = "Anime";
     private Anime currentAnime = null;
     private Occurrence currentOccurrence = null;
 
+
     private final static SingletonDao INSTANCE = new SingletonDao();
 
     private SingletonDao() {
         animeDao = new AnimeDao();
         settingsDao = new SettingsDao();
+
+        compileLists();
     }
 
     public static SingletonDao getInstance(){
@@ -39,7 +49,6 @@ public final class SingletonDao {
         return this.settingsDao;
     }
 
-    // sketchy application access
     public void setApplication(Application application) {
         this.application = application;
     }
@@ -91,5 +100,21 @@ public final class SingletonDao {
     public void setCurrentAnime(Anime currentAnime, Occurrence occurrence) {
         this.currentAnime = currentAnime;
         this.currentOccurrence = occurrence;
+    }
+
+    public ArrayList<Anime> getFilteredAndSortedAnime() {
+        return filteredAndSortedAnime;
+    }
+
+    public ArrayList<Pair> getFilteredAndSortedOccurrences() {
+        return filteredAndSortedOccurrences;
+    }
+
+    // compile methods
+    public void compileLists(){
+        // todo: do this method justice
+        // for now these are just as is from the AnimeDao
+        filteredAndSortedAnime = animeDao.getCollection();
+        filteredAndSortedOccurrences = AnimeAggregate.getPairs(animeDao.getCollection());
     }
 }

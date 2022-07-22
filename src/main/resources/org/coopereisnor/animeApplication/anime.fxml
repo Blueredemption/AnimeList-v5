@@ -32,7 +32,7 @@
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin></Button>
-                <Button id="newButton" layoutX="613.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="New" GridPane.columnIndex="2">
+                <Button id="newButton" layoutX="613.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="New Anime" GridPane.columnIndex="2">
                     <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                     </GridPane.margin>
@@ -111,29 +111,32 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-                  <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="70.0" />
+                  <ColumnConstraints hgrow="NEVER" prefWidth="130.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="nextButton1" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="Add Occurrence" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
+                  <Button fx:id="newOccurrenceButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="New Occurrence" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
                      <GridPane.margin>
                         <Insets left="10.0" top="10.0" />
                      </GridPane.margin>
                   </Button>
-                  <Label fx:id="nameLabel1" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+                  <Label id="animeDataLabel" fx:id="scoreLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <GridPane.margin>
+                        <Insets bottom="2.0" top="8.0" />
+                     </GridPane.margin>
                   </Label>
-                  <ToggleButton mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Favorite" GridPane.columnIndex="3">
+                  <ToggleButton id="toggleButtonColored" fx:id="focusedButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Focused" GridPane.columnIndex="3">
                      <GridPane.margin>
                         <Insets right="5.0" top="10.0" />
                      </GridPane.margin>
                   </ToggleButton>
-                  <ToggleButton mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Tracking" GridPane.columnIndex="5">
+                  <ToggleButton id="toggleButtonColored" fx:id="trackingButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Tracking" GridPane.columnIndex="5">
                      <GridPane.margin>
                         <Insets left="5.0" top="10.0" />
                      </GridPane.margin>
@@ -143,11 +146,12 @@
                         <Insets right="10.0" top="10.0" />
                      </GridPane.margin>
                   </ProgressBar>
-                  <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="General Statistics" GridPane.columnIndex="4">
+                  <Button fx:id="generalStatisticsButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="General Statistics" GridPane.columnIndex="4">
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" top="10.0" />
                      </GridPane.margin>
                   </Button>
+                  <Label GridPane.columnIndex="6" />
                </children>
             </GridPane>
          </children>

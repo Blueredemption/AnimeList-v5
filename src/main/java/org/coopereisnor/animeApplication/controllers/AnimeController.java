@@ -1,18 +1,10 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.beans.binding.Bindings;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -21,9 +13,7 @@ import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.utility.UtilityMethods;
 
-import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.time.format.DateTimeFormatter;
 
 public class AnimeController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -31,6 +21,7 @@ public class AnimeController {
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final Anime anime = singletonDao.getCurrentAnime();
+    private Occurrence selectedOccurrence = null;
 
     @FXML
     private GridPane gridPane;
@@ -42,31 +33,112 @@ public class AnimeController {
     private Label nameLabel;
     @FXML
     private TabPane tabPane;
-
+    @FXML
+    private Label scoreLabel;
+    @FXML
+    private ToggleButton focusedButton;
+    @FXML
+    private Button generalStatisticsButton;
+    @FXML
+    private ToggleButton trackingButton;
+    @FXML
+    private Button newOccurrenceButton;
 
     @FXML
     public void initialize() {
         Common.configureNavigation(gridPane, this.getClass());
+        configureAnimeActions();
         kagamine();
+        configureToggleActions();
+    }
+
+    public void configureAnimeActions(){
+        previousButton.setOnAction(actionEvent -> {
+            Anime nextAnime = Common.getNextAnime(anime, false);
+            singletonDao.setCurrentAnime(nextAnime, null);
+            application.changeScene("anime.fxml", nextAnime.getName());
+        });
+
+        nextButton.setOnAction(actionEvent -> {
+            Anime nextAnime = Common.getNextAnime(anime, true);
+            singletonDao.setCurrentAnime(nextAnime, null);
+            application.changeScene("anime.fxml", nextAnime.getName());
+        });
+
+        generalStatisticsButton.setOnAction(actionEvent -> {
+            // todo: popup with general statistics and a way to view and modify episode objects
+        });
+
+        newOccurrenceButton.setOnAction(actionEvent -> {
+            Common.createNewOccurrencePopup();
+        });
+    }
+
+    public void configureToggleActions(){
+        focusedButton.setSelected(selectedOccurrence.isFocused());
+        focusedButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!oldValue){
+                if(!selectedOccurrence.isFocused()){
+                    selectedOccurrence.setFocused(true);
+                    for(Occurrence occurrence : anime.getOccurrences()){
+                        if(occurrence != selectedOccurrence) occurrence.setFocused(false);
+                    }
+                    animeDao.save(anime);
+                }
+            }else{ // if oldValue == true
+                if(selectedOccurrence.isFocused()){
+                    focusedButton.setSelected(true);
+                }
+            }
+        }));
+
+        trackingButton.setSelected(selectedOccurrence.isTracked());
+        trackingButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
+            selectedOccurrence.setTracked(newValue);
+            animeDao.save(anime);
+            // todo: recompile statistics related to tracking
+        }));
     }
 
     public void kagamine(){
         double imageWidth = 314;
         double imageHeight = 450;
 
+        // the anime level information todo: add actions for these two
+        nameLabel.setText(anime.getName());
+        scoreLabel.setText("Overall Score:   " +(anime.getScore() == -1 ? "" : anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +""));
+
+
         Occurrence focusedOccurrence;
         Tab focusedTab = null; // focusedTab will always be assigned due to the logic flow below
 
+        // this logic flow tracks which tab+occurrence is first shown
         if(singletonDao.getCurrentOccurrence() != null){
             focusedOccurrence = singletonDao.getCurrentOccurrence();
         } else{
-            focusedOccurrence = anime.getOccurrences().get(0);
+            focusedOccurrence = anime.getFocusedOccurrence() != null ? anime.getFocusedOccurrence() : anime.getOccurrences().get(0);
         }
+        selectedOccurrence = focusedOccurrence;
 
-        nameLabel.setText(anime.getName());
 
+        // now we add a tab corresponding to each occurrence
         for(Occurrence occurrence : anime.getOccurrences()){
             Tab tab = new Tab();
+
+            // the tab holds a reference of the occurrence for identification
+            tab.setUserData(occurrence);
+
+            // the tab will make sure the controller knows which occurrence is active with this action listener
+            tab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    selectedOccurrence = (Occurrence)tab.getUserData();
+
+                    // based on the new selected occurrence, we need to change what the toggle buttons are displaying
+                    // these won't fire events because the event handlers have yet to be added to the buttons in this workflow
+                    focusedButton.setSelected(selectedOccurrence.isFocused());
+                    trackingButton.setSelected(selectedOccurrence.isTracked());
+                }
+            });
 
             if(occurrence == focusedOccurrence){
                 focusedTab = tab;
@@ -75,6 +147,7 @@ public class AnimeController {
             tab.setText(occurrence.getName());
 
             ScrollPane scrollPane = new ScrollPane();
+            scrollPane.setId("tabPaneScrollPane");
             scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
             scrollPane.setFitToWidth(true);
@@ -105,12 +178,12 @@ public class AnimeController {
             gridPane.getColumnConstraints().addAll(columnConstraints, columnConstraints2);
 
             int counter = 0;
-            // occurrence information
+            // occurrence information // todo add actions for all of these
             createDataLabels(counter++, gridPane, "Type:", occurrence.getType());
             createDataLabels(counter++, gridPane, "Episodes:", occurrence.getEpisodesWatched().size() +"/" +occurrence.getEpisodes() +" Episodes");
             createDataLabels(counter++, gridPane, "Status:", occurrence.getStatus());
             createDataLabels(counter++, gridPane, "Aired Dates:", UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()));
-            createDataLabels(counter++, gridPane, "Premiered:", occurrence.getPremieredSeason() +" " +occurrence.getPremieredYear());
+            createDataLabels(counter++, gridPane, "Premiered:", occurrence.getPremieredYear() == -1 ? "" : occurrence.getPremieredSeason() +" " +occurrence.getPremieredYear());
             createDataLabels(counter++, gridPane, "Genres:", UtilityMethods.getAsCommaSeperatedString(occurrence.getGenres()));
             createDataLabels(counter++, gridPane, "Themes:", UtilityMethods.getAsCommaSeperatedString(occurrence.getThemes()));
             createDataLabels(counter++, gridPane, "Durration:", occurrence.getDuration()/60 +" Minutes");
@@ -127,27 +200,17 @@ public class AnimeController {
             createDataLabels(counter++, gridPane, "Score:", occurrence.getScore() == -1 ? "" : occurrence.getScore() % 1 == 0 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"");
 
 
-            Pane imagePane = new Pane();
-            // todo: dynamically select which occurrence to get image from
             BufferedImage bufferedImage = UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage());
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            BackgroundImage backgroundImage = new BackgroundImage(image,
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    new BackgroundSize(1.0, 1.0, true, true, false, false));
-            imagePane.setBackground(new Background(backgroundImage));
-            imagePane.setOnMouseClicked(event -> {
-                // todo: popup to change the image
-            });
-
+            Pane imagePane = Common.getImagePaneFor(null, bufferedImage);
             imagePane.setMinSize(imageWidth, imageHeight);
             imagePane.setPrefSize(imageWidth, imageHeight);
             imagePane.setMaxSize(imageWidth, imageHeight);
             imagePane.setPadding(new Insets(5,0,0,5));
-            // set the border todo: use settingsDao
-            imagePane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+            imagePane.setOnMouseClicked(event -> {
+                // todo: popup to change the image
+            });
+
             hBox.getChildren().add(imagePane);
-
-
 
 
             // below the data and images
@@ -190,6 +253,10 @@ public class AnimeController {
 
 
         tabPane.getSelectionModel().select(focusedTab);
+    }
+
+    public void setFocusedAndTracking(){
+
     }
 
     public void createDataLabels(int index, GridPane parent, String textOne, String textTwo){

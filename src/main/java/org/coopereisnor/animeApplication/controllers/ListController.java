@@ -22,6 +22,7 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
+import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.statistics.OccurrenceStatistics;
 import org.coopereisnor.utility.UtilityMethods;
@@ -70,7 +71,7 @@ public class ListController {
 
 
 
-    public void loadTypeComponents(){
+    private void loadTypeComponents(){
         typeButton.setText(singletonDao.getType());
         orderButton.setText(singletonDao.getOrder());
 
@@ -83,46 +84,41 @@ public class ListController {
 
 
 
-    public void loadListComponents(){
+    private void loadListComponents(){
         // first remove everything to start fresh
         insideScrollPane.getChildren().clear();
 
         int iterator = 0;
         if(singletonDao.getType().equals("Anime")) {
-            for(Anime anime : animeDao.getCollection()){
-                // this is temp until I implement scores
-                double randomNum = (new Random()).nextDouble(10);
-                randomNum = ((double)((int)(randomNum*10)))/10.0;
-                anime.setScore(randomNum);
+            for(Anime anime : singletonDao.getFilteredAndSortedAnime()){
+                int earliestYear = OccurrenceStatistics.getEarliestYear(anime.getOccurrences());
 
                 String number = ++iterator +":";
                 String name = anime.getName();
-                String score = anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
-                String year = OccurrenceStatistics.getEarliestYear(anime.getOccurrences()) +"";
+                String score = anime.getScore() == -1 ? "" :anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
+                String year = earliestYear == Integer.MAX_VALUE ? "" : earliestYear +"";
                 String episodes = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) + "/" +OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
-                double progress = Math.random();
+                double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
                 EventHandler eventHandler = event -> {};
 
                 addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, null);
             }
         }else{
-            for(Anime anime : animeDao.getCollection()){
-                for(Occurrence occurrence : anime.getOccurrences()){
-                    String number = ++iterator +":";
-                    String name = occurrence.getName();
-                    String score = occurrence.getScore() +"";
-                    String year = occurrence.getPremieredYear() +"";
-                    String episodes = occurrence.getEpisodesWatched().size() +"/" +occurrence.getEpisodes();
-                    double progress = Math.random();
-                    EventHandler eventHandler = event -> {};
+            for(Pair pair : singletonDao.getFilteredAndSortedOccurrences()){
+                String number = ++iterator +":";
+                String name = pair.getOccurrence().getName();
+                String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore() % 1 == 0 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
+                String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
+                String episodes = pair.getOccurrence().getEpisodesWatched().size() +"/" +pair.getOccurrence().getEpisodes();
+                double progress = ((double)pair.getOccurrence().getEpisodesWatched().size())/((double)pair.getOccurrence().getEpisodes());
+                EventHandler eventHandler = event -> {};
 
-                    addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, occurrence);
-                }
+                addListComponents(number, name, score, year, episodes, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
             }
         }
     }
 
-    public void addListComponents(String number, String name, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
+    private void addListComponents(String number, String name, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -201,13 +197,13 @@ public class ListController {
 
 
 
-    public void loadImageComponents(){
+    private void loadImageComponents(){
         // first remove everything to start fresh
         imageFlowPane.getChildren().clear();
 
         if(singletonDao.getType().equals("Anime")){
             for (Anime anime : animeDao.getCollection()) {
-                addImageComponents(UtilityMethods.toBufferedImage(anime.getOccurrences().get(0).getImageIcon().getImage()), anime, null);
+                addImageComponents(UtilityMethods.toBufferedImage(anime.getFocusedOccurrence().getImageIcon().getImage()), anime, null);
             }
         } else{
             for (Anime anime : animeDao.getCollection()) {
@@ -218,38 +214,26 @@ public class ListController {
         }
     }
 
-    public void addImageComponents(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
-        Pane imagePane = new Pane();
-        // todo: dynamically select which occurrence to get image from
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        BackgroundImage backgroundImage = new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                new BackgroundSize(1.0, 1.0, true, true, false, false));
-        imagePane.setBackground(new Background(backgroundImage));
+    private void addImageComponents(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
+        double width = 157;
+        double height = 225;
+
+        Pane imagePane = Common.getImagePaneFor(null, bufferedImage);
+        imagePane.setMinSize(width, height);
+        imagePane.setPrefSize(width, height);
+        imagePane.setMaxSize(width, height);
+        imagePane.setPadding(new Insets(5,0,0,5));
         imagePane.setOnMouseClicked(event -> {
             singletonDao.setCurrentAnime(anime, occurrence);
             application.changeScene("anime.fxml", anime.getName());
         });
 
-        double width = 157;
-        double height = 225;
-        imagePane.setMinSize(width, height);
-        imagePane.setPrefSize(width, height);
-        imagePane.setMaxSize(width, height);
-        imagePane.setPadding(new Insets(5,0,0,5));
-
         imageFlowPane.getChildren().add(imagePane);
-
-        // set the border todo: use settingsDao
-        imagePane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-
     }
 
 
 
-
-
-    public void loadToggleComponents(){
+    private void loadToggleComponents(){
         // view button
         if(singletonDao.getListFXML().equals("list.fxml")){ // these don't need to updated higher up since the page refreshes
             viewButton.setText("List");
@@ -280,12 +264,12 @@ public class ListController {
         }));
     }
 
-    public void loadSortComponents(){
+    private void loadSortComponents(){
         // todo: move array initialization later and store the selection in singleton
         // todo: make combobox impact the order of elements
         // todo: make order impact the order of elements
 
-        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Score", "Name", "Eps. Watched", "Eps. Total", "Year", "Type", "Progress");
+        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Rank", "Score", "Name", "Eps. Watched", "Eps. Total", "Year", "Type", "Progress");
         comboBox.setItems(sortStrings);
         comboBox.setValue(sortStrings.get(0));
 
@@ -300,7 +284,7 @@ public class ListController {
         }));
     }
 
-    public void loadFilterComponents(){
+    private void loadFilterComponents(){
         // todo: make actually filter the elements and have them stored in singleton
 
         for(int i = 0; i < 20; i++){
