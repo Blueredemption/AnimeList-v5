@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.AddAnimeController">
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.AddNewController">
    <children>
       <Label maxWidth="1.7976931348623157E308" text="MyAnimeList.net URL:" VBox.vgrow="ALWAYS" />
       <TextField fx:id="textField" VBox.vgrow="ALWAYS" />
@@ -27,7 +27,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="createButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" text="Create" GridPane.columnIndex="1">
+            <Button fx:id="createButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" text="Add" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>

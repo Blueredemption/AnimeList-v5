@@ -1,10 +1,13 @@
 package org.coopereisnor.animeApplication.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
@@ -56,7 +59,7 @@ public class AnimeController {
     public void configureAnimeActions(){
         nameLabel.setOnMouseClicked(mouseEvent -> {
             if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                System.out.println("Right Click on Anime name");
+
             }
         });
 
@@ -76,8 +79,16 @@ public class AnimeController {
             // todo: popup with general statistics and a way to view and modify episode objects
         });
 
+        scoreLabel.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                singletonDao.setCurrentField("AnimeScore");
+                Common.popup("editScore.fxml");
+            }
+        });
+
         newOccurrenceButton.setOnAction(actionEvent -> {
-            Common.createNewOccurrencePopup();
+            singletonDao.setCurrentField("Occurrence");
+            Common.popup("addNew.fxml");
         });
     }
 
@@ -126,6 +137,7 @@ public class AnimeController {
             focusedOccurrence = anime.getFocusedOccurrence() != null ? anime.getFocusedOccurrence() : anime.getOccurrences().get(0);
         }
         selectedOccurrence = focusedOccurrence;
+        singletonDao.setCurrentAnime(anime, selectedOccurrence);
 
 
         // now we add a tab corresponding to each occurrence
@@ -139,6 +151,7 @@ public class AnimeController {
             tab.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue) {
                     selectedOccurrence = (Occurrence)tab.getUserData();
+                    singletonDao.setCurrentAnime(anime, selectedOccurrence);
 
                     // based on the new selected occurrence, we need to change what the toggle buttons are displaying
                     // these won't fire events because the event handlers have yet to be added to the buttons in this workflow
@@ -186,25 +199,73 @@ public class AnimeController {
 
             int counter = 0;
             // occurrence information // todo add actions for all of these
-            createDataLabels(counter++, gridPane, "Type:", occurrence.getType());
-            createDataLabels(counter++, gridPane, "Episodes:", occurrence.getEpisodesWatched().size() +"/" +occurrence.getEpisodes() +" Episodes");
-            createDataLabels(counter++, gridPane, "Status:", occurrence.getStatus());
-            createDataLabels(counter++, gridPane, "Aired Dates:", UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()));
-            createDataLabels(counter++, gridPane, "Premiered:", occurrence.getPremieredYear() == -1 ? "" : occurrence.getPremieredSeason() +" " +occurrence.getPremieredYear());
-            createDataLabels(counter++, gridPane, "Genres:", UtilityMethods.getAsCommaSeperatedString(occurrence.getGenres()));
-            createDataLabels(counter++, gridPane, "Themes:", UtilityMethods.getAsCommaSeperatedString(occurrence.getThemes()));
-            createDataLabels(counter++, gridPane, "Durration:", occurrence.getDuration()/60 +" Minutes");
-            createDataLabels(counter++, gridPane, "Content Rating:", occurrence.getRating());
-            createDataLabels(counter++, gridPane, "", ""); // using as a spacer
-            createDataLabels(counter++, gridPane, "Source:", occurrence.getSource());
-            createDataLabels(counter++, gridPane, "Studios:", UtilityMethods.getAsCommaSeperatedString(occurrence.getStudios()));
-            createDataLabels(counter++, gridPane, "Producers:", UtilityMethods.getAsCommaSeperatedString(occurrence.getProducers()));
-            createDataLabels(counter++, gridPane, "Licensors:", UtilityMethods.getAsCommaSeperatedString(occurrence.getLicensors()));
-            createDataLabels(counter++, gridPane, "", ""); // using as a spacer
-            createDataLabels(counter++, gridPane, "Watch Status:", occurrence.getWatchStatus());
-            createDataLabels(counter++, gridPane, "Watch Dates:", UtilityMethods.getAsFormattedDate(occurrence.getStartedWatching()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getFinishedWatching()));
-            createDataLabels(counter++, gridPane, "Language:", occurrence.getLanguage());
-            createDataLabels(counter++, gridPane, "Score:", occurrence.getScore() == -1 ? "" : occurrence.getScore() % 1 == 0 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"");
+            createDataLabels(counter++, gridPane, "Type:",
+                    occurrence.getType(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Episodes:",
+                    occurrence.getEpisodesWatched().size() +"/" +occurrence.getEpisodes() +" Episodes",
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Status:",
+                    occurrence.getStatus(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Aired Dates:",
+                    UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()),
+                    mouseEvent -> {
+                if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                        singletonDao.setCurrentField("AiredDates");
+                        Common.popup("editDates.fxml");
+                    }});
+            createDataLabels(counter++, gridPane, "Premiered:",
+                    occurrence.getPremieredYear() == -1 ? "" : occurrence.getPremieredSeason() +" " +occurrence.getPremieredYear(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Genres:",
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getGenres()),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Themes:",
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getThemes()),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Durration:",
+                    occurrence.getDuration()/60 +" Minutes",
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Content Rating:",
+                    occurrence.getRating(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "", "", mouseEvent -> { }); // using as a spacer
+            createDataLabels(counter++, gridPane, "Source:",
+                    occurrence.getSource(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Studios:",
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getStudios()),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Producers:",
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getProducers()),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Licensors:",
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getLicensors()),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "", "", mouseEvent -> { }); // using as a spacer
+            createDataLabels(counter++, gridPane, "Watch Status:",
+                    occurrence.getWatchStatus(),
+                    mouseEvent -> { });
+            createDataLabels(counter++, gridPane, "Watch Dates:",
+                    UtilityMethods.getAsFormattedDate(occurrence.getStartedWatching()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getFinishedWatching()),
+                    mouseEvent -> {
+                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                            singletonDao.setCurrentField("WatchDates");
+                            Common.popup("editDates.fxml");
+                        }
+                    });
+            createDataLabels(counter++, gridPane, "Language:",
+                    occurrence.getLanguage(),
+                    mouseEvent -> { });
+            createDataLabels(counter, gridPane, "Score:",
+                    occurrence.getScore() == -1 ? "" : occurrence.getScore() % 1 == 0 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"",
+                    mouseEvent -> {
+                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                            singletonDao.setCurrentField("OccurrenceScore");
+                            Common.popup("editScore.fxml");
+                        }
+                    });
 
 
             BufferedImage bufferedImage = UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage());
@@ -266,7 +327,7 @@ public class AnimeController {
 
     }
 
-    public void createDataLabels(int index, GridPane parent, String textOne, String textTwo){
+    public void createDataLabels(int index, GridPane parent, String textOne, String textTwo, EventHandler<MouseEvent> eventHandler){
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.NEVER);
 
@@ -275,6 +336,7 @@ public class AnimeController {
         paramLabel.setMinWidth(150);
         paramLabel.setPrefWidth(150);
         paramLabel.setId("animeDataLabel");
+        paramLabel.setOnMouseClicked(eventHandler);
         GridPane.setHgrow(paramLabel, Priority.NEVER);
         parent.add(paramLabel, 0, index);
 
@@ -283,6 +345,7 @@ public class AnimeController {
         valueLabel.setMaxWidth(Double.MAX_VALUE);
         valueLabel.setAlignment(Pos.CENTER);
         valueLabel.setId("animeDataLabel");
+        valueLabel.setOnMouseClicked(eventHandler);
         GridPane.setHgrow(valueLabel, Priority.ALWAYS);
         parent.add(valueLabel, 1, index);
 

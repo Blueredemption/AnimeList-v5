@@ -128,35 +128,22 @@ public class Common {
     // popups
     public static void configureNewAnimePopup(Node node){
         ((Button)node).setOnAction(actionEvent -> {
-            try {
-                final Stage popup = new Stage();
-                popup.setResizable(false);
-
-                popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
-
-                Scene addAnimeScene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource("addAnime.fxml"))));
-                File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
-                addAnimeScene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
-                popup.setScene(addAnimeScene);
-                popup.show();
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            SingletonDao.getInstance().setCurrentField("Anime");
+            popup("addNew.fxml");
         });
     }
 
-    public static void createNewOccurrencePopup(){
+    public static void popup(String fxml){
         try {
             final Stage popup = new Stage();
             popup.setResizable(false);
 
             popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
 
-            Scene addOccurrenceScene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource("addOccurrence.fxml"))));
+            Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml))));
             File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
-            addOccurrenceScene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
-            popup.setScene(addOccurrenceScene);
+            scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+            popup.setScene(scene);
             popup.show();
 
         } catch (IOException e) {

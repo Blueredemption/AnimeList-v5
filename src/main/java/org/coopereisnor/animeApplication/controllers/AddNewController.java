@@ -15,7 +15,7 @@ import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
 
-public class AddOccurrenceController {
+public class AddNewController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
@@ -30,6 +30,51 @@ public class AddOccurrenceController {
 
     @FXML
     public void initialize() {
+        if(singletonDao.getCurrentField().equals("Anime")){
+            initializeAnime();
+        }else if(singletonDao.getCurrentField().equals("Occurrence")){
+            initializeOccurrence();
+        }
+    }
+
+    public void initializeAnime(){
+        textField.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER ) {
+                createAnimeAndNavigate(event);
+            }
+        } );
+
+        cancelButton.setOnAction(event -> {
+            System.out.println("Kagamine");
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+        });
+
+        createButton.setOnAction(this::createAnimeAndNavigate);
+    }
+
+    public void createAnimeAndNavigate(Event event){
+        Occurrence occurrence;
+
+        if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
+        else occurrence = new Occurrence();
+
+        // the first occurrence in an anime is set to focused by default
+        occurrence.setFocused(true);
+
+        Anime anime = animeDao.createNewAnime();
+        anime.setName(occurrence.getName().equals("New Occurrence") ? "New Anime" : occurrence.getName());
+        anime.addOccurrence(occurrence);
+        animeDao.save(anime);
+
+        singletonDao.setCurrentAnime(anime, occurrence);
+        application.changeScene("anime.fxml", anime.getName());
+        singletonDao.compileLists();
+        singletonDao.update(true, true);
+
+        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+    }
+
+    public void initializeOccurrence(){
         textField.setOnKeyPressed( event -> {
             if( event.getCode() == KeyCode.ENTER ) {
                 createOccurrenceAndNavigate(event);
@@ -47,11 +92,15 @@ public class AddOccurrenceController {
         if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
         else occurrence = new Occurrence();
 
-        singletonDao.getCurrentAnime().addOccurrence(occurrence);
+        Anime anime = singletonDao.getCurrentAnime();
+        anime.addOccurrence(occurrence);
+        animeDao.save(anime);
 
         singletonDao.setCurrentAnime(singletonDao.getCurrentAnime(), occurrence);
         application.changeScene("anime.fxml", singletonDao.getCurrentAnime().getName());
         singletonDao.compileLists();
+        singletonDao.update(true, true);
+
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }
