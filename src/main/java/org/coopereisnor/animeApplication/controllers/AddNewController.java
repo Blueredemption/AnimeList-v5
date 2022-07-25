@@ -56,7 +56,7 @@ public class AddNewController {
         Occurrence occurrence;
 
         if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
-        else occurrence = new Occurrence();
+        else occurrence = new Occurrence(System.currentTimeMillis());
 
         // the first occurrence in an anime is set to focused by default
         occurrence.setFocused(true);
@@ -68,8 +68,7 @@ public class AddNewController {
 
         singletonDao.setCurrentAnime(anime, occurrence);
         application.changeScene("anime.fxml", anime.getName());
-        singletonDao.compileLists();
-        singletonDao.update(true, true);
+        singletonDao.update();
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
@@ -90,7 +89,7 @@ public class AddNewController {
         Occurrence occurrence;
 
         if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
-        else occurrence = new Occurrence();
+        else occurrence = new Occurrence(System.currentTimeMillis());
 
         Anime anime = singletonDao.getCurrentAnime();
         anime.addOccurrence(occurrence);
@@ -98,8 +97,7 @@ public class AddNewController {
 
         singletonDao.setCurrentAnime(singletonDao.getCurrentAnime(), occurrence);
         application.changeScene("anime.fxml", singletonDao.getCurrentAnime().getName());
-        singletonDao.compileLists();
-        singletonDao.update(true, true);
+        singletonDao.update();
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }

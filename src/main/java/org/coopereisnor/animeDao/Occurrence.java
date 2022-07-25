@@ -1,14 +1,18 @@
 package org.coopereisnor.animeDao;
 
+import org.coopereisnor.utility.UtilityMethods;
+
 import javax.swing.*;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 public class Occurrence implements java.io.Serializable {
+    private long identifier;
     private URL url;
     private String name;
     private String type; // Season, OVA, Movie, Other?
@@ -18,12 +22,12 @@ public class Occurrence implements java.io.Serializable {
     private LocalDate airedEndDate;
     private String premieredSeason;
     private int premieredYear;
-    private final ArrayList<String> licensors;
-    private final ArrayList<String> producers;
-    private final ArrayList<String> studios;
+    private final LinkedHashSet<String> licensors;
+    private final LinkedHashSet<String> producers;
+    private final LinkedHashSet<String> studios;
     private String source;
-    private final ArrayList<String> genres;
-    private final ArrayList<String> themes;
+    private final LinkedHashSet<String> genres;
+    private final LinkedHashSet<String> themes;
     private int duration; // seconds
     private String rating;
     private LocalDate startedWatching;
@@ -31,7 +35,7 @@ public class Occurrence implements java.io.Serializable {
 
     private URL imageURL;
     private ImageIcon imageIcon;
-    private final ArrayList<Episode> episodesWatched;
+    private final LinkedHashSet<Episode> episodesWatched;
     private boolean focused;
     private boolean tracked;
     private double score;
@@ -39,7 +43,8 @@ public class Occurrence implements java.io.Serializable {
     private String watchStatus;
     private String notes;
 
-    public Occurrence(){ // constructor
+    public Occurrence(long identifier){ // constructor
+        this.identifier = identifier;
         url = null;
         name = "New Occurrence";
         type = null;
@@ -49,12 +54,12 @@ public class Occurrence implements java.io.Serializable {
         airedEndDate = null;
         premieredSeason = null;
         premieredYear = -1;
-        licensors = new ArrayList<>();
-        producers = new ArrayList<>();
-        studios = new ArrayList<>();
+        licensors = new LinkedHashSet<>();
+        producers = new LinkedHashSet<>();
+        studios = new LinkedHashSet<>();
         source = null;
-        genres = new ArrayList<>();
-        themes = new ArrayList<>();
+        genres = new LinkedHashSet<>();
+        themes = new LinkedHashSet<>();
         duration = -1;
         rating = null;
         startedWatching = null;
@@ -63,7 +68,7 @@ public class Occurrence implements java.io.Serializable {
         watchStatus = null;
         imageURL = null;
         imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
-        episodesWatched = new ArrayList<>();
+        episodesWatched = new LinkedHashSet<>();
         focused = false;
         tracked = true;
         score = -1;
@@ -72,6 +77,10 @@ public class Occurrence implements java.io.Serializable {
     }
 
     // getters
+    public long getIdentifier(){
+        return  identifier;
+    }
+
     public URL getUrl(){
         return url;
     }
@@ -108,28 +117,28 @@ public class Occurrence implements java.io.Serializable {
         return premieredYear;
     }
 
-    public ArrayList<String> getLicensors() {
-        return (ArrayList)licensors.clone();
+    public String[] getLicensors() {
+        return UtilityMethods.convertToStringArray(licensors);
     }
 
-    public ArrayList<String> getProducers() {
-        return (ArrayList)producers.clone();
+    public String[] getProducers() {
+        return UtilityMethods.convertToStringArray(producers);
     }
 
-    public ArrayList<String> getStudios() {
-        return (ArrayList) studios.clone();
+    public String[] getStudios() {
+        return UtilityMethods.convertToStringArray(studios);
     }
 
     public String getSource() {
         return source;
     }
 
-    public ArrayList<String> getGenres() {
-        return (ArrayList)genres.clone();
+    public String[] getGenres() {
+        return UtilityMethods.convertToStringArray(genres);
     }
 
-    public ArrayList<String> getThemes() {
-        return (ArrayList)themes.clone();
+    public String[] getThemes() {
+        return UtilityMethods.convertToStringArray(themes);
     }
 
     public int getDuration() {
@@ -156,8 +165,9 @@ public class Occurrence implements java.io.Serializable {
         return imageIcon;
     }
 
-    public ArrayList<Episode> getEpisodesWatched() {
-        return (ArrayList)episodesWatched.clone();
+    public Episode[] getEpisodesWatched() {
+        Episode[] episodes = new Episode[episodesWatched.size()];
+        return episodesWatched.toArray(episodes);
     }
 
     public boolean isFocused() {
@@ -269,35 +279,6 @@ public class Occurrence implements java.io.Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    // static methods for parameter groups
-    public static String[] getTypes(){
-        return new String[]{"Season", "Special", "Movie", "Other"};
-    }
-
-    public static String[] getStatuses(){
-        return new String[]{"Not Yet Aired", "Airing", "Finished Airing", "Paused", "Other"};
-    }
-
-    public static String[] getWatchStatuses(){
-        return new String[]{"Plan to Watch", "Watching", "Paused", "Dropped"};
-    }
-
-    public static String[] getPremieredSeasons(){
-        return new String[]{"Winter", "Spring", "Summer", "Fall", "Other"};
-    }
-
-    public static String[] getSources(){
-        return new String[]{"Manga", "Light novel", "Other"};
-    }
-
-    public static String[] getRatings(){
-        return new String[]{"G", "PG", "PG-13", "R-17+", "R+, Other"};
-    }
-
-    public static String[] getLanguages(){
-        return new String[]{"Subbed", "Dubbed", "Other"};
     }
 
     // adders

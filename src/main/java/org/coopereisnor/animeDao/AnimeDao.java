@@ -82,7 +82,7 @@ public class AnimeDao {
     private void add(Anime anime){
         // first we check to see if it is already in the collection before adding it (serialization makes this laborious)
         for(Anime entry : collection){
-            if(anime.getIdentifier().equals(entry.getIdentifier())) return; // it is already there, no need to add it.
+            if(anime.getIdentifier() == entry.getIdentifier()) return; // it is already there, no need to add it.
         }
         // it was not found in the collection, so let's add it.
         collection.add(anime);
@@ -96,7 +96,7 @@ public class AnimeDao {
         // first we check to see if it is already in the collection before removing it (serialization makes this laborious)
         ArrayList<Anime> tempCollection = new ArrayList<>();
         for(Anime entry : collection){
-            if(anime.getIdentifier().equals(entry.getIdentifier())) tempCollection.add(entry) ; // found one! remove when done iterating.
+            if(anime.getIdentifier() == entry.getIdentifier()) tempCollection.add(entry) ; // found one! remove when done iterating.
         }
         // remove all found copies (this is a presumptive catch-all for any duplication bug that may arise)
         for(Anime entry : tempCollection){

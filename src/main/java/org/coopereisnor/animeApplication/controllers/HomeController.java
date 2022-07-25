@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -21,7 +22,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-public class HomeController {
+public class HomeController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
@@ -35,6 +36,7 @@ public class HomeController {
 
     @FXML
     public void initialize() {
+        singletonDao.setCurrentController(this);
         Common.configureNavigation(gridPane, this.getClass());
         applyImage();
     }
@@ -43,4 +45,8 @@ public class HomeController {
         Common.getImagePaneFor(imagePane, UtilityMethods.toBufferedImage(settingsDao.getSettings().getHomeImage().getImage()));
     }
 
+    @Override
+    public ProgressBar getUpdateProgressBar() {
+        return null;
+    }
 }

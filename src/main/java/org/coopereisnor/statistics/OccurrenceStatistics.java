@@ -1,8 +1,10 @@
 package org.coopereisnor.statistics;
 
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 // this class contains methods that return information given an ArrayList of Occurrences
@@ -45,6 +47,23 @@ public class OccurrenceStatistics {
         return earliestYear;
     }
 
+    public static LocalDate getEarliestStartedWatching(ArrayList<Occurrence> occurrences){
+        LocalDate date = LocalDate.MAX;
+        for(Occurrence occurrence : occurrences){
+            if (occurrence.getStartedWatching() == null) continue;
+            if (occurrence.getStartedWatching().isBefore(date)) date = occurrence.getStartedWatching();
+        }
+        return date;
+    }
+
+    public static LocalDate getLatestFinishedWatching(ArrayList<Occurrence> occurrences){
+        LocalDate date = LocalDate.MIN;
+        for(Occurrence occurrence : occurrences){
+            if (occurrence.getFinishedWatching() == null) continue;
+            if (occurrence.getFinishedWatching().isAfter(date)) date = occurrence.getFinishedWatching();
+        }
+        return date;
+    }
 
     // utility methods
 }

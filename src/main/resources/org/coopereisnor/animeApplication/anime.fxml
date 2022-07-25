@@ -141,7 +141,7 @@
                         <Insets left="5.0" top="10.0" />
                      </GridPane.margin>
                   </ToggleButton>
-                  <ProgressBar prefHeight="25.0" prefWidth="200.0" progress="0.0" visible="false" GridPane.columnIndex="1">
+                  <ProgressBar fx:id="progressBar" prefHeight="25.0" prefWidth="200.0" progress="0.0" visible="false" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets right="10.0" top="10.0" />
                      </GridPane.margin>

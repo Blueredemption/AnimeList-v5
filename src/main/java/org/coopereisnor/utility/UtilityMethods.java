@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedHashSet;
 
 public class UtilityMethods {
 
@@ -49,14 +50,19 @@ public class UtilityMethods {
         return date == null ? "?" : date.format(formatter);
     }
 
-    public static String getAsCommaSeperatedString(ArrayList<String> strings){
+    public static String getAsCommaSeperatedString(String[] strings){
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < strings.size(); i++){
-            builder.append(strings.get(i));
-            if(!(i + 1 == strings.size())){
+        for(int i = 0; i < strings.length; i++){
+            builder.append(strings[i]);
+            if(!(i + 1 == strings.length)){
                 builder.append(", ");
             }
         }
         return builder.toString();
+    }
+
+    public static String[] convertToStringArray(LinkedHashSet<String> set){
+        String[] strings = new String[set.size()];
+        return set.toArray(strings);
     }
 }

@@ -25,7 +25,7 @@ public class MALScrape {
         try {
             Document page = Jsoup.connect(url).get();
 
-            Occurrence occurrence = new Occurrence();
+            Occurrence occurrence = new Occurrence(System.currentTimeMillis());
 
             // the first two are easy:
             occurrence.setName(page.title().replace("- MyAnimeList.net", "").trim());
@@ -200,7 +200,7 @@ public class MALScrape {
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            return new Occurrence(); // if it fails just return an empty occurrence
+            return new Occurrence(System.currentTimeMillis()); // if it fails just return an empty occurrence
         }
     }
 

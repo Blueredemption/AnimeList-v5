@@ -45,9 +45,9 @@ public class EditScoreController {
         cancelButton.setOnAction(event -> ((Stage)((Node)event.getSource()).getScene().getWindow()).close());
 
         if(singletonDao.getCurrentField().equals("AnimeScore")) {
-            valueFactory.setValue(anime.getScore() >= 0 ? anime.getScore() : 5);
+            valueFactory.setValue(anime.getScore() >= 0 ? anime.getScore() : 8);
         }else if(singletonDao.getCurrentField().equals("OccurrenceScore")){
-            valueFactory.setValue(occurrence.getScore() >= 0 ? occurrence.getScore() : 5);
+            valueFactory.setValue(occurrence.getScore() >= 0 ? occurrence.getScore() : 8);
         }
 
         spinner.setOnKeyPressed( event -> {
@@ -86,8 +86,7 @@ public class EditScoreController {
     private void commonEnd(Event event) {
         animeDao.save(anime);
         application.changeScene("anime.fxml", anime.getName());
-        singletonDao.compileLists();
-        singletonDao.update(true, false);
+        singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }

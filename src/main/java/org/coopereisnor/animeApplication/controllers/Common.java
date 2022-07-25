@@ -33,13 +33,15 @@ public class Common {
                     if(!cls.equals(HomeController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("home.fxml", "Home"));
                 }
                 case "listButton" -> {
-                    if(!cls.equals(ListController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene(SingletonDao.getInstance().getListFXML(), "My List"));
+                    // want to allow refresh
+                    ((Button)node).setOnAction(actionEvent -> application.changeScene(SingletonDao.getInstance().getListFXML(), "My List"));
                 }
                 case "newButton" -> {
                     Common.configureNewAnimePopup(node);
                 }
                 case "statisticsButton" -> {
-                    if(!cls.equals(StatisticsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("statistics.fxml", "Statistics"));
+                    // want to allow refresh
+                    ((Button)node).setOnAction(actionEvent -> application.changeScene("statistics.fxml", "Statistics"));
                 }
                 case "timelineButton" -> {
                     if(!cls.equals(TimelineController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("timeline.fxml", "Timeline"));
@@ -112,7 +114,7 @@ public class Common {
     }
 
     public static Anime getNextAnime(Anime currentAnime, boolean right){
-        ArrayList<Anime> workingCollection = SingletonDao.getInstance().getFilteredAndSortedAnime();
+        ArrayList<Anime> workingCollection = SingletonDao.getInstance().getListContainer().getFilteredAndSortedAnime();
         int currentIndex = workingCollection.indexOf(currentAnime);
         int size = workingCollection.size();
         if(currentIndex + 1 == size && right){

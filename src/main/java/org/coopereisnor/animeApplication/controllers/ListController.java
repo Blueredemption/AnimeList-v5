@@ -12,12 +12,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.singleton.ListContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -34,7 +36,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Random;
 
-public class ListController {
+public class ListController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
@@ -58,9 +60,14 @@ public class ListController {
     private ComboBox<String> comboBox;
     @FXML
     private FlowPane flowPane;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private ProgressBar progressBar;
 
     @FXML
     public void initialize() {
+        singletonDao.setCurrentController(this);
         Common.configureNavigation(gridPane, this.getClass());
         Common.setFasterScrollBar(scrollPane);
         loadToggleComponents();
@@ -73,7 +80,7 @@ public class ListController {
 
     private void loadTypeComponents(){
         typeButton.setText(singletonDao.getType());
-        orderButton.setText(singletonDao.getOrder());
+        orderButton.setText(singletonDao.getListContainer().getOrder());
 
         if(singletonDao.getListFXML().equals("list.fxml")){
             loadListComponents();
@@ -90,7 +97,7 @@ public class ListController {
 
         int iterator = 0;
         if(singletonDao.getType().equals("Anime")) {
-            for(Anime anime : singletonDao.getFilteredAndSortedAnime()){
+            for(Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())){
                 int earliestYear = OccurrenceStatistics.getEarliestYear(anime.getOccurrences());
 
                 String number = ++iterator +":";
@@ -104,13 +111,13 @@ public class ListController {
                 addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, null);
             }
         }else{
-            for(Pair pair : singletonDao.getFilteredAndSortedOccurrences()){
+            for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
                 String number = ++iterator +":";
                 String name = pair.getOccurrence().getName();
                 String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore() % 1 == 0 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
                 String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
-                String episodes = pair.getOccurrence().getEpisodesWatched().size() +"/" +pair.getOccurrence().getEpisodes();
-                double progress = ((double)pair.getOccurrence().getEpisodesWatched().size())/((double)pair.getOccurrence().getEpisodes());
+                String episodes = pair.getOccurrence().getEpisodesWatched().length +"/" +pair.getOccurrence().getEpisodes();
+                double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
                 EventHandler eventHandler = event -> {};
 
                 addListComponents(number, name, score, year, episodes, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
@@ -202,14 +209,12 @@ public class ListController {
         imageFlowPane.getChildren().clear();
 
         if(singletonDao.getType().equals("Anime")){
-            for (Anime anime : animeDao.getCollection()) {
+            for (Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())) {
                 addImageComponents(UtilityMethods.toBufferedImage(anime.getFocusedOccurrence().getImageIcon().getImage()), anime, null);
             }
         } else{
-            for (Anime anime : animeDao.getCollection()) {
-                for(Occurrence occurrence : anime.getOccurrences()){
-                    addImageComponents(UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage()), anime, occurrence);
-                }
+            for (Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())) {
+                addImageComponents(UtilityMethods.toBufferedImage(pair.getOccurrence().getImageIcon().getImage()), pair.getAnime(), pair.getOccurrence());
             }
         }
     }
@@ -234,6 +239,13 @@ public class ListController {
 
 
     private void loadToggleComponents(){
+        // search area
+        searchField.setText(singletonDao.getListContainer().getSearch());
+        searchField.setOnKeyTyped(keyEvent -> {
+            singletonDao.getListContainer().setSearch(searchField.getText());
+            loadTypeComponents();
+        });
+
         // view button
         if(singletonDao.getListFXML().equals("list.fxml")){ // these don't need to updated higher up since the page refreshes
             viewButton.setText("List");
@@ -269,16 +281,20 @@ public class ListController {
         // todo: make combobox impact the order of elements
         // todo: make order impact the order of elements
 
-        ObservableList<String> sortStrings = FXCollections.observableArrayList("Started", "Rank", "Score", "Name", "Eps. Watched", "Eps. Total", "Year", "Type", "Progress");
+        ObservableList<String> sortStrings = FXCollections.observableArrayList("Added", "Score", "Name", "Rank", "Started", "Finished", "Eps. Watched", "Eps. Total", "Year", "Progress");
         comboBox.setItems(sortStrings);
-        comboBox.setValue(sortStrings.get(0));
+        comboBox.setValue(singletonDao.getListContainer().getSortBy());
+        comboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            singletonDao.getListContainer().setSortBy(comboBox.getValue());
+            loadTypeComponents();
+        });
 
-        orderButton.setSelected(!singletonDao.getOrder().equals("Ascending"));
+        orderButton.setSelected(!singletonDao.getListContainer().getOrder().equals("Ascending"));
         orderButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             if(oldValue){
-                singletonDao.setOrder("Ascending");
+                singletonDao.getListContainer().setOrder("Ascending");
             } else{
-                singletonDao.setOrder("Descending");
+                singletonDao.getListContainer().setOrder("Descending");
             }
             loadTypeComponents();
         }));
@@ -300,5 +316,10 @@ public class ListController {
         filterButton.setPrefHeight(25);
         filterButton.setId("filterButtonClear");
         flowPane.getChildren().add(filterButton);
+    }
+
+    @Override
+    public ProgressBar getUpdateProgressBar() {
+        return progressBar;
     }
 }

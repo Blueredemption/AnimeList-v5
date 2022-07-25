@@ -19,7 +19,18 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         SingletonDao.getInstance().setApplication(this);
+        SingletonDao.getInstance().update();
 
+        // statisticsContainer is the last thing on its own thread to be initialized. Everything needs to have AN instance before launching.
+        while(SingletonDao.getInstance().getStatisticsContainer() == null){
+            try {
+                Thread.sleep(1); // I don't like waiting using loops, but since this is just when launching the program I'll let it fly.
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // with all the initialization over, we can create the GUI:
         this.stage = stage;
         stage.setMinWidth(width);
         stage.setMinHeight(height);

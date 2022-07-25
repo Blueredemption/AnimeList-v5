@@ -19,7 +19,7 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
 
-public class AnimeController {
+public class AnimeController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
@@ -38,6 +38,8 @@ public class AnimeController {
     @FXML
     private TabPane tabPane;
     @FXML
+    private ProgressBar progressBar;
+    @FXML
     private Label scoreLabel;
     @FXML
     private ToggleButton focusedButton;
@@ -50,6 +52,7 @@ public class AnimeController {
 
     @FXML
     public void initialize() {
+        singletonDao.setCurrentController(this);
         Common.configureNavigation(gridPane, this.getClass());
         configureAnimeActions();
         kagamine();
@@ -114,7 +117,7 @@ public class AnimeController {
         trackingButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
             selectedOccurrence.setTracked(newValue);
             animeDao.save(anime);
-            singletonDao.update(true, false);
+            singletonDao.update();
         }));
     }
 
@@ -203,7 +206,7 @@ public class AnimeController {
                     occurrence.getType(),
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Episodes:",
-                    occurrence.getEpisodesWatched().size() +"/" +occurrence.getEpisodes() +" Episodes",
+                    occurrence.getEpisodesWatched().length +"/" +occurrence.getEpisodes() +" Episodes",
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Status:",
                     occurrence.getStatus(),
@@ -300,7 +303,7 @@ public class AnimeController {
             notesLabel.setPadding(new Insets(0,0,0,5));
             gridPane2.add(notesLabel, 0, 0);
 
-            ProgressBar progressBar = new ProgressBar(((double)occurrence.getEpisodesWatched().size())/((double)occurrence.getEpisodes()));
+            ProgressBar progressBar = new ProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
             progressBar.setPrefWidth(imageWidth);
             progressBar.setPrefHeight(20);
             gridPane2.add(progressBar, 1, 0);
@@ -350,5 +353,10 @@ public class AnimeController {
         parent.add(valueLabel, 1, index);
 
         gridPane.getRowConstraints().add(rowConstraints);
+    }
+
+    @Override
+    public ProgressBar getUpdateProgressBar() {
+        return progressBar;
     }
 }
