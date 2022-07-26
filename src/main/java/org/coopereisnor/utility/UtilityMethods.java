@@ -8,10 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class UtilityMethods {
 
@@ -62,7 +59,9 @@ public class UtilityMethods {
     }
 
     public static String[] convertToStringArray(LinkedHashSet<String> set){
-        String[] strings = new String[set.size()];
-        return set.toArray(strings);
+        ArrayList<String> list = new ArrayList<>(set);
+        list.removeIf(s -> s.equals(""));
+        Collections.sort(list);
+        return list.toArray(new String[0]);
     }
 }

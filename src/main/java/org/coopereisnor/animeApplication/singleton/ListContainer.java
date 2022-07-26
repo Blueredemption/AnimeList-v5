@@ -1,5 +1,6 @@
 package org.coopereisnor.animeApplication.singleton;
 
+import javafx.collections.FXCollections;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.AnimeAggregate;
@@ -7,6 +8,7 @@ import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class ListContainer {
@@ -56,6 +58,7 @@ public class ListContainer {
 
     public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
+        update();
     }
 
     public ArrayList<Anime> getFilteredAndSortedAnime() {
@@ -71,8 +74,10 @@ public class ListContainer {
     // update methods
     public void silentUpdate(){
         System.out.println("Hatsune Miku");
-        filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
+        // it is important that occurrences are filtered first because anime are filtered based on those occurrences
         filteredAndSortedOccurrences = sortPairs(filterPairs(AnimeAggregate.getPairs(animeDao.getCollection())));
+        filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
+
         if(order.equals("Descending")){
             Collections.reverse(filteredAndSortedAnime);
             Collections.reverse(filteredAndSortedOccurrences);
@@ -84,8 +89,13 @@ public class ListContainer {
         new StatisticsContainer();
     }
 
-    public ArrayList<Anime> filterAnime(ArrayList<Anime> anime){
-        return anime;
+    public ArrayList<Anime> filterAnime(ArrayList<Anime> collection){
+        ArrayList<Anime> toRemove = new ArrayList<>();
+        for(Anime anime : collection){
+            if(!containsAtLeastOneOccurrence(anime)) toRemove.add(anime);
+        }
+        collection.removeAll(toRemove);
+        return collection;
     }
 
     public ArrayList<Anime> sortAnime(ArrayList<Anime> anime){
@@ -105,6 +115,14 @@ public class ListContainer {
     }
 
     public ArrayList<Pair> filterPairs(ArrayList<Pair> pairs){
+        ArrayList<Pair> toRemove = new ArrayList<>();
+        for(Tag tag : tags){
+            for(Pair pair : pairs){
+                if(getFilterApply(pair, tag)) toRemove.add(pair);
+            }
+        }
+
+        pairs.removeAll(toRemove);
         return pairs;
     }
 
@@ -122,6 +140,41 @@ public class ListContainer {
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
         }
         return pairs;
+    }
+
+    public boolean getFilterApply(Pair pair, Tag tag){
+        boolean returnValue;
+        switch(tag.getFilter()){
+            case "Type" -> returnValue = pair.getOccurrence().getType().equals(tag.getAttribute());
+            case "Status" -> returnValue = pair.getOccurrence().getStatus().equals(tag.getAttribute());
+            case "Season" -> returnValue = pair.getOccurrence().getPremieredSeason().equals(tag.getAttribute());
+            case "Genres" -> returnValue = Arrays.asList(pair.getOccurrence().getGenres()).contains(tag.getAttribute());
+            case "Theme" -> returnValue = Arrays.asList(pair.getOccurrence().getThemes()).contains(tag.getAttribute());
+            case "Rating" -> returnValue = pair.getOccurrence().getRating().equals(tag.getAttribute());
+            case "Source" -> returnValue = pair.getOccurrence().getSource().equals(tag.getAttribute());
+            case "Studio" -> returnValue = Arrays.asList(pair.getOccurrence().getStudios()).contains(tag.getAttribute());
+            case "Producer" -> returnValue = Arrays.asList(pair.getOccurrence().getProducers()).contains(tag.getAttribute());
+            case "Licensor" -> returnValue = Arrays.asList(pair.getOccurrence().getLicensors()).contains(tag.getAttribute());
+            case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
+            case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
+            default -> {
+                System.out.println("Inside default that should never be reached... ListContainer.java");
+                returnValue = false; // should never happen
+            }
+        }
+
+        return tag.isType() ^ returnValue;
+    }
+
+    public boolean containsAtLeastOneOccurrence(Anime anime){
+        boolean contains = false;
+        for(Pair pair : filteredAndSortedOccurrences){
+            if(anime.getOccurrences().contains(pair.getOccurrence())) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
     }
 
     public static ArrayList<Anime> searchedAnime(ArrayList<Anime> collection, String searchString) {
@@ -163,4 +216,5 @@ public class ListContainer {
         }
         return returnList;
     }
+
 }

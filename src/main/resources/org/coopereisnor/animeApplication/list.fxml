@@ -221,7 +221,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="22.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="50.0" text="Add" GridPane.columnIndex="1">
+                        <Button fx:id="addFilterButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="25.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="50.0" text="Add" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>

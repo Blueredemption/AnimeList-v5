@@ -99,11 +99,11 @@ public class MALScrape {
                             String premiered = removeHeader(str);
                             String[] split = premiered.split(" ");
                             if(split[0].trim().equals("?")){
-                                occurrence.setPremieredSeason(null);
+                                occurrence.setPremieredSeason("");
                                 occurrence.setPremieredYear(-1);
                             }else{
                                 occurrence.setPremieredSeason(split[0].trim());
-                                occurrence.setPremieredYear(Integer.parseInt(split[1].trim()));
+                                occurrence.setPremieredYear(Integer.parseInt(split[1]== null ? "" : split[1].trim()));
                             }
                             count++;
                         }

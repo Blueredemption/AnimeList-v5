@@ -326,10 +326,6 @@ public class AnimeController implements Controller{
         tabPane.getSelectionModel().select(focusedTab);
     }
 
-    public void setFocusedAndTracking(){
-
-    }
-
     public void createDataLabels(int index, GridPane parent, String textOne, String textTwo, EventHandler<MouseEvent> eventHandler){
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setVgrow(Priority.NEVER);

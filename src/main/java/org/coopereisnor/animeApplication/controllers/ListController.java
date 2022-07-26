@@ -25,6 +25,7 @@ import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.manipulation.Pair;
+import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.statistics.OccurrenceStatistics;
 import org.coopereisnor.utility.UtilityMethods;
@@ -33,6 +34,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
@@ -58,6 +60,8 @@ public class ListController implements Controller{
     private ToggleButton orderButton;
     @FXML
     private ComboBox<String> comboBox;
+    @FXML
+    private Button addFilterButton;
     @FXML
     private FlowPane flowPane;
     @FXML
@@ -274,13 +278,14 @@ public class ListController implements Controller{
             }
             loadTypeComponents();
         }));
+
+        // filter button
+        addFilterButton.setOnAction(actionEvent -> {
+            Common.popup("addFilter.fxml");
+        });
     }
 
     private void loadSortComponents(){
-        // todo: move array initialization later and store the selection in singleton
-        // todo: make combobox impact the order of elements
-        // todo: make order impact the order of elements
-
         ObservableList<String> sortStrings = FXCollections.observableArrayList("Added", "Score", "Name", "Rank", "Started", "Finished", "Eps. Watched", "Eps. Total", "Year", "Progress");
         comboBox.setItems(sortStrings);
         comboBox.setValue(singletonDao.getListContainer().getSortBy());
@@ -301,21 +306,20 @@ public class ListController implements Controller{
     }
 
     private void loadFilterComponents(){
-        // todo: make actually filter the elements and have them stored in singleton
-
-        for(int i = 0; i < 20; i++){
-            Button filterButton = new Button((Math.random() +"").substring(0, 1 + (int)(Math.random() * ((8 - 1) + 1))));
-            filterButton.setPrefHeight(25);
-            filterButton.setId(i%2 == 0 ? "filterButtonWant" : "filterButtonAvoid");
-            flowPane.getChildren().add(filterButton);
+        for(Tag tag : singletonDao.getListContainer().getTags()){
+            Button tagButton = new Button(tag.getAttribute());
+            tagButton.setPrefHeight(25);
+            tagButton.setUserData(tag);
+            tagButton.setId(tag.isType() ? "filterButtonWant" : "filterButtonAvoid");
+            tagButton.setOnAction(actionEvent -> {
+                ArrayList<Tag> currentTags = singletonDao.getListContainer().getTags();
+                currentTags.remove((Tag)tagButton.getUserData());
+                singletonDao.getListContainer().setTags(currentTags);
+                flowPane.getChildren().remove(tagButton);
+                loadTypeComponents();
+            });
+            flowPane.getChildren().add(tagButton);
         }
-
-
-        // todo: if (filterCount > 1) add, else do nothing.
-        Button filterButton = new Button("Clear All");
-        filterButton.setPrefHeight(25);
-        filterButton.setId("filterButtonClear");
-        flowPane.getChildren().add(filterButton);
     }
 
     @Override

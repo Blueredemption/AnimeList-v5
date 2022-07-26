@@ -47,32 +47,32 @@ public class Occurrence implements java.io.Serializable {
         this.identifier = identifier;
         url = null;
         name = "New Occurrence";
-        type = null;
+        type = "";
         episodes = 0;
-        status = null;
+        status = "";
         airedStartDate = null;
         airedEndDate = null;
-        premieredSeason = null;
+        premieredSeason = "";
         premieredYear = -1;
         licensors = new LinkedHashSet<>();
         producers = new LinkedHashSet<>();
         studios = new LinkedHashSet<>();
-        source = null;
+        source = "";
         genres = new LinkedHashSet<>();
         themes = new LinkedHashSet<>();
         duration = -1;
-        rating = null;
+        rating = "";
         startedWatching = null;
         finishedWatching = null;
 
-        watchStatus = null;
+        watchStatus = "";
         imageURL = null;
         imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
         episodesWatched = new LinkedHashSet<>();
         focused = false;
         tracked = true;
         score = -1;
-        language = null;
+        language = "";
         notes = "";
     }
 
