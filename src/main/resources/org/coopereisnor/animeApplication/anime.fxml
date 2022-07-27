@@ -106,19 +106,19 @@
             <GridPane>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
-                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="70.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" prefWidth="70.0" />
-                  <ColumnConstraints hgrow="NEVER" prefWidth="130.0" />
+                  <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" prefWidth="200.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="newOccurrenceButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="New Occurrence" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
+                  <Button fx:id="newOccurrenceButton" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="125.0" text="New Occurrence" GridPane.columnIndex="7" GridPane.halignment="RIGHT">
                      <GridPane.margin>
                         <Insets left="10.0" top="10.0" />
                      </GridPane.margin>
@@ -152,6 +152,14 @@
                      </GridPane.margin>
                   </Button>
                   <Label GridPane.columnIndex="6" />
+                  <Label id="animeDataLabel" fx:id="rankLabel" alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="680.0" layoutY="18.0" maxWidth="1.7976931348623157E308" prefHeight="30.0" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="2.0" top="8.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
             </GridPane>
          </children>

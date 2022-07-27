@@ -52,6 +52,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(!cls.equals(SettingsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("settings.fxml", "Settings"));
                 }
+                default -> System.out.println("Reached Default in Common configureNavigation");
             }
         }
 
@@ -83,6 +84,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(cls.equals(SettingsController.class)) Platform.runLater(node::requestFocus);
                 }
+                default -> System.out.println("Reached Default in Common requestProperFocus");
             }
         }
     }
@@ -115,14 +117,18 @@ public class Common {
 
     public static Anime getNextAnime(Anime currentAnime, boolean right){
         ArrayList<Anime> workingCollection = SingletonDao.getInstance().getListContainer().getFilteredAndSortedAnime();
-        int currentIndex = workingCollection.indexOf(currentAnime);
-        int size = workingCollection.size();
-        if(currentIndex + 1 == size && right){
-            return workingCollection.get(0);
-        }else if(currentIndex == 0 && !right){
-            return workingCollection.get(size - 1);
+        if(workingCollection.size() == 0){
+            return currentAnime;
         }else{
-            return right ? workingCollection.get(currentIndex + 1) : workingCollection.get(currentIndex - 1);
+            int currentIndex = workingCollection.indexOf(currentAnime);
+            int size = workingCollection.size();
+            if(currentIndex + 1 == size && right){
+                return workingCollection.get(0);
+            }else if(currentIndex == 0 && !right){
+                return workingCollection.get(size - 1);
+            }else{
+                return right ? workingCollection.get(currentIndex + 1) : workingCollection.get(currentIndex - 1);
+            }
         }
     }
 

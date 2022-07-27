@@ -2,19 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" alignment="CENTER" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="230.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.EditDatesController">
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="230.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.EditRankController">
     <children>
-        <Label fx:id="labelOne" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-      <DatePicker fx:id="datePickerOne" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-      <Label fx:id="labelTwo" layoutX="20.0" layoutY="20.0" maxWidth="1.7976931348623157E308" />
-      <DatePicker fx:id="datePickerTwo" layoutX="20.0" layoutY="33.0" maxWidth="1.7976931348623157E308" />
+        <Label maxWidth="1.7976931348623157E308" text="Rank:" VBox.vgrow="ALWAYS" />
+        <Spinner fx:id="spinner" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
         <GridPane>
             <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

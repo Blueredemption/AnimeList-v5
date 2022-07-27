@@ -40,6 +40,8 @@ public class AnimeController implements Controller{
     @FXML
     private ProgressBar progressBar;
     @FXML
+    private Label rankLabel;
+    @FXML
     private Label scoreLabel;
     @FXML
     private ToggleButton focusedButton;
@@ -80,6 +82,12 @@ public class AnimeController implements Controller{
 
         generalStatisticsButton.setOnAction(actionEvent -> {
             // todo: popup with general statistics and a way to view and modify episode objects
+        });
+
+        rankLabel.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton() == MouseButton.SECONDARY){
+                Common.popup("editRank.fxml");
+            }
         });
 
         scoreLabel.setOnMouseClicked(mouseEvent -> {
@@ -127,6 +135,7 @@ public class AnimeController implements Controller{
 
         // the anime level information todo: add actions for these two
         nameLabel.setText(anime.getName());
+        rankLabel.setText("Rank:   " +(anime.getRank() > animeDao.getCollection().size() ? "" : anime.getRank()));
         scoreLabel.setText("Overall Score:   " +(anime.getScore() == -1 ? "" : anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +""));
 
 
@@ -206,13 +215,14 @@ public class AnimeController implements Controller{
                     occurrence.getType(),
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Episodes:",
-                    occurrence.getEpisodesWatched().length +"/" +occurrence.getEpisodes() +" Episodes",
+                    occurrence.getEpisodes() == 0 && occurrence.getEpisodesWatched().length == 0 ? "" : occurrence.getEpisodesWatched().length +"/" +occurrence.getEpisodes() +" Episodes",
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Status:",
                     occurrence.getStatus(),
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Aired Dates:",
-                    UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()),
+                    (occurrence.getAiredStartDate() == null && occurrence.getAiredEndDate() == null) ?
+                    "" : UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()),
                     mouseEvent -> {
                 if(mouseEvent.getButton() == MouseButton.SECONDARY){
                         singletonDao.setCurrentField("AiredDates");
@@ -228,7 +238,7 @@ public class AnimeController implements Controller{
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getThemes()),
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Durration:",
-                    occurrence.getDuration()/60 +" Minutes",
+                    occurrence.getDuration() > 0 ? occurrence.getDuration()/60 +" Minutes" : "",
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Content Rating:",
                     occurrence.getRating(),
@@ -251,7 +261,8 @@ public class AnimeController implements Controller{
                     occurrence.getWatchStatus(),
                     mouseEvent -> { });
             createDataLabels(counter++, gridPane, "Watch Dates:",
-                    UtilityMethods.getAsFormattedDate(occurrence.getStartedWatching()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getFinishedWatching()),
+                    (occurrence.getStartedWatching() == null && occurrence.getFinishedWatching() == null) ?
+                            "" : UtilityMethods.getAsFormattedDate(occurrence.getStartedWatching()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getFinishedWatching()),
                     mouseEvent -> {
                         if(mouseEvent.getButton() == MouseButton.SECONDARY){
                             singletonDao.setCurrentField("WatchDates");

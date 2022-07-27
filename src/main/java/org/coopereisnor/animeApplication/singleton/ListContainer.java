@@ -74,7 +74,7 @@ public class ListContainer {
     // update methods
     public void silentUpdate(){
         System.out.println("Hatsune Miku");
-        // it is important that occurrences are filtered first because anime are filtered based on those occurrences
+        // it is important that occurrences are filtered first because anime are filtered using the occurrences list
         filteredAndSortedOccurrences = sortPairs(filterPairs(AnimeAggregate.getPairs(animeDao.getCollection())));
         filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
 
@@ -99,7 +99,11 @@ public class ListContainer {
     }
 
     public ArrayList<Anime> sortAnime(ArrayList<Anime> anime){
-        switch (sortBy) {
+        return sortAnime(anime, sortBy);
+    }
+
+    public ArrayList<Anime> sortAnime(ArrayList<Anime> anime, String sort){
+        switch (sort) {
             case "Added" -> anime.sort(Anime.SORT_BY_ADDED);
             case "Score" -> anime.sort(Anime.SORT_BY_SCORE);
             case "Name" -> anime.sort(Anime.SORT_BY_NAME);
@@ -110,6 +114,7 @@ public class ListContainer {
             case "Eps. Total" -> anime.sort(Anime.SORT_BY_EPISODES_TOTAL);
             case "Year" -> anime.sort(Anime.SORT_BY_YEAR);
             case "Progress" -> anime.sort(Anime.SORT_BY_PROGRESS);
+            default -> System.out.println("Reached Default in ListContainer sortAnime");
         }
         return anime;
     }
@@ -138,6 +143,7 @@ public class ListContainer {
             case "Eps. Total" -> pairs.sort(Pair.SORT_BY_EPISODES_TOTAL);
             case "Year" -> pairs.sort(Pair.SORT_BY_YEAR);
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
+            default -> System.out.println("Reached Default in ListContainer sortPairs");
         }
         return pairs;
     }
@@ -158,7 +164,7 @@ public class ListContainer {
             case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
             case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
             default -> {
-                System.out.println("Inside default that should never be reached... ListContainer.java");
+                System.out.println("Reached Default in ListContainer filter");
                 returnValue = false; // should never happen
             }
         }

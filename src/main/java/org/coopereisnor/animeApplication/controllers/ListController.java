@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -108,7 +109,8 @@ public class ListController implements Controller{
                 String name = anime.getName();
                 String score = anime.getScore() == -1 ? "" :anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
                 String year = earliestYear == Integer.MAX_VALUE ? "" : earliestYear +"";
-                String episodes = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) + "/" +OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
+                String episodes = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) == 0 && OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ?
+                        "" : OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) + "/" +OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
                 double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
                 EventHandler eventHandler = event -> {};
 
@@ -120,7 +122,7 @@ public class ListController implements Controller{
                 String name = pair.getOccurrence().getName();
                 String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore() % 1 == 0 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
                 String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
-                String episodes = pair.getOccurrence().getEpisodesWatched().length +"/" +pair.getOccurrence().getEpisodes();
+                String episodes = pair.getOccurrence().getEpisodes() == 0 && pair.getOccurrence().getEpisodesWatched().length == 0 ? "" : pair.getOccurrence().getEpisodesWatched().length +"/" +pair.getOccurrence().getEpisodes();
                 double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
                 EventHandler eventHandler = event -> {};
 
@@ -233,8 +235,10 @@ public class ListController implements Controller{
         imagePane.setMaxSize(width, height);
         imagePane.setPadding(new Insets(5,0,0,5));
         imagePane.setOnMouseClicked(event -> {
-            singletonDao.setCurrentAnime(anime, occurrence);
-            application.changeScene("anime.fxml", anime.getName());
+            if(event.getButton() == MouseButton.PRIMARY){
+                singletonDao.setCurrentAnime(anime, occurrence);
+                application.changeScene("anime.fxml", anime.getName());
+            }
         });
 
         imageFlowPane.getChildren().add(imagePane);

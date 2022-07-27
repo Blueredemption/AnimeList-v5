@@ -70,7 +70,7 @@
                         <Insets right="5.0" />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="commitButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" text="Commit" GridPane.columnIndex="1">
+                <Button fx:id="commitButton" maxWidth="100.0" minWidth="100.0" mnemonicParsing="false" prefHeight="30.0" text="Confirm" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets left="5.0" />
                     </GridPane.margin>

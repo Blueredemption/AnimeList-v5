@@ -119,6 +119,7 @@ public class AddFilterController {
             case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLicensors()));
             case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getWatchStatuses()));
             case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLanguages()));
+            default -> System.out.println("Reached Default in Common populateAttributeComboBox");
         }
     }
 

@@ -62,6 +62,7 @@ public class AddNewController {
         occurrence.setFocused(true);
 
         Anime anime = animeDao.createNewAnime();
+        anime.setRank(animeDao.getCollection().size());
         anime.setName(occurrence.getName().equals("New Occurrence") ? "New Anime" : occurrence.getName());
         anime.addOccurrence(occurrence);
         animeDao.save(anime);
