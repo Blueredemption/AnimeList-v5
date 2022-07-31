@@ -1,9 +1,9 @@
 package org.coopereisnor.manipulation;
 
 public class Tag {
-    private final String filter;
-    private final String attribute;
-    private final boolean type;
+    private String filter;
+    private String attribute;
+    private boolean type;
 
     public Tag(String filter, String attribute, boolean type){
         this.filter = filter;
@@ -21,6 +21,18 @@ public class Tag {
 
     public boolean isType() {
         return type;
+    }
+
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
+
+    public void setAttribute(String attribute) {
+        this.attribute = attribute;
+    }
+
+    public void setType(boolean type) {
+        this.type = type;
     }
 
     @Override

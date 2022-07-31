@@ -22,7 +22,7 @@ public class StatisticsContainer {
     double currentPercent = 0.0;
 
     public StatisticsContainer(){
-        System.out.println("Kagamine Len");
+        System.out.println("Statistics Container");
 
         filteredPairs = AnimeAggregate.getPairs(singletonDao.getAnimeDao().getCollection());
 

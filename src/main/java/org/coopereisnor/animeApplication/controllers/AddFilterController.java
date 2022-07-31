@@ -19,7 +19,6 @@ import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 
 public class AddFilterController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -27,7 +26,7 @@ public class AddFilterController {
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
 
-    private ArrayList<Tag> currentTags = new ArrayList<>();
+    private final ArrayList<Tag> currentTags = new ArrayList<>();
 
     @FXML
     private ComboBox<String> filterComboBox;
@@ -88,7 +87,7 @@ public class AddFilterController {
     }
 
     private void populateFilterComboBox(){
-        ObservableList<String> filterStrings = FXCollections.observableArrayList("Type", "Status", "Season", "Genres", "Theme", "Rating", "Source", "Studio", "Producer", "Licensor", "Watch Status", "Language");
+        ObservableList<String> filterStrings = FXCollections.observableArrayList("Type", "Status", "Season", "Genre", "Theme", "Rating", "Source", "Studio", "Producer", "Licensor", "Watch Status", "Language");
         filterComboBox.setItems(filterStrings);
 
     }
@@ -110,7 +109,7 @@ public class AddFilterController {
             case "Type" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getTypes()));
             case "Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getStatuses()));
             case "Season" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getSeasons()));
-            case "Genres" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getGenres()));
+            case "Genre" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getGenres()));
             case "Theme" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getThemes()));
             case "Rating" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getRatings()));
             case "Source" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getSources()));
@@ -119,12 +118,11 @@ public class AddFilterController {
             case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLicensors()));
             case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getWatchStatuses()));
             case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLanguages()));
-            default -> System.out.println("Reached Default in Common populateAttributeComboBox");
+            default -> System.out.println("Reached Default in AddFilterController populateAttributeComboBox");
         }
     }
 
     private void validateAdd(){
-        //System.out.println((filterComboBox.getValue() != null) +" " +(attributeComboBox.getValue() != null) +" " +checkCurrentTags(getNewTag()));
         addButton.setDisable(!(filterComboBox.getValue() != null && attributeComboBox.getValue() != null && !checkCurrentTags(getNewTag())));
     }
 

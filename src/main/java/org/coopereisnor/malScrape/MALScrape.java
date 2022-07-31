@@ -190,7 +190,6 @@ public class MALScrape {
                     // we want the biggest version, so we have to add an "l" before the .blah
                     imageURL = imageURL.substring(0, imageURL.lastIndexOf(".")) +"l" +imageURL.substring(imageURL.lastIndexOf("."));
                     URL urlObject = new URL(imageURL);
-                    occurrence.setImageURL(urlObject);
                     occurrence.setImageIcon(new ImageIcon(ImageIO.read(urlObject)));
                     break; // found it, no need to look anymore.
                 }

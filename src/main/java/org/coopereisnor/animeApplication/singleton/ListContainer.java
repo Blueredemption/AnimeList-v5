@@ -73,7 +73,7 @@ public class ListContainer {
 
     // update methods
     public void silentUpdate(){
-        System.out.println("Hatsune Miku");
+        System.out.println("Silent Update");
         // it is important that occurrences are filtered first because anime are filtered using the occurrences list
         filteredAndSortedOccurrences = sortPairs(filterPairs(AnimeAggregate.getPairs(animeDao.getCollection())));
         filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
@@ -85,6 +85,7 @@ public class ListContainer {
     }
 
     public void update(){
+        System.out.println("Update");
         silentUpdate();
         new StatisticsContainer();
     }

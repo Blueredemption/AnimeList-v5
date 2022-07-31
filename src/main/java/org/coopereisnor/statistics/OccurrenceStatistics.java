@@ -65,5 +65,26 @@ public class OccurrenceStatistics {
         return date;
     }
 
-    // utility methods
+
+    public static LocalDate getLatestEndDate(ArrayList<Occurrence> occurrences) {
+        LocalDate latestDate = LocalDate.MIN;
+        for(Occurrence occurrence : occurrences){
+            if(occurrence.getFinishedWatching() == null) return null;
+            else if(occurrence.getFinishedWatching().isAfter(latestDate)){
+                latestDate = occurrence.getFinishedWatching();
+            }
+        }
+        return latestDate;
+    }
+
+    public static LocalDate getEarliestStartDate(ArrayList<Occurrence> occurrences) {
+        LocalDate earliestDate = LocalDate.MAX;
+        for(Occurrence occurrence : occurrences){
+            if(occurrence.getStartedWatching() == null) return null;
+            else if(occurrence.getStartedWatching().isBefore(earliestDate)){
+                earliestDate = occurrence.getStartedWatching();
+            }
+        }
+        return earliestDate;
+    }
 }

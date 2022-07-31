@@ -33,7 +33,6 @@ public class Occurrence implements java.io.Serializable {
     private LocalDate startedWatching;
     private LocalDate finishedWatching;
 
-    private URL imageURL;
     private ImageIcon imageIcon;
     private final LinkedHashSet<Episode> episodesWatched;
     private boolean focused;
@@ -66,7 +65,6 @@ public class Occurrence implements java.io.Serializable {
         finishedWatching = null;
 
         watchStatus = "";
-        imageURL = null;
         imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
         episodesWatched = new LinkedHashSet<>();
         focused = false;
@@ -157,10 +155,6 @@ public class Occurrence implements java.io.Serializable {
         return finishedWatching;
     }
 
-    public URL getImageURL(){
-        return imageURL;
-    }
-
     public ImageIcon getImageIcon() {
         return imageIcon;
     }
@@ -247,10 +241,6 @@ public class Occurrence implements java.io.Serializable {
 
     public void setFinishedWatching(LocalDate finishedWatching) {
         this.finishedWatching = finishedWatching;
-    }
-
-    public void setImageURL(URL imageURL){
-        this.imageURL = imageURL;
     }
 
     public void setImageIcon(ImageIcon imageIcon) {
@@ -354,8 +344,7 @@ public class Occurrence implements java.io.Serializable {
         returnString += "Themes: " +themes+"\n";
         returnString += "Duration: " +duration/60 +"\n";
         returnString += "Rating: " +rating +"\n";
-        returnString += "MAL URL: " +url.toString() +"\n";
-        returnString += "Image URL: " +imageURL.toString() +"\n";
+        returnString += "MAL URL: " +url.toString() +"\n";;
         return returnString;
     }
 }

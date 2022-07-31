@@ -33,7 +33,7 @@ public class FilterContainer {
     double currentPercent = 0.0;
 
     public FilterContainer(){
-        System.out.println("Kagamine Rin");
+        System.out.println("Filter Container");
 
         allPairs = AnimeAggregate.getPairs(singletonDao.getAnimeDao().getCollection());
 

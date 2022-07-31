@@ -45,7 +45,6 @@ public class AddNewController {
         } );
 
         cancelButton.setOnAction(event -> {
-            System.out.println("Kagamine");
             ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         });
 
