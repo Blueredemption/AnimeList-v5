@@ -426,7 +426,7 @@ public class AnimeController implements Controller{
         Label paramLabel = new Label(textOne);
         paramLabel.setMinHeight(textOne.equals("") ? 0 : 24);
         paramLabel.setPrefHeight(textOne.equals("") ? 0 : 24);
-        paramLabel.setMaxHeight(textOne.equals("") ? 0 : 24);
+        paramLabel.setMaxHeight(textOne.equals("" ) ? 0 : 24);
         paramLabel.setMinWidth(150);
         paramLabel.setPrefWidth(150);
         paramLabel.setId("animeDataLabel");
