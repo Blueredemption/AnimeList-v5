@@ -394,7 +394,9 @@ public class AnimeController implements Controller{
 
             ProgressBar progressBar = new ProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
             progressBar.setPrefWidth(imageWidth);
+            progressBar.setMinHeight(20);
             progressBar.setPrefHeight(20);
+            progressBar.setMaxHeight(20);
             gridPane2.add(progressBar, 1, 0);
 
             // text area
