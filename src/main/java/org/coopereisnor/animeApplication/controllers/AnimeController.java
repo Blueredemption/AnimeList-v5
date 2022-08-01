@@ -424,7 +424,9 @@ public class AnimeController implements Controller{
         rowConstraints.setVgrow(Priority.NEVER);
 
         Label paramLabel = new Label(textOne);
-        paramLabel.setPrefHeight(textOne.equals("") ? 15 : 24);
+        paramLabel.setMinHeight(textOne.equals("") ? 0 : 24);
+        paramLabel.setPrefHeight(textOne.equals("") ? 0 : 24);
+        paramLabel.setMaxHeight(textOne.equals("") ? 0 : 24);
         paramLabel.setMinWidth(150);
         paramLabel.setPrefWidth(150);
         paramLabel.setId("animeDataLabel");
