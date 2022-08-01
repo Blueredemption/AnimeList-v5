@@ -378,7 +378,6 @@ public class AnimeController implements Controller{
             GridPane gridPane2 = new GridPane();
             GridPane.setFillWidth(gridPane2, true);
             gridPane2.setPadding(new Insets(0,5,0,5));
-            //gridPane2.setId("containerBackground");
             HBox.setHgrow(gridPane2, Priority.ALWAYS);
             vBox.getChildren().add(gridPane2);
 
@@ -403,18 +402,21 @@ public class AnimeController implements Controller{
             textArea.setBackground(Background.EMPTY);
             textArea.setPadding(new Insets(5,5,5,5));
             textArea.setPrefHeight(0);
+            textArea.setText(occurrence.getNotes());
+            textArea.setOnKeyTyped(keyEvent -> saveNotes(occurrence, textArea));
             VBox.setVgrow(textArea, Priority.ALWAYS);
             vBox.getChildren().add(textArea);
-
-
 
             tabPane.getTabs().add(tab);
         }
 
-
-
         tabPane.getSelectionModel().select(focusedTab);
     }
+
+    private void saveNotes(Occurrence occurrence, TextArea textArea){
+        occurrence.setNotes(textArea.getText());
+        animeDao.save(anime);
+    };
 
     public void createDataLabels(int index, GridPane parent, String textOne, String textTwo, EventHandler<MouseEvent> eventHandler){
         RowConstraints rowConstraints = new RowConstraints();

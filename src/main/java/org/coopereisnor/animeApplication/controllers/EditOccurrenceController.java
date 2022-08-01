@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import org.coopereisnor.animeApplication.Application;
@@ -49,6 +50,12 @@ public class EditOccurrenceController {
 
         nameTextField.setOnKeyTyped(keyEvent -> setValid());
 
+        nameTextField.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER && !confirmButton.isDisabled()) {
+                endEvent(event);
+            }
+        } );
+
         urlTextField.setOnKeyTyped(keyEvent -> {
             try {
                 currentURL = new URL(urlTextField.getText());
@@ -58,6 +65,12 @@ public class EditOccurrenceController {
             }
             setValid();
         });
+
+        urlTextField.setOnKeyPressed( event -> {
+            if( event.getCode() == KeyCode.ENTER && !confirmButton.isDisabled()) {
+                endEvent(event);
+            }
+        } );
 
         deleteButton.setOnAction(this::deleteEvent);
 
@@ -69,7 +82,7 @@ public class EditOccurrenceController {
     }
 
     private void setValid(){
-        confirmButton.setDisable(currentURL == null || nameTextField.getText().equals(""));
+        confirmButton.setDisable(currentURL == null || nameTextField.getText().trim().equals(""));
         refreshButton.setDisable(confirmButton.isDisable());
     }
 
@@ -93,7 +106,7 @@ public class EditOccurrenceController {
         if(anime.getOccurrences().size() == 0){
             animeDao.remove(anime);
             singletonDao.update();
-            application.changeScene("list.fxml", "My List");
+            application.changeScene(singletonDao.getListFXML(), "My List");
 
         }else{
             if(!anime.getOccurrences().get(0).isFocused()) anime.getOccurrences().get(0).setFocused(focused);

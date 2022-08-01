@@ -11,13 +11,24 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+
 public class Application extends javafx.application.Application {
     private static String title = "AnimeList-v5";
     private Stage stage;
-    private int width = 1212;
-    private int height = 798;
+
     @Override
     public void start(Stage stage) throws IOException {
+        int height;
+        int width;
+
+        if(System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
+            width = 1212;
+            height = 798;
+        }else{
+            width = 1212;
+            height = 798;
+        }
+
         SingletonDao.getInstance().setApplication(this);
         SingletonDao.getInstance().update();
 

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.EditTagController">
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="500.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.EditTagController">
     <children>
         <Label fx:id="paramLabel" maxWidth="1.7976931348623157E308" />
         <GridPane>
@@ -36,7 +36,7 @@
             </children>
         </GridPane>
         <Label maxWidth="1.7976931348623157E308" text="Selected:" />
-        <ScrollPane id="background" fx:id="selectedScrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0" VBox.vgrow="ALWAYS">
+        <ScrollPane id="background" fx:id="selectedScrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" minHeight="33.0" prefHeight="33.0" VBox.vgrow="ALWAYS">
             <content>
                 <FlowPane fx:id="selectedFlowPane" hgap="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="470.0" vgap="3.0">
                     <padding>
@@ -45,7 +45,7 @@
             </content>
         </ScrollPane>
         <Label maxWidth="1.7976931348623157E308" text="Options:" />
-        <ScrollPane fx:id="optionsScrollPane" hbarPolicy="NEVER" layoutX="20.0" layoutY="60.0" maxHeight="-Infinity" minHeight="75.0" prefHeight="105.0" VBox.vgrow="ALWAYS">
+        <ScrollPane fx:id="optionsScrollPane" hbarPolicy="NEVER" layoutX="20.0" layoutY="60.0" maxHeight="-Infinity" minHeight="89.0" prefHeight="89.0" VBox.vgrow="ALWAYS">
             <content>
                 <FlowPane fx:id="optionsFlowPane" hgap="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="470.0" vgap="3.0">
                     <padding>
