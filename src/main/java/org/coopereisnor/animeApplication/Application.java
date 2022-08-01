@@ -22,12 +22,13 @@ public class Application extends javafx.application.Application {
         int width;
 
         if(System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
-            width = 1212;
-            height = 798;
+            width = 1227;
+            height = 806;
         }else{
             width = 1212;
             height = 798;
         }
+
 
         SingletonDao.getInstance().setApplication(this);
         SingletonDao.getInstance().update();
