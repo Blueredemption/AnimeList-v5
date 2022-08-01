@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -372,7 +373,7 @@ public class AnimeController implements Controller{
             });
 
             hBox.getChildren().add(imagePane);
-
+            hBox.setBackground(Background.fill(Color.PINK));
 
             // below the data and images
             GridPane gridPane2 = new GridPane();
@@ -394,9 +395,7 @@ public class AnimeController implements Controller{
 
             ProgressBar progressBar = new ProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
             progressBar.setPrefWidth(imageWidth);
-            progressBar.setMinHeight(20);
             progressBar.setPrefHeight(20);
-            progressBar.setMaxHeight(20);
             gridPane2.add(progressBar, 1, 0);
 
             // text area
