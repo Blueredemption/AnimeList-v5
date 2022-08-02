@@ -6,6 +6,7 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
+import org.coopereisnor.statistics.AnimeStatistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;

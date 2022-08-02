@@ -30,27 +30,27 @@ public class Common {
         for(Node node : gridPane.getChildren()){
             switch (node.getId()) {
                 case "homeButton" -> {
-                    if(!cls.equals(HomeController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("home.fxml", "Home"));
+                    if(!cls.equals(HomeController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("home.fxml"));
                 }
                 case "listButton" -> {
                     // want to allow refresh
-                    ((Button)node).setOnAction(actionEvent -> application.changeScene(SingletonDao.getInstance().getListFXML(), "My List"));
+                    ((Button)node).setOnAction(actionEvent -> application.changeScene(SingletonDao.getInstance().getListFXML()));
                 }
                 case "newButton" -> {
                     Common.configureNewAnimePopup(node);
                 }
                 case "statisticsButton" -> {
                     // want to allow refresh
-                    ((Button)node).setOnAction(actionEvent -> application.changeScene("statistics.fxml", "Statistics"));
+                    ((Button)node).setOnAction(actionEvent -> application.changeScene("statistics.fxml"));
                 }
                 case "timelineButton" -> {
-                    if(!cls.equals(TimelineController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("timeline.fxml", "Timeline"));
+                    if(!cls.equals(TimelineController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("timeline.fxml"));
                 }
                 case "notesButton" -> {
-                    if(!cls.equals(NotesController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("notes.fxml", "Notes"));
+                    if(!cls.equals(NotesController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("notes.fxml"));
                 }
                 case "settingsButton" -> {
-                    if(!cls.equals(SettingsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("settings.fxml", "Settings"));
+                    if(!cls.equals(SettingsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("settings.fxml"));
                 }
                 default -> System.out.println("Reached Default in Common configureNavigation");
             }

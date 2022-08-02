@@ -56,7 +56,7 @@ public class GeneralStatisticsController {
         int hours = minutes/60;
         int displayedDays = hours/24;
         int displayedHours = hours - displayedDays*24;
-        int displayedMinutes = minutes - displayedHours*60 - displayedDays*24;
+        int displayedMinutes = minutes - displayedHours*60 - displayedDays*24*60;
 
         numberOfDaysLabel.setText(displayedDays +" Days");
         numberOfHoursLabel.setText(displayedHours + " Hours");

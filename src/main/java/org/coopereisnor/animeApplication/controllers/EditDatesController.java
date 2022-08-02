@@ -71,7 +71,7 @@ public class EditDatesController {
 
     public void commonEnd(ActionEvent actionEvent){
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
     }

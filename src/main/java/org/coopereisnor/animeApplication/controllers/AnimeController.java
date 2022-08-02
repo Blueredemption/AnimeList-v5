@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.customJavaFXObjects.ProgressIndicatorBar;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -71,13 +72,13 @@ public class AnimeController implements Controller{
         previousButton.setOnAction(actionEvent -> {
             Anime nextAnime = Common.getNextAnime(anime, false);
             singletonDao.setCurrentAnime(nextAnime, null);
-            application.changeScene("anime.fxml", nextAnime.getName());
+            application.changeScene("anime.fxml");
         });
 
         nextButton.setOnAction(actionEvent -> {
             Anime nextAnime = Common.getNextAnime(anime, true);
             singletonDao.setCurrentAnime(nextAnime, null);
-            application.changeScene("anime.fxml", nextAnime.getName());
+            application.changeScene("anime.fxml");
         });
 
         generalStatisticsButton.setOnAction(actionEvent -> {
@@ -142,7 +143,7 @@ public class AnimeController implements Controller{
         });
 
         rankLabel.setText("Rank:   " +(anime.getRank() > animeDao.getCollection().size() ? "" : anime.getRank()));
-        scoreLabel.setText("Overall Score:   " +(anime.getScore() == -1 ? "" : anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +""));
+        scoreLabel.setText("Overall Score:   " +(anime.getScore() == -1 ? "" : anime.getScore() == 10 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +""));
 
 
         Occurrence focusedOccurrence;
@@ -232,7 +233,7 @@ public class AnimeController implements Controller{
                         }
                     });
             createDataLabels(counter++, gridPane, "Episodes:",
-                    occurrence.getEpisodes() == 0 && occurrence.getEpisodesWatched().length == 0 ? "" : occurrence.getEpisodesWatched().length +"/" +occurrence.getEpisodes() +" Episodes",
+                    occurrence.getEpisodes() == 0 && occurrence.getEpisodesWatched().length == 0 ? "" : occurrence.getEpisodesWatched().length +" / " +occurrence.getEpisodes() +" Episodes",
                     mouseEvent -> {
                         if(mouseEvent.getButton() == MouseButton.SECONDARY){
                             Common.popup("editEpisodes.fxml");
@@ -247,8 +248,7 @@ public class AnimeController implements Controller{
                         }
                     });
             createDataLabels(counter++, gridPane, "Aired Dates:",
-                    (occurrence.getAiredStartDate() == null && occurrence.getAiredEndDate() == null) ?
-                    "" : UtilityMethods.getAsFormattedDate(occurrence.getAiredStartDate()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getAiredEndDate()),
+                    UtilityMethods.getDatesString(occurrence.getAiredStartDate(), occurrence.getAiredEndDate()),
                     mouseEvent -> {
                 if(mouseEvent.getButton() == MouseButton.SECONDARY){
                         singletonDao.setCurrentField("AiredDates");
@@ -334,8 +334,7 @@ public class AnimeController implements Controller{
                         }
                     });
             createDataLabels(counter++, gridPane, "Watch Dates:",
-                    (occurrence.getStartedWatching() == null && occurrence.getFinishedWatching() == null) ?
-                            "" : UtilityMethods.getAsFormattedDate(occurrence.getStartedWatching()) +" to " +UtilityMethods.getAsFormattedDate(occurrence.getFinishedWatching()),
+                    UtilityMethods.getDatesString(occurrence.getStartedWatching(), occurrence.getFinishedWatching()),
                     mouseEvent -> {
                         if(mouseEvent.getButton() == MouseButton.SECONDARY){
                             singletonDao.setCurrentField("WatchDates");
@@ -351,7 +350,7 @@ public class AnimeController implements Controller{
                         }
                     });
             createDataLabels(counter, gridPane, "Score:",
-                    occurrence.getScore() == -1 ? "" : occurrence.getScore() % 1 == 0 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"",
+                    occurrence.getScore() == -1 ? "" : occurrence.getScore() == 10 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"",
                     mouseEvent -> {
                         if(mouseEvent.getButton() == MouseButton.SECONDARY){
                             singletonDao.setCurrentField("OccurrenceScore");
@@ -373,7 +372,6 @@ public class AnimeController implements Controller{
             });
 
             hBox.getChildren().add(imagePane);
-            hBox.setBackground(Background.fill(Color.PINK));
 
             // below the data and images
             GridPane gridPane2 = new GridPane();
@@ -386,14 +384,14 @@ public class AnimeController implements Controller{
             ColumnConstraints columnConstraints4 = new ColumnConstraints();
             gridPane.getColumnConstraints().addAll(columnConstraints3, columnConstraints4);
 
-            Label notesLabel = new Label("");
+            Label notesLabel = new Label("Notes:");
             GridPane.setHgrow(notesLabel, Priority.ALWAYS);
             notesLabel.setId("animeDataLabel");
             notesLabel.setPrefHeight(20);
             notesLabel.setPadding(new Insets(0,0,0,5));
             gridPane2.add(notesLabel, 0, 0);
 
-            ProgressBar progressBar = new ProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
+            ProgressIndicatorBar progressBar  = new ProgressIndicatorBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
             progressBar.setPrefWidth(imageWidth);
             progressBar.setPrefHeight(20);
             gridPane2.add(progressBar, 1, 0);
@@ -403,6 +401,7 @@ public class AnimeController implements Controller{
             textArea.setBackground(Background.EMPTY);
             textArea.setPadding(new Insets(5,5,5,5));
             textArea.setPrefHeight(0);
+            textArea.setWrapText(true);
             textArea.setText(occurrence.getNotes());
             textArea.setOnKeyTyped(keyEvent -> saveNotes(occurrence, textArea));
             VBox.setVgrow(textArea, Priority.ALWAYS);

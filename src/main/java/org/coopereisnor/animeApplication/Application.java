@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+import org.coopereisnor.statistics.AnimeStatistics;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class Application extends javafx.application.Application {
             }
         }
 
+        System.out.println(AnimeStatistics.getTotalEpisodesWatched(SingletonDao.getInstance().getAnimeDao().getCollection()));
+
         // with all the initialization over, we can create the GUI:
         this.stage = stage;
         stage.setMinWidth(width);
@@ -55,16 +58,15 @@ public class Application extends javafx.application.Application {
         File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
         scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
 
-        stage.setTitle(title + "  –  Viewing: Home");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }
 
-    public void changeScene(String fxml, String extraText) {
+    public void changeScene(String fxml) {
         try{
             Parent pane = FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml)));
             stage.getScene().setRoot(pane);
-            stage.setTitle(title + "  –  Viewing: " +extraText);
         }catch(IOException ex){
             ex.printStackTrace();
         }

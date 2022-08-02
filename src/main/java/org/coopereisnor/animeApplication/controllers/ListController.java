@@ -1,5 +1,6 @@
 package org.coopereisnor.animeApplication.controllers;
 
+import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -20,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.customJavaFXObjects.ProgressIndicatorBar;
 import org.coopereisnor.animeApplication.singleton.ListContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -109,8 +111,7 @@ public class ListController implements Controller{
                 String name = anime.getName();
                 String score = anime.getScore() == -1 ? "" :anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
                 String year = earliestYear == Integer.MAX_VALUE ? "" : earliestYear +"";
-                String episodes = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) == 0 && OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ?
-                        "" : OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()) + "/" +OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
+                String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
                 double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
                 EventHandler eventHandler = event -> {};
 
@@ -120,9 +121,9 @@ public class ListController implements Controller{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
                 String number = ++iterator +":";
                 String name = pair.getOccurrence().getName();
-                String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore() % 1 == 0 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
+                String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore()  == 10 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
                 String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
-                String episodes = pair.getOccurrence().getEpisodes() == 0 && pair.getOccurrence().getEpisodesWatched().length == 0 ? "" : pair.getOccurrence().getEpisodesWatched().length +"/" +pair.getOccurrence().getEpisodes();
+                String episodes = pair.getOccurrence().getEpisodes() == 0 ? "" : pair.getOccurrence().getEpisodes() +"";
                 double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
                 EventHandler eventHandler = event -> {};
 
@@ -137,7 +138,7 @@ public class ListController implements Controller{
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
         containerPane.setMinHeight(HBox.USE_PREF_SIZE);
         containerPane.setPrefWidth(Double.MAX_VALUE);
-        containerPane.setPrefHeight(40);
+        containerPane.setPrefHeight(35);
         containerPane.setMaxWidth(HBox.USE_COMPUTED_SIZE);
         containerPane.setMaxHeight(HBox.USE_COMPUTED_SIZE);
         containerPane.setPadding(new Insets(5,5,5,5));
@@ -190,7 +191,7 @@ public class ListController implements Controller{
         containerPane.add(label, 4, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
-        ProgressBar progressBar = new ProgressBar(progress); // watched/total
+        ProgressIndicatorBar progressBar = new ProgressIndicatorBar(progress);
         progressBar.setMinWidth(125);
         progressBar.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop() - 4);
         containerPane.add(progressBar, 5, 0);
@@ -202,7 +203,7 @@ public class ListController implements Controller{
         viewButton.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop());
         viewButton.setOnAction(actionEvent -> {
             singletonDao.setCurrentAnime(anime, occurrence);
-            application.changeScene("anime.fxml", anime.getName());
+            application.changeScene("anime.fxml");
         });
         containerPane.add(viewButton, 6, 0);
         GridPane.setMargin(viewButton, new Insets(0, 5, 0, 5));
@@ -237,7 +238,7 @@ public class ListController implements Controller{
         imagePane.setOnMouseClicked(event -> {
             if(event.getButton() == MouseButton.PRIMARY){
                 singletonDao.setCurrentAnime(anime, occurrence);
-                application.changeScene("anime.fxml", anime.getName());
+                application.changeScene("anime.fxml");
             }
         });
 
@@ -269,7 +270,7 @@ public class ListController implements Controller{
             } else{
                 singletonDao.setListFXML("listImages.fxml");
             }
-            application.changeScene(singletonDao.getListFXML(), "My List");
+            application.changeScene(singletonDao.getListFXML());
         }));
 
         // type button

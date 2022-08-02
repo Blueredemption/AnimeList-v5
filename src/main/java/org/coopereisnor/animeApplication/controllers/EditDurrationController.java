@@ -63,7 +63,7 @@ public class EditDurrationController
     private void endEvent(Event event) {
         occurrence.setDuration(valueFactory.getValue()*60);
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }

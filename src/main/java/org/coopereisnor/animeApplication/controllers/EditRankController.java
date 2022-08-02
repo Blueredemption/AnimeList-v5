@@ -62,7 +62,7 @@ public class EditRankController {
     private void endEvent(Event event) {
         anime.setRank(valueFactory.getValue());
         shiftRanks();
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }

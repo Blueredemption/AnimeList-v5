@@ -173,7 +173,7 @@ public class EditEpisodesController {
                 occurrence.addEpisodeWatched(newEpisode);
             }
             animeDao.save(anime);
-            application.changeScene("anime.fxml", anime.getName());
+            application.changeScene("anime.fxml");
             singletonDao.update();
             ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         }catch(Exception ex){

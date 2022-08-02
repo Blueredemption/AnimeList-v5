@@ -90,7 +90,7 @@ public class EditOccurrenceController {
         occurrence.setName(nameTextField.getText().trim());
         occurrence.setUrl(currentURL);
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
@@ -106,12 +106,12 @@ public class EditOccurrenceController {
         if(anime.getOccurrences().size() == 0){
             animeDao.remove(anime);
             singletonDao.update();
-            application.changeScene(singletonDao.getListFXML(), "My List");
+            application.changeScene(singletonDao.getListFXML());
 
         }else{
             if(!anime.getOccurrences().get(0).isFocused()) anime.getOccurrences().get(0).setFocused(focused);
             singletonDao.update();
-            application.changeScene("anime.fxml", anime.getName());
+            application.changeScene("anime.fxml");
         }
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();

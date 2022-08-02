@@ -67,7 +67,7 @@ public class AddNewController {
         animeDao.save(anime);
 
         singletonDao.setCurrentAnime(anime, occurrence);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
@@ -96,7 +96,7 @@ public class AddNewController {
         animeDao.save(anime);
 
         singletonDao.setCurrentAnime(singletonDao.getCurrentAnime(), occurrence);
-        application.changeScene("anime.fxml", singletonDao.getCurrentAnime().getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
 
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();

@@ -81,7 +81,7 @@ public class AddFilterController {
 
         commitButton.setOnAction(actionEvent -> {
             singletonDao.getListContainer().setTags(currentTags);
-            application.changeScene(singletonDao.getListFXML(), "My List");
+            application.changeScene(singletonDao.getListFXML());
             ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
         });
     }

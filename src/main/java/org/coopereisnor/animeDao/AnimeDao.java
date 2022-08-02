@@ -6,6 +6,8 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class AnimeDao {
     static File root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"animeObjects");
@@ -61,15 +63,19 @@ public class AnimeDao {
 
     private void save(int index){
         Anime anime = collection.get(index);
-        try {
-            FileOutputStream fileStream = new FileOutputStream(root.toPath() +File.separator +anime.getIdentifier() +".ser");
-            ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
-            objectStream.writeObject(anime);
-            objectStream.close();
-            fileStream.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            try {
+                FileOutputStream fileStream = new FileOutputStream(root.toPath() +File.separator +anime.getIdentifier() +".ser");
+                ObjectOutputStream objectStream = new ObjectOutputStream(fileStream);
+                objectStream.writeObject(anime);
+                objectStream.close();
+                fileStream.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public Anime createNewAnime(){

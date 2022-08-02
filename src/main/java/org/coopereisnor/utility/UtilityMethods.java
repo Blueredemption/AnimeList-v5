@@ -64,4 +64,20 @@ public class UtilityMethods {
         Collections.sort(list);
         return list.toArray(new String[0]);
     }
+
+    public static String getDatesString(LocalDate first, LocalDate second){
+        if(!(first == null || second == null)) {
+            if (first.equals(second)) {
+                return UtilityMethods.getAsFormattedDate(first);
+            }else{
+                return UtilityMethods.getAsFormattedDate(first) + " to " + UtilityMethods.getAsFormattedDate(second);
+            }
+        } else {
+            if(!(first == null && second == null)){
+                return UtilityMethods.getAsFormattedDate(first) + " to " + UtilityMethods.getAsFormattedDate(second);
+            }else{
+                return  "";
+            }
+        }
+    }
 }

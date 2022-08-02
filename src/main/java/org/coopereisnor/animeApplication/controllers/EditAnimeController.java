@@ -102,7 +102,7 @@ public class EditAnimeController {
 
         anime.setName(nameTextField.getText().trim());
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
@@ -110,7 +110,7 @@ public class EditAnimeController {
     private void deleteEvent(Event event){
         animeDao.remove(anime);
         singletonDao.update();
-        application.changeScene(singletonDao.getListFXML(), "My List");
+        application.changeScene(singletonDao.getListFXML());
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }

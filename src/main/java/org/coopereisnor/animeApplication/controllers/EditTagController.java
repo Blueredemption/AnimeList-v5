@@ -189,7 +189,7 @@ public class EditTagController {
             default -> System.out.println("Reached Default in EditTagController endAction");
         }
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }

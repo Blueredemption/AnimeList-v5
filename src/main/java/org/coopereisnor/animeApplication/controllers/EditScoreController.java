@@ -85,7 +85,7 @@ public class EditScoreController {
 
     private void commonEnd(Event event) {
         animeDao.save(anime);
-        application.changeScene("anime.fxml", anime.getName());
+        application.changeScene("anime.fxml");
         singletonDao.update();
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
