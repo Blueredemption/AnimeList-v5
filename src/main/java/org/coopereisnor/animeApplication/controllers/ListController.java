@@ -138,7 +138,7 @@ public class ListController implements Controller{
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
         containerPane.setMinHeight(HBox.USE_PREF_SIZE);
         containerPane.setPrefWidth(Double.MAX_VALUE);
-        containerPane.setPrefHeight(35);
+        containerPane.setPrefHeight(37);
         containerPane.setMaxWidth(HBox.USE_COMPUTED_SIZE);
         containerPane.setMaxHeight(HBox.USE_COMPUTED_SIZE);
         containerPane.setPadding(new Insets(5,5,5,5));
