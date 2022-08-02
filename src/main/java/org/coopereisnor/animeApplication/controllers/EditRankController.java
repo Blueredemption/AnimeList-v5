@@ -77,5 +77,6 @@ public class EditRankController {
                 animeDao.save(sortedAnime.get(i));
             }
         }
+        animeDao.save(anime);
     }
 }

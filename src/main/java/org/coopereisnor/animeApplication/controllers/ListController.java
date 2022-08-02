@@ -1,27 +1,15 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
-import org.coopereisnor.animeApplication.customJavaFXObjects.ProgressIndicatorBar;
+import org.coopereisnor.animeApplication.customJavaFXObjects.PercentProgressBar;
 import org.coopereisnor.animeApplication.singleton.ListContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -34,12 +22,7 @@ import org.coopereisnor.statistics.OccurrenceStatistics;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
 
 public class ListController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -191,7 +174,7 @@ public class ListController implements Controller{
         containerPane.add(label, 4, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
-        ProgressIndicatorBar progressBar = new ProgressIndicatorBar(progress);
+        PercentProgressBar progressBar = new PercentProgressBar(progress);
         progressBar.setMinWidth(125);
         progressBar.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop() - 4);
         containerPane.add(progressBar, 5, 0);

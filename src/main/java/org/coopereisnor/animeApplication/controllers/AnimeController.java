@@ -8,9 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.coopereisnor.animeApplication.Application;
-import org.coopereisnor.animeApplication.customJavaFXObjects.ProgressIndicatorBar;
+import org.coopereisnor.animeApplication.customJavaFXObjects.PercentProgressBar;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -391,7 +390,7 @@ public class AnimeController implements Controller{
             notesLabel.setPadding(new Insets(0,0,0,5));
             gridPane2.add(notesLabel, 0, 0);
 
-            ProgressIndicatorBar progressBar  = new ProgressIndicatorBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
+            PercentProgressBar progressBar  = new PercentProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
             progressBar.setPrefWidth(imageWidth);
             progressBar.setPrefHeight(20);
             gridPane2.add(progressBar, 1, 0);

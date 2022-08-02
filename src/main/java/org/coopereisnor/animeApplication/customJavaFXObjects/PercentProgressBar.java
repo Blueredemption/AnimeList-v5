@@ -4,13 +4,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.StackPane;
 
-public class ProgressIndicatorBar extends StackPane {
+public class PercentProgressBar extends StackPane {
     private final double progress;
 
     private final ProgressBar bar  = new ProgressBar();
     private final  Label label = new Label();
 
-    public ProgressIndicatorBar(double progress) {
+    public PercentProgressBar(double progress) {
         this.progress = progress;
 
         setValues();
