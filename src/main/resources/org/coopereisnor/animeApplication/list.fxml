@@ -255,6 +255,7 @@
                         <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
                         <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
                         <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
                       <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -277,8 +278,8 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label GridPane.columnIndex="6" />
-                        <Label layoutX="20.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="115.0" text="Details:" GridPane.columnIndex="6">
+                        <Label GridPane.columnIndex="7" />
+                        <Label layoutX="20.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="115.0" text="Details:" GridPane.columnIndex="7">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
@@ -286,7 +287,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="698.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="70.0" text="Score:" GridPane.columnIndex="2">
+                        <Label layoutX="698.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="70.0" text="Score:" GridPane.columnIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
@@ -294,7 +295,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="293.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="80.0" text="Year:" GridPane.columnIndex="3">
+                        <Label layoutX="293.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="80.0" text="Year:" GridPane.columnIndex="4">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
@@ -302,7 +303,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="393.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="90.0" text="Episodes:" GridPane.columnIndex="4">
+                        <Label layoutX="393.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="75.0" text="Episodes:" GridPane.columnIndex="5">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
@@ -310,13 +311,21 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="493.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="125.0" text="Progress:" GridPane.columnIndex="5">
+                        <Label layoutX="493.0" layoutY="23.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="110.0" text="Progress:" GridPane.columnIndex="6">
                            <GridPane.margin>
                               <Insets left="5.0" right="5.0" />
                            </GridPane.margin>
                            <font>
                               <Font size="14.0" />
                            </font>
+                        </Label>
+                        <Label layoutX="260.0" layoutY="15.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="70.0" text="Rank:" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </GridPane.margin>
                         </Label>
                      </children>
                      <padding>

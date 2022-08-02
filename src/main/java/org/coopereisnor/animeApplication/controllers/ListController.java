@@ -92,30 +92,32 @@ public class ListController implements Controller{
 
                 String number = ++iterator +":";
                 String name = anime.getName();
-                String score = anime.getScore() == -1 ? "" :anime.getScore() % 1 == 0 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
+                String rank = anime.getRank() +"";
+                String score = anime.getScore() == -1 ? "" : anime.getScore()  == 10 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
                 String year = earliestYear == Integer.MAX_VALUE ? "" : earliestYear +"";
                 String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
                 double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
                 EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, score, year, episodes, progress, eventHandler, anime, null);
+                addListComponents(number, name, rank, score, year, episodes, progress, eventHandler, anime, null);
             }
         }else{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
                 String number = ++iterator +":";
                 String name = pair.getOccurrence().getName();
+                String rank = pair.getAnime().getRank() +"";
                 String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore()  == 10 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
                 String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
                 String episodes = pair.getOccurrence().getEpisodes() == 0 ? "" : pair.getOccurrence().getEpisodes() +"";
                 double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
                 EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, score, year, episodes, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
+                addListComponents(number, name, rank, score, year, episodes, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
             }
         }
     }
 
-    private void addListComponents(String number, String name, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
+    private void addListComponents(String number, String name, String rank, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -142,42 +144,51 @@ public class ListController implements Controller{
         col5.setHgrow(Priority.NEVER);
         ColumnConstraints col6 = new ColumnConstraints();
         col6.setHgrow(Priority.NEVER);
-        containerPane.getColumnConstraints().addAll(col0, col1, col2, col3, col4, col5, col6);
+        ColumnConstraints col7 = new ColumnConstraints();
+        col7.setHgrow(Priority.NEVER);
+        containerPane.getColumnConstraints().addAll(col0, col1, col2, col3, col4, col5, col6, col7);
 
+        int i = 0;
         Label label = new Label(number);
         label.setMinWidth(35);
         label.setTextOverrun(OverrunStyle.CLIP);
-        containerPane.add(label, 0, 0);
+        containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(name);
         label.setPrefWidth(Integer.MAX_VALUE);
         label.setTextOverrun(OverrunStyle.ELLIPSIS);
-        containerPane.add(label, 1, 0);
+        containerPane.add(label, i++, 0);
+        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+
+        label = new Label(rank);
+        label.setMinWidth(70);
+        label.setTextOverrun(OverrunStyle.CLIP);
+        containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(score);
         label.setMinWidth(70);
         label.setTextOverrun(OverrunStyle.CLIP);
-        containerPane.add(label, 2, 0);
+        containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(year);
         label.setMinWidth(80);
         label.setTextOverrun(OverrunStyle.CLIP);
-        containerPane.add(label, 3, 0);
+        containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(episodes);
-        label.setMinWidth(90);
+        label.setMinWidth(75);
         label.setTextOverrun(OverrunStyle.CLIP);
-        containerPane.add(label, 4, 0);
+        containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         PercentProgressBar progressBar = new PercentProgressBar(progress);
-        progressBar.setMinWidth(125);
+        progressBar.setMinWidth(110);
         progressBar.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop() - 4);
-        containerPane.add(progressBar, 5, 0);
+        containerPane.add(progressBar, i++, 0);
         GridPane.setMargin(progressBar, new Insets(0, 5, 0, 5));
 
         Button viewButton = new Button("View");
@@ -188,7 +199,7 @@ public class ListController implements Controller{
             singletonDao.setCurrentAnime(anime, occurrence);
             application.changeScene("anime.fxml");
         });
-        containerPane.add(viewButton, 6, 0);
+        containerPane.add(viewButton, i, 0);
         GridPane.setMargin(viewButton, new Insets(0, 5, 0, 5));
     }
 

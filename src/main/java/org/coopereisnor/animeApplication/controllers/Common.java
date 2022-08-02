@@ -2,12 +2,18 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -141,6 +147,7 @@ public class Common {
         });
     }
 
+    public static final KeyCombination escape = new KeyCodeCombination(KeyCode.ESCAPE);
     public static void popup(String fxml){
         try {
             final Stage popup = new Stage();
@@ -151,6 +158,10 @@ public class Common {
             Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml))));
             File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
             scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+            popup.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+                if(escape.match(event)) popup.close();
+            });
+
             popup.setScene(scene);
             popup.show();
 
