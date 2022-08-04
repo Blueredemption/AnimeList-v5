@@ -103,6 +103,7 @@ public class AnimeController implements Controller{
         });
     }
 
+
     public void configureToggleActions(){
         focusedButton.setSelected(selectedOccurrence.isFocused());
         focusedButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
@@ -121,11 +122,14 @@ public class AnimeController implements Controller{
             }
         }));
 
+
         trackingButton.setSelected(selectedOccurrence.isTracked());
         trackingButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-            selectedOccurrence.setTracked(newValue);
-            animeDao.save(anime);
-            singletonDao.update();
+            if(selectedOccurrence.isTracked() != newValue){
+                selectedOccurrence.setTracked(newValue);
+                animeDao.save(anime);
+                singletonDao.update();
+            }
         }));
     }
 
