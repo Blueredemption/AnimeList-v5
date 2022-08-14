@@ -15,6 +15,7 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
+import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.net.MalformedURLException;
@@ -46,7 +47,7 @@ public class EditOccurrenceController {
     public void initialize() {
         currentURL = occurrence.getUrl();
         nameTextField.setText(occurrence.getName());
-        urlTextField.setText(occurrence.getUrl().toString());
+        urlTextField.setText(occurrence.getUrl() == null ? "" : occurrence.getUrl().toString());
 
         nameTextField.setOnKeyTyped(keyEvent -> setValid());
 
@@ -96,7 +97,11 @@ public class EditOccurrenceController {
     }
 
     private void refreshEvent(Event event){
-
+        MALScrape.refreshOccurrenceFromURL(urlTextField.getText().trim(), occurrence);
+        animeDao.save(anime);
+        application.changeScene("anime.fxml");
+        singletonDao.update();
+        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 
     private void deleteEvent(Event event){

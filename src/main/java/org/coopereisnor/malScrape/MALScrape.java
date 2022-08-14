@@ -3,6 +3,7 @@ package org.coopereisnor.malScrape;
 import org.coopereisnor.animeDao.Occurrence;
 
 import javax.imageio.ImageIO;
+import javax.print.Doc;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
@@ -21,186 +22,268 @@ import org.jsoup.nodes.Document;
 
 public class MALScrape {
 
+    // checks the link to see if it is a mal anime link
+    public static boolean checkLink(String url){
+        return url.contains("https://myanimelist.net/anime/");
+    }
+
     public static Occurrence getOccurrenceFromURL(String url){
-        try {
-            Document page = Jsoup.connect(url).get();
-
-            Occurrence occurrence = new Occurrence(System.currentTimeMillis());
-
-            // the first two are easy:
-            occurrence.setName(page.title().replace("- MyAnimeList.net", "").trim());
-            occurrence.setUrl(new URL(url));
-
-            // the rest I have found by iterating through mostly the raw text
-            String plainText = page.wholeText();
-            InputStream stream = new ByteArrayInputStream(plainText.getBytes(StandardCharsets.UTF_8));
-            BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-            String str = br.readLine();
-
-            int count = 0;
-            while (str != null) {
-                switch(count){
-                    case 0:
-                        if(str.contains("Type:")) {
-                            str = br.readLine();
-                            occurrence.setType(removeHeader(str));
-                            count++;
-                        }
-                        break;
-                    case 1:
-                        if(str.contains("Episodes:")) {
-                            str = br.readLine();
-                            try{ // if it is a number, pass it along
-                                occurrence.setEpisodes(Integer.parseInt(removeHeader(str)));
-                            }catch(Exception ex){ // if it doesn't parse (it's not a number), pass in -1.
-                                occurrence.setEpisodes(-1);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 2:
-                        if(str.contains("Status:")) {
-                            str = br.readLine();
-                            occurrence.setStatus(removeHeader(str));
-                            count++;
-                        }
-                        break;
-                    case 3:
-                        if(str.contains("Aired:")) {
-                            str = br.readLine();
-                            String aired = removeHeader(str);
-                            String[] split = aired.split("to");
-                            // if either the start or end date do not parse we want the given date to be set to null instead.
-                            try{
-                                occurrence.setAiredStartDate(parseDate(split[0]));
-                            }catch(Exception ex){
-                                occurrence.setAiredStartDate(null);
-                            }
-                            try{
-                                occurrence.setAiredEndDate(parseDate(split[1]));
-                            }catch(ArrayIndexOutOfBoundsException ex){
-                                occurrence.setAiredEndDate(null);
-
-                                // the "second" count++ is because if there is only one "Aired", "Premiered" doesn't (probably always) exist.
-                                count++;
-                                // and as a result, there probably won't be any year or season. We don't care if season is empty, but we do care if year is.
-                                // so lets get year from the first date, if it exists.
-                                if(occurrence.getAiredStartDate() != null) occurrence.setPremieredYear(occurrence.getAiredStartDate().getYear());
-
-                            }catch(ParseException ex){
-                                occurrence.setAiredEndDate(null);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 4:
-                        if(str.contains("Premiered:")) {
-                            str = br.readLine();
-                            String premiered = removeHeader(str);
-                            String[] split = premiered.split(" ");
-                            if(split[0].trim().equals("?")){
-                                occurrence.setPremieredSeason("");
-                                occurrence.setPremieredYear(-1);
-                            }else{
-                                occurrence.setPremieredSeason(split[0].trim());
-                                occurrence.setPremieredYear(Integer.parseInt(split[1]== null ? "" : split[1].trim()));
-                            }
-                            count++;
-                        }
-                        break;
-                    case 5:
-                        if(str.contains("Producers:")||str.contains("Producer:")) {
-                            str = br.readLine();
-                            for(String string : getEntries(str)){
-                                occurrence.addProducer(string);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 6:
-                        if(str.contains("Licensors:")||str.contains("Licensor:")) {
-                            str = br.readLine();
-                            for(String string : getEntries(str)){
-                                occurrence.addLicensor(string);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 7:
-                        if(str.contains("Studios:")||str.contains("Studio:")) {
-                            str = br.readLine();
-                            for(String string : getEntries(str)){
-                                occurrence.addStudio(string);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 8:
-                        if(str.contains("Source:")) {
-                            str = br.readLine();
-                            occurrence.setSource(removeHeader(str));
-                            count++;
-                        }
-                        break;
-                    case 9:
-                        if(str.contains("Genres:")||str.contains("Genre:")) {
-                            str = br.readLine();
-                            for(String string : getGenreThemeEntries(str)){
-                                occurrence.addGenre(string);
-                            }
-                            count++;
-                        }
-                        break;
-                    case 10:
-                        if(str.contains("Themes:")||str.contains("Theme:")){
-                            str = br.readLine();
-                            for(String string : getGenreThemeEntries(str)){
-                                occurrence.addTheme(string);
-                            }
-                        } else if(str.contains("Duration:")) {
-                            str = br.readLine();
-                            occurrence.setDuration(convertDurationToSeconds(str));
-                            count++;
-                        }
-                        break;
-                    case 11:
-                        if(str.contains("Rating:")) {
-                            str = br.readLine();
-                            if(str.contains("R - 17+")){
-                                occurrence.setRating("R-17+");
-                            } else{
-                                occurrence.setRating(removeHeader(str).split(" - ")[0].trim());
-                            }
-                            count++;
-                        }
-                        break;
-                }
-                str = br.readLine();
-            }
-
-            // The final thing we need to do is get the image for the anime, but we need to go through the html source to get the url for it.
-            String htmlSource = page.html();
-            stream = new ByteArrayInputStream(htmlSource.getBytes(StandardCharsets.UTF_8));
-            br = new BufferedReader(new InputStreamReader(stream));
-            str = br.readLine();
-
-            while (str != null) {
-                if(str.contains("og:image")){
-                    String imageURL = str.replace("<meta property=\"og:image\" content=\"","").replace("\"/>","").replace("\">","");
-                    // we want the biggest version, so we have to add an "l" before the .blah
-                    imageURL = imageURL.substring(0, imageURL.lastIndexOf(".")) +"l" +imageURL.substring(imageURL.lastIndexOf("."));
-                    URL urlObject = new URL(imageURL);
-                    occurrence.setImageIcon(new ImageIcon(ImageIO.read(urlObject)));
-                    break; // found it, no need to look anymore.
-                }
-                str = br.readLine();
-            }
-            return occurrence;
-
+        try{
+            return parseWebpage(getWebpage(url), url);
         } catch (IOException ex) {
+            System.out.println("Failure in MalScrape.java"); // todo logger this
             ex.printStackTrace();
-            return new Occurrence(System.currentTimeMillis()); // if it fails just return an empty occurrence
+            return new Occurrence(System.currentTimeMillis());
         }
+    }
+
+    public static void refreshOccurrenceFromURL(String url, Occurrence oldOccurrence){
+        if(!checkLink(url)) return; // we don't want to refresh with an empty anime
+
+        Occurrence newOccurrence = getOccurrenceFromURL(url);
+
+        oldOccurrence.setUrl(newOccurrence.getUrl());
+
+        if(newOccurrence.getEpisodes() > oldOccurrence.getEpisodes()){
+            oldOccurrence.setEpisodes(newOccurrence.getEpisodes());
+        }
+
+        oldOccurrence.setStatus(newOccurrence.getStatus());
+
+        oldOccurrence.setAiredStartDate(newOccurrence.getAiredStartDate());
+        oldOccurrence.setAiredEndDate(newOccurrence.getAiredEndDate());
+        oldOccurrence.setPremieredSeason(newOccurrence.getPremieredSeason());
+        oldOccurrence.setPremieredYear(newOccurrence.getPremieredYear());
+
+        for(String producer : newOccurrence.getProducers()){
+            oldOccurrence.addProducer(producer);
+        }
+
+        for(String studio : newOccurrence.getStudios()){
+            oldOccurrence.addStudio(studio);
+        }
+
+        for(String licensor : newOccurrence.getLicensors()){
+            oldOccurrence.addLicensor(licensor);
+        }
+
+        for(String genre : newOccurrence.getGenres()){
+            oldOccurrence.addGenre(genre);
+        }
+
+        for(String theme : newOccurrence.getThemes()){
+            oldOccurrence.addTheme(theme);
+        }
+
+        oldOccurrence.setImageIcon(newOccurrence.getImageIcon());
+    }
+
+    // retrieves the webpage
+    private static Document getWebpage(String url) throws IOException {
+        return Jsoup.connect(url).get();
+    }
+
+    private static Occurrence parseWebpage(Document webpage, String url) throws IOException {
+        Occurrence occurrence = new Occurrence(System.currentTimeMillis());
+
+        // the name of the occurrence comes from the webpage title
+        occurrence.setName(webpage.title().replace("- MyAnimeList.net", "").trim());
+        // where the url comes from is obvious lol
+        occurrence.setUrl(new URL(url));
+
+        // the image link is retrieved from the html of the webpage
+        ImageIcon imageIcon = getImageIcon(webpage.html());
+        if(imageIcon != null) occurrence.setImageIcon(imageIcon);
+
+        // the rest of the attributes are retrieved from the raw text of the webpage
+
+        String webpageString = webpage.wholeText();
+
+        // type
+        String typeString = getAttributeString(webpageString, "Type:", null);
+        if(typeString != null){
+            occurrence.setType(removeHeader(typeString));
+        }
+
+        // episodes
+        typeString = getAttributeString(webpageString, "Episodes:", null);
+        if(typeString != null){
+            try{
+                occurrence.setEpisodes(Integer.parseInt(removeHeader(typeString)));
+            }catch(Exception ex){
+                System.out.println("Could not parse Episodes string value"); // todo logger this
+                ex.printStackTrace();
+            }
+        }
+
+        // status
+        typeString = getAttributeString(webpageString, "Status:", null);
+        if(typeString != null){
+            occurrence.setStatus(removeHeader(typeString));
+        }
+
+        // aired
+        typeString = getAttributeString(webpageString, "Aired:", null);
+        if(typeString != null){
+            String aired = removeHeader(typeString);
+            String[] split = aired.split("to");
+
+            try{
+                occurrence.setAiredStartDate(parseDate(split[0]));
+            }catch(Exception ex){
+                System.out.println("Could not apply AiredStartDate"); // todo logger this
+                ex.printStackTrace();
+            }
+
+            try{
+                occurrence.setAiredEndDate(parseDate(split[1]));
+            }catch(ParseException ex){
+                System.out.println("Could not apply AiredEndDate"); // todo logger this
+                ex.printStackTrace();
+            }catch(ArrayIndexOutOfBoundsException ex){
+                occurrence.setAiredEndDate(occurrence.getAiredStartDate());
+                System.out.println("Index out of bounds exception, setting airedEndDate to airedStartDate"); // todo logger this
+                ex.printStackTrace();
+            }
+        }
+
+        // premiered
+        typeString = getAttributeString(webpageString, "Premiered:", null);
+        if(typeString != null){
+            String premiered = removeHeader(typeString);
+            String[] split = premiered.split(" ");
+            if(split[0].trim().equals("?")){
+                // do nothing
+            }else{
+                occurrence.setPremieredSeason(split[0].trim());
+                occurrence.setPremieredYear(Integer.parseInt(split[1]== null ? "" : split[1].trim()));
+            }
+        }else{
+            if(occurrence.getAiredStartDate() != null) occurrence.setPremieredYear(occurrence.getAiredStartDate().getYear());
+        }
+
+        // producers
+        typeString = getAttributeString(webpageString, "Producers:", "Producer:");
+        if(typeString != null) {
+            for(String string : getEntries(typeString)){
+                occurrence.addProducer(string);
+            }
+        }
+
+        // licensors
+        typeString = getAttributeString(webpageString, "Licensors:", "Licensor:");
+        if(typeString != null) {
+            for(String string : getEntries(typeString)){
+                occurrence.addLicensor(string);
+            }
+        }
+
+        // studios
+        typeString = getAttributeString(webpageString, "Studios:", "Studio:");
+        if(typeString != null) {
+            for(String string : getEntries(typeString)){
+                occurrence.addStudio(string);
+            }
+        }
+
+        // source
+        typeString = getAttributeString(webpageString, "Source:", null);
+        if(typeString != null){
+            occurrence.setSource(removeHeader(typeString));
+        }
+
+        // genres
+        typeString = getAttributeString(webpageString, "Genres:", "Genre:");
+        if(typeString != null) {
+            for(String string : getGenreThemeEntries(typeString)){
+                occurrence.addGenre(string);
+            }
+        }
+
+        // themes
+        typeString = getAttributeString(webpageString, "Themes:", "Theme:");
+        if(typeString != null) {
+            for(String string : getGenreThemeEntries(typeString)){
+                occurrence.addTheme(string);
+            }
+        }
+
+        // duration
+        typeString = getAttributeString(webpageString, "Duration:", null);
+        if(typeString != null){
+            occurrence.setDuration(convertDurationToSeconds(typeString));
+        }
+
+        // rating
+        typeString = getAttributeString(webpageString, "Rating:", null);
+        if(typeString != null){
+            if(typeString.contains("R - 17+")){
+                occurrence.setRating("R-17+");
+            } else{
+                occurrence.setRating(removeHeader(typeString).split(" - ")[0].trim());
+            }
+        }
+
+        return occurrence;
+    }
+
+    private static ImageIcon getImageIcon(String htmlSource) throws IOException {
+        ImageIcon imageIcon = null;
+
+        InputStream stream = new ByteArrayInputStream(htmlSource.getBytes(StandardCharsets.UTF_8));
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        String line = br.readLine();
+
+        while (line != null) {
+            if(line.contains("og:image")){
+                String imageURL = line.replace("<meta property=\"og:image\" content=\"","").replace("\"/>","").replace("\">","");
+                // we want the biggest version, so we have to add an "l" before the .blah (this is a mal thing)
+                imageURL = imageURL.substring(0, imageURL.lastIndexOf(".")) +"l" +imageURL.substring(imageURL.lastIndexOf("."));
+                URL urlObject = new URL(imageURL);
+                imageIcon = new ImageIcon(ImageIO.read(urlObject));
+                break; // found it, no need to look anymore.
+            }
+            line = br.readLine();
+        }
+
+        return imageIcon;
+    }
+
+    private static String getAttributeString(String webpageString, String attributeStringOne, String attributeStringTwo) throws IOException {
+        InputStream stream = new ByteArrayInputStream(webpageString.getBytes(StandardCharsets.UTF_8));
+        BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+        String line = br.readLine();
+        boolean typeFound = false; // we want the searches to not catch anything before Type: (Status seems to get caught somewhere before the information portion)
+
+        if(attributeStringOne != null && attributeStringTwo != null){
+            while (line != null) {
+                if (!typeFound) if(line.contains("Type:")) typeFound = true;
+                else {
+                    line = br.readLine();
+                    continue;
+                }
+
+                if(line.contains(attributeStringOne)||line.contains(attributeStringTwo)){
+                    return br.readLine();
+                }
+                line = br.readLine();
+            }
+        }else if(attributeStringOne != null){
+            while (line != null) {
+                if (!typeFound) if(line.contains("Type:")) typeFound = true;
+                else {
+                    line = br.readLine();
+                    continue;
+                }
+
+                if(line.contains(attributeStringOne)){
+                    return br.readLine();
+                }
+                line = br.readLine();
+            }
+        }
+
+        return null;
     }
 
     private static String removeHeader(String string){
@@ -219,7 +302,7 @@ public class MALScrape {
         }
     }
 
-   private static String[] getGenreThemeEntries(String string){
+    private static String[] getGenreThemeEntries(String string){
         String[] entries = getEntries(string);
         for(int i = 0; i < entries.length; i++){
             entries[i] = entries[i].substring(0, (entries[i].length()/2));

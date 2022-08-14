@@ -88,7 +88,7 @@ public class AddNewController {
     public void createOccurrenceAndNavigate(Event event){
         Occurrence occurrence;
 
-        if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
+        if(MALScrape.checkLink(textField.getText().trim())) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
         else occurrence = new Occurrence(System.currentTimeMillis());
 
         Anime anime = singletonDao.getCurrentAnime();

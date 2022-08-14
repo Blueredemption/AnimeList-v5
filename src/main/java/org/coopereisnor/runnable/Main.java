@@ -32,7 +32,7 @@ public class Main {
     }
 
     public static void testMALScrape(){
-        Occurrence occurrence = MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/1195/Zero_no_Tsukaima?q=familiar&cat=anime");
+        Occurrence occurrence = MALScrape.getOccurrenceFromURL("https://myanimelist.net/anime/47164/Dungeon_ni_Deai_wo_Motomeru_no_wa_Machigatteiru_Darou_ka_IV__Shin_Shou_-_Meikyuu-hen");
         System.out.println(occurrence);
     }
 
