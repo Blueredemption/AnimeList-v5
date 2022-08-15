@@ -21,11 +21,13 @@ import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
+import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.security.cert.CertificateParsingException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -115,8 +117,8 @@ public class Common {
                 new BackgroundSize(1.0, 1.0, true, true, false, false));
         workingPane.setBackground(new Background(backgroundImage));
 
-        // set the border todo: use settingsDao
-        workingPane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+        // set the border
+        workingPane.setBorder(new Border(new BorderStroke(UtilityMethods.convertColor(SingletonDao.getInstance().getSettingsDao().getSettings().getBorderColor()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
 
         return workingPane;
     }
@@ -156,7 +158,7 @@ public class Common {
             popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
 
             Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml))));
-            File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
+            File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"application.css").toFile();
             scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
             popup.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
                 if(escape.match(event)) popup.close();

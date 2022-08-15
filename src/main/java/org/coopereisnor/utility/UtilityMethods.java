@@ -80,4 +80,35 @@ public class UtilityMethods {
             }
         }
     }
+
+    public static String getFileAsString(Path filePath){
+        String fileContent = "";
+
+        try
+        {
+            byte[] bytes = Files.readAllBytes(filePath);
+            fileContent = new String (bytes);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        return fileContent;
+    }
+
+    public static String getStringOfColor(Color color){
+        return "rgb(" +color.getRed() +", " +color.getGreen() +", " +color.getBlue() +")";
+    }
+
+    public static java.awt.Color convertColor(javafx.scene.paint.Color color){
+        return new java.awt.Color((float) color.getRed(),
+                                  (float) color.getGreen(),
+                                  (float) color.getBlue(),
+                                  (float) color.getOpacity());
+    }
+
+    public static javafx.scene.paint.Color convertColor(Color color){
+        return javafx.scene.paint.Color.rgb(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha() / 255.0);
+    }
 }

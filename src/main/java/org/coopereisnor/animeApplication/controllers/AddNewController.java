@@ -60,6 +60,8 @@ public class AddNewController {
         // the first occurrence in an anime is set to focused by default
         occurrence.setFocused(true);
 
+        occurrence.setTracked(settingsDao.getSettings().isTracking());
+
         Anime anime = animeDao.createNewAnime();
         anime.setRank(animeDao.getCollection().size());
         anime.setName(occurrence.getName().equals("New Occurrence") ? "New Anime" : occurrence.getName());
@@ -90,6 +92,8 @@ public class AddNewController {
 
         if(MALScrape.checkLink(textField.getText().trim())) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
         else occurrence = new Occurrence(System.currentTimeMillis());
+
+        occurrence.setTracked(settingsDao.getSettings().isTracking());
 
         Anime anime = singletonDao.getCurrentAnime();
         anime.addOccurrence(occurrence);

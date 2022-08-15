@@ -55,7 +55,7 @@ public class Application extends javafx.application.Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("home.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"test.css").toFile();
+        File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"application.css").toFile();
         scene.getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
 
         stage.setTitle(title);

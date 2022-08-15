@@ -2,6 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -70,6 +74,198 @@
             <padding>
                 <Insets bottom="10.0" left="10.0" right="10.0" />
             </padding>
+         <children>
+            <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="500.0" HBox.hgrow="ALWAYS">
+               <content>
+                  <GridPane maxWidth="1.7976931348623157E308" vgap="5.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="200.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                    </rowConstraints>
+                     <children>
+                        <Label id="headerLabel" text="Color Settings" />
+                        <Label text="Button" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <ColorPicker fx:id="buttonColorPicker" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
+                        <Label layoutX="10.0" layoutY="48.0" text="Button - Hovered" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Button - Pressed" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Text" GridPane.rowIndex="17">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Text Field / Area" GridPane.columnIndex="3" GridPane.rowIndex="17">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Progress Bar - Empty" GridPane.rowIndex="19">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Rejection Button" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Rejection Button - Hovered" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Rejection Button - Pressed" GridPane.columnIndex="3" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Rejection Button - Border" GridPane.rowIndex="9">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Acceptance Button" GridPane.rowIndex="11">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Acceptance Button - Hovered" GridPane.columnIndex="3" GridPane.rowIndex="11">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Acceptance Button - Pressed" GridPane.columnIndex="3" GridPane.rowIndex="12">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Acceptance Button - Border" GridPane.rowIndex="12">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Neutral Button" GridPane.rowIndex="14">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Neutral Button - Hovered" GridPane.columnIndex="3" GridPane.rowIndex="14">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Neutral Button - Pressed" GridPane.columnIndex="3" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Neutral Button - Border" GridPane.rowIndex="15">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Background - Front" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Background - Middle" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <Label text="Background - Back" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding></Label>
+                        <Label text="Progress Bar - Full" GridPane.columnIndex="3" GridPane.rowIndex="19">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <ColorPicker fx:id="backgroundColorThreePicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ColorPicker fx:id="backgroundColorTwoPicker" layoutX="822.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ColorPicker fx:id="backgroundColorOnePicker" layoutX="822.0" layoutY="83.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ColorPicker fx:id="buttonHoveredColorPicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ColorPicker fx:id="buttonPressedColorPicker" layoutX="822.0" layoutY="183.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                        <ColorPicker fx:id="rejectionButtonColorPicker" layoutX="822.0" layoutY="243.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <ColorPicker fx:id="rejectionButtonBorderColorPicker" layoutX="822.0" layoutY="283.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <ColorPicker fx:id="rejectionButtonHoveredColorPicker" layoutX="822.0" layoutY="313.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <ColorPicker fx:id="rejectionButtonPressedColorPicker" layoutX="822.0" layoutY="343.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                        <ColorPicker fx:id="acceptanceButtonColorPicker" layoutX="822.0" layoutY="373.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <ColorPicker fx:id="acceptanceButtonBorderColorPicker" layoutX="822.0" layoutY="413.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <ColorPicker fx:id="acceptanceButtonHoveredColorPicker" layoutX="822.0" layoutY="443.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="11" />
+                        <ColorPicker fx:id="acceptanceButtonPressedColorPicker" layoutX="822.0" layoutY="473.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+                        <ColorPicker fx:id="neutralButtonColorPicker" layoutX="822.0" layoutY="503.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                        <ColorPicker fx:id="neutralButtonBorderColorPicker" layoutX="822.0" layoutY="543.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                        <ColorPicker fx:id="neutralButtonHoveredColorPicker" layoutX="822.0" layoutY="573.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+                        <ColorPicker fx:id="neutralButtonPressedColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+                        <ColorPicker fx:id="textColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                        <ColorPicker fx:id="textAreaColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="17" />
+                        <ColorPicker fx:id="progressBarEmptyColorPicker" layoutX="822.0" layoutY="673.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                        <ColorPicker fx:id="progressBarFullColorPicker" layoutX="822.0" layoutY="733.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
+                        <Button fx:id="backgroundColorThreeDefault" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="backgroundColorTwoDefault" layoutX="872.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                        <Button fx:id="backgroundColorOneDefault" layoutX="391.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Button fx:id="buttonHoveredColorDefault" layoutX="872.0" layoutY="83.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+                        <Button fx:id="buttonPressedColorDefault" layoutX="872.0" layoutY="153.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="6" />
+                        <Button fx:id="buttonColorDefault" layoutX="391.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Button fx:id="rejectionButtonHoveredColorDefault" layoutX="399.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                        <Button fx:id="rejectionButtonPressedColorDefault" layoutX="888.0" layoutY="193.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+                        <Button fx:id="acceptanceButtonHoveredColorDefault" layoutX="888.0" layoutY="223.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="11" />
+                        <Button fx:id="acceptanceButtonPressedColorDefault" layoutX="888.0" layoutY="263.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="12" />
+                        <Button fx:id="neutralButtonHoveredColorDefault" layoutX="888.0" layoutY="293.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="14" />
+                        <Button fx:id="neutralButtonPressedColorDefault" layoutX="888.0" layoutY="333.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="15" />
+                        <Button fx:id="textAreaColorDefault" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="17" />
+                        <Button fx:id="progressBarFullColorDefault" layoutX="888.0" layoutY="403.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="19" />
+                        <Button fx:id="rejectionButtonColorDefault" layoutX="888.0" layoutY="443.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                        <Button fx:id="rejectionButtonBorderColorDefault" layoutX="399.0" layoutY="193.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+                        <Button fx:id="acceptanceButtonColorDefault" layoutX="399.0" layoutY="223.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                        <Button fx:id="acceptanceButtonBorderColorDefault" layoutX="399.0" layoutY="263.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+                        <Button fx:id="neutralButtonColorDefault" layoutX="399.0" layoutY="293.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="14" />
+                        <Button fx:id="neutralButtonBorderColorDefault" layoutX="399.0" layoutY="333.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="15" />
+                        <Button fx:id="textColorDefault" layoutX="399.0" layoutY="363.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="17" />
+                        <Button fx:id="progressBarEmptyColorDefault" layoutX="399.0" layoutY="403.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="19" />
+                        <Label id="headerLabel" layoutX="10.0" layoutY="18.0" text="General Settings" GridPane.rowIndex="21" />
+                        <Label text="Default Tracking Value" GridPane.rowIndex="23">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <ToggleButton fx:id="trackingToggleButton" mnemonicParsing="false" prefWidth="70.0" GridPane.columnIndex="2" GridPane.rowIndex="23" />
+                        <Label text="Background / Button Border" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin></Label>
+                        <ColorPicker fx:id="borderColorPicker" layoutX="738.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Button fx:id="borderColorDefault" layoutX="888.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
         </HBox>
     </children>
 </VBox>
