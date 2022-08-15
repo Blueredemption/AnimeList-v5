@@ -6,8 +6,13 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -69,10 +74,8 @@ public class SettingsDao {
         try {
             FileWriter writer = new FileWriter(root.toPath() +File.separator +"application.css");
 
-            URI uri = Objects.requireNonNull(getClass().getResource("/css/Application.css")).toURI();
-            String mainPath = Paths.get(uri).toString();
-            Path path = Paths.get(mainPath);
-            String cssFile = UtilityMethods.getFileAsString(path);
+            InputStream stream = getClass().getResourceAsStream("/css/Application.css");
+            String cssFile = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
 
             cssFile = cssFile.replaceFirst("buttonColor", UtilityMethods.getStringOfColor(settings.getButtonColor()));
             cssFile = cssFile.replaceFirst("buttonColorHovered", UtilityMethods.getStringOfColor(settings.getButtonColorHovered()));
@@ -100,10 +103,8 @@ public class SettingsDao {
 
             writer.write(cssFile);
             writer.close();
-        } catch (IOException ex) {
+        } catch (IOException ex) { // todo: logger this
             ex.printStackTrace();
-        } catch (URISyntaxException ex) {
-            ex.printStackTrace(); // todo logger this and above
         }
     }
 
