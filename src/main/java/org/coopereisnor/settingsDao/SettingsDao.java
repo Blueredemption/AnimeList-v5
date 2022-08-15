@@ -4,7 +4,10 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -66,7 +69,9 @@ public class SettingsDao {
         try {
             FileWriter writer = new FileWriter(root.toPath() +File.separator +"application.css");
 
-            Path path = new File(getClass().getResource("/css/Application.css").getFile()).toPath();
+            URI uri = Objects.requireNonNull(getClass().getResource("/css/Application.css")).toURI();
+            String mainPath = Paths.get(uri).toString();
+            Path path = Paths.get(mainPath);
             String cssFile = UtilityMethods.getFileAsString(path);
 
             cssFile = cssFile.replaceFirst("buttonColor", UtilityMethods.getStringOfColor(settings.getButtonColor()));
@@ -97,6 +102,8 @@ public class SettingsDao {
             writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace(); // todo logger this and above
         }
     }
 
