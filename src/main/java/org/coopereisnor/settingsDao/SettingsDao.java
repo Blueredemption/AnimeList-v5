@@ -66,7 +66,8 @@ public class SettingsDao {
         try {
             FileWriter writer = new FileWriter(root.toPath() +File.separator +"application.css");
 
-            String cssFile = UtilityMethods.getFileAsString(Path.of(Objects.requireNonNull(getClass().getResource("/css/Application.css")).getPath()));
+            Path path = new File(getClass().getResource("/css/Application.css").getFile()).toPath();
+            String cssFile = UtilityMethods.getFileAsString(path);
 
             cssFile = cssFile.replaceFirst("buttonColor", UtilityMethods.getStringOfColor(settings.getButtonColor()));
             cssFile = cssFile.replaceFirst("buttonColorHovered", UtilityMethods.getStringOfColor(settings.getButtonColorHovered()));
