@@ -29,6 +29,10 @@
     text-color: textColor;
 }
 
+.root {
+    -fx-font-family: Roboto;
+}
+
 #background, #bottomVBox {
     -fx-background-color: background-color-one;
     -fx-background: background-color-one;

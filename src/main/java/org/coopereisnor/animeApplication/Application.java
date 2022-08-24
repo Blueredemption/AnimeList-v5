@@ -3,12 +3,14 @@ package org.coopereisnor.animeApplication;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.statistics.AnimeStatistics;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -53,6 +55,10 @@ public class Application extends javafx.application.Application {
         stage.setHeight(height);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("home.fxml"));
+
+        // load in the font needed
+        Font.loadFont(Objects.requireNonNull(getClass().getResource("/css/fonts/Roboto-Regular.ttf")).toExternalForm(), 10);
+        Font.loadFont(Objects.requireNonNull(getClass().getResource("/css/fonts/Roboto-Bold.ttf")).toExternalForm(), 10);
 
         Scene scene = new Scene(fxmlLoader.load());
         File file = Paths.get(SingletonDao.getInstance().getSettingsDao().getRoot().toPath() + File.separator +"application.css").toFile();
