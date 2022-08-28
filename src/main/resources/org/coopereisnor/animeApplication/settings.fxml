@@ -80,10 +80,10 @@
                   <GridPane maxWidth="1.7976931348623157E308" vgap="5.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="200.0" />
-                      <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="110.0" />
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
                         <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="200.0" />
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="110.0" />
                         <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -118,7 +118,7 @@
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin></Label>
-                        <ColorPicker fx:id="buttonColorPicker" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
+                        <ColorPicker fx:id="buttonColorPicker" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="5" />
                         <Label layoutX="10.0" layoutY="48.0" text="Button - Hovered" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="10.0" />
@@ -206,27 +206,27 @@
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin></Label>
-                        <ColorPicker fx:id="backgroundColorThreePicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ColorPicker fx:id="backgroundColorTwoPicker" layoutX="822.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <ColorPicker fx:id="backgroundColorOnePicker" layoutX="822.0" layoutY="83.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <ColorPicker fx:id="buttonHoveredColorPicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                        <ColorPicker fx:id="buttonPressedColorPicker" layoutX="822.0" layoutY="183.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-                        <ColorPicker fx:id="rejectionButtonColorPicker" layoutX="822.0" layoutY="243.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                        <ColorPicker fx:id="rejectionButtonBorderColorPicker" layoutX="822.0" layoutY="283.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                        <ColorPicker fx:id="rejectionButtonHoveredColorPicker" layoutX="822.0" layoutY="313.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-                        <ColorPicker fx:id="rejectionButtonPressedColorPicker" layoutX="822.0" layoutY="343.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-                        <ColorPicker fx:id="acceptanceButtonColorPicker" layoutX="822.0" layoutY="373.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                        <ColorPicker fx:id="acceptanceButtonBorderColorPicker" layoutX="822.0" layoutY="413.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                        <ColorPicker fx:id="acceptanceButtonHoveredColorPicker" layoutX="822.0" layoutY="443.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="11" />
-                        <ColorPicker fx:id="acceptanceButtonPressedColorPicker" layoutX="822.0" layoutY="473.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="12" />
-                        <ColorPicker fx:id="neutralButtonColorPicker" layoutX="822.0" layoutY="503.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                        <ColorPicker fx:id="neutralButtonBorderColorPicker" layoutX="822.0" layoutY="543.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                        <ColorPicker fx:id="neutralButtonHoveredColorPicker" layoutX="822.0" layoutY="573.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="14" />
-                        <ColorPicker fx:id="neutralButtonPressedColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="15" />
-                        <ColorPicker fx:id="textColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
-                        <ColorPicker fx:id="textAreaColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="17" />
-                        <ColorPicker fx:id="progressBarEmptyColorPicker" layoutX="822.0" layoutY="673.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
-                        <ColorPicker fx:id="progressBarFullColorPicker" layoutX="822.0" layoutY="733.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
+                        <ColorPicker fx:id="backgroundColorThreePicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ColorPicker fx:id="backgroundColorTwoPicker" layoutX="822.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ColorPicker fx:id="backgroundColorOnePicker" layoutX="822.0" layoutY="83.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <ColorPicker fx:id="buttonHoveredColorPicker" layoutX="822.0" layoutY="153.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                        <ColorPicker fx:id="buttonPressedColorPicker" layoutX="822.0" layoutY="183.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+                        <ColorPicker fx:id="rejectionButtonColorPicker" layoutX="822.0" layoutY="243.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <ColorPicker fx:id="rejectionButtonBorderColorPicker" layoutX="822.0" layoutY="283.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <ColorPicker fx:id="rejectionButtonHoveredColorPicker" layoutX="822.0" layoutY="313.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+                        <ColorPicker fx:id="rejectionButtonPressedColorPicker" layoutX="822.0" layoutY="343.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                        <ColorPicker fx:id="acceptanceButtonColorPicker" layoutX="822.0" layoutY="373.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <ColorPicker fx:id="acceptanceButtonBorderColorPicker" layoutX="822.0" layoutY="413.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                        <ColorPicker fx:id="acceptanceButtonHoveredColorPicker" layoutX="822.0" layoutY="443.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="11" />
+                        <ColorPicker fx:id="acceptanceButtonPressedColorPicker" layoutX="822.0" layoutY="473.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+                        <ColorPicker fx:id="neutralButtonColorPicker" layoutX="822.0" layoutY="503.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                        <ColorPicker fx:id="neutralButtonBorderColorPicker" layoutX="822.0" layoutY="543.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                        <ColorPicker fx:id="neutralButtonHoveredColorPicker" layoutX="822.0" layoutY="573.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="14" />
+                        <ColorPicker fx:id="neutralButtonPressedColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="15" />
+                        <ColorPicker fx:id="textColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                        <ColorPicker fx:id="textAreaColorPicker" layoutX="822.0" layoutY="603.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="17" />
+                        <ColorPicker fx:id="progressBarEmptyColorPicker" layoutX="822.0" layoutY="673.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                        <ColorPicker fx:id="progressBarFullColorPicker" layoutX="822.0" layoutY="733.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
                         <Button fx:id="backgroundColorThreeDefault" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Button fx:id="backgroundColorTwoDefault" layoutX="872.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                         <Button fx:id="backgroundColorOneDefault" layoutX="391.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="2" GridPane.rowIndex="3" />
@@ -259,7 +259,7 @@
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin></Label>
-                        <ColorPicker fx:id="borderColorPicker" layoutX="738.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="140.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <ColorPicker fx:id="borderColorPicker" layoutX="738.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                         <Button fx:id="borderColorDefault" layoutX="888.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>

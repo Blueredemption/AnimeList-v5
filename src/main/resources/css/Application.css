@@ -457,6 +457,11 @@
     -fx-text-fill: text-color;
 }
 
+.color-picker > .arrow-button {
+    -fx-scale-x: 0;
+    -fx-scale-y: 0;
+}
+
 .hyperlink {
     -fx-border-color: transparent;
 }
@@ -466,13 +471,8 @@
 }
 
 .color-palette-region > .color-square.hover-square {
-    -fx-background-color: -fx-faint-focus-color, white;
-    -fx-background-insets: -3,-1;
-    -fx-background-radius: 5,0;
-    -fx-scale-x: 1.5;
-    -fx-scale-y: 1.5;
-    -fx-border-color: border-color;
-    -fx-border-insets: -1, -1;
+    -fx-scale-x: 0;
+    -fx-scale-y: 0;
 }
 
 .custom-color-dialog * {
@@ -485,4 +485,22 @@
 
 .custom-color-dialog .controls-pane .customcolor-controls-background {
     -fx-background-color: background-color-one;
+}
+
+/* CONTEXT MENU RELATED */
+.context-menu {
+    -fx-background-color: background-color-one;
+    -fx-text-fill: text-color;
+}
+
+.menu-item .label {
+    -fx-text-fill: text-color;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: text-color;
+}
+
+.menu-item:focused {
+    -fx-background-color: button-color;
 }
