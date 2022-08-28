@@ -2,19 +2,15 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
@@ -22,13 +18,13 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.utility.UtilityMethods;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Set;
 
 public class Common {
     public static void configureNavigation(GridPane gridPane, Class cls){
@@ -124,16 +120,38 @@ public class Common {
 
     public static Pane getImagePaneFor(Pane imagePane, BufferedImage bufferedImage){
         Pane workingPane = imagePane != null ? imagePane : new Pane();
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        BackgroundImage backgroundImage = new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                new BackgroundSize(1.0, 1.0, true, true, false, false));
-        workingPane.setBackground(new Background(backgroundImage));
+        workingPane.setBackground(new Background(makeBackgroundImage(bufferedImage)));
 
         // set the border
-        workingPane.setBorder(new Border(new BorderStroke(UtilityMethods.convertColor(SingletonDao.getInstance().getSettingsDao().getSettings().getBorderColor()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
-
+        setBorder(workingPane);
         return workingPane;
+    }
+
+    public static void setBorder(Pane pane){
+        pane.setBorder(new Border(new BorderStroke(UtilityMethods.convertColor(SingletonDao.getInstance().getSettingsDao().getSettings().getBorderColor()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+    }
+
+    public static BackgroundImage makeBackgroundImage(BufferedImage bufferedImage){
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        return new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(1.0, 1.0, true, true, false, false));
+    }
+
+    public static BufferedImage makeFilteredImage(BufferedImage baseImage) {
+        BufferedImage overlayImage = new BufferedImage(baseImage.getWidth(), baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = overlayImage.createGraphics();
+        Color color = SingletonDao.getInstance().getSettingsDao().getSettings().getTextAreaColor();
+        g2d.setBackground(new Color(color.getRed(), color.getGreen(), color.getBlue(), 230));
+        g2d.clearRect(0, 0, baseImage.getWidth(), baseImage.getHeight());
+        g2d.dispose();
+
+        BufferedImage combinedImage = new BufferedImage(baseImage.getWidth(), baseImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics g = combinedImage.getGraphics();
+        g.drawImage(baseImage, 0, 0, null);
+        g.drawImage(overlayImage, 0, 0, null);
+        g.dispose();
+
+        return combinedImage;
     }
 
     public static Anime getNextAnime(Anime currentAnime, boolean right){

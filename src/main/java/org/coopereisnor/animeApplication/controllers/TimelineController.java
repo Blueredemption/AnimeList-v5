@@ -2,6 +2,9 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
@@ -17,6 +20,8 @@ public class TimelineController {
 
     @FXML
     private GridPane gridPane;
+    @FXML
+    private StackedBarChart chart;
 
     @FXML
     public void initialize() {

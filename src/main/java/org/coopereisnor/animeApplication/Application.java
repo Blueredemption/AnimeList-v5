@@ -1,13 +1,19 @@
 package org.coopereisnor.animeApplication;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.coopereisnor.animeApplication.controllers.Common;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.statistics.AnimeStatistics;
+import org.coopereisnor.utility.UtilityMethods;
 
+import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -53,6 +59,7 @@ public class Application extends javafx.application.Application {
         stage.setMinHeight(height);
         stage.setWidth(width);
         stage.setHeight(height);
+        stage.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("/images/Icon.png"))));
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("home.fxml"));
 

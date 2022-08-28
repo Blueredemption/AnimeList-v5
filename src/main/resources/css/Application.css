@@ -60,11 +60,28 @@
     -fx-font-weight: bold;
     -fx-display-caret:true;
     -fx-font-size: 12px;
-    -fx-background-color: background-color-two;
+    -fx-background-color: transparent;
 }
 
 .text-field, .text-area .content {
     -fx-background-color: text-area-color;
+}
+
+#transparent.text-area {
+    -fx-background-color: transparent;
+}
+
+#transparent.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#transparent.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+
+}
+
+#transparent.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 
 /** BUTTONS **/
@@ -86,7 +103,7 @@
 }
 
 .button:pressed, .toggle-button:pressed, .date-picker > .arrow-button:pressed {
-    -fx-background-color: button-color-pressed;
+
 }
 
 
