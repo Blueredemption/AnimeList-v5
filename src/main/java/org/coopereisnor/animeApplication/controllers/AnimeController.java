@@ -407,6 +407,8 @@ public class AnimeController implements Controller{
             textArea.setWrapText(true);
             textArea.setText(occurrence.getNotes());
             textArea.setOnKeyTyped(keyEvent -> saveNotes(occurrence, textArea));
+            textArea.setUserData(true);
+            Common.setFasterScrollBar(textArea);
             VBox.setVgrow(textArea, Priority.ALWAYS);
             vBox.getChildren().add(textArea);
 

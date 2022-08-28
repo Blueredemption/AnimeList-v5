@@ -2,17 +2,19 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
@@ -26,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 public class Common {
     public static void configureNavigation(GridPane gridPane, Class cls){
@@ -103,6 +106,20 @@ public class Common {
             double vvalue = scrollPane.getVvalue();
             scrollPane.setVvalue(vvalue + -deltaY/diff);
         });
+    }
+
+    public static void setFasterScrollBar(TextArea textArea) {
+        // what a fucking pain in the ass this is. So apparently textArea has its own scrollPane that can't be accessed unless the css is loaded
+        // which is after the Platform.runLater() scope. I have a listener for the first scroll event on the textArea to add a listener to the scrollPane inside it.
+        // the textArea only fires a scrollEvent once (maybe when I first apply the text?), so I don't have to worry about the first event firing more than once, but I put a
+        // flag in there anyway using the setUserData property where the textArea is initialized just to be safe. Really hacky code to get around this issue, I don't like it.
+        if((boolean)textArea.getUserData()){
+            textArea.setUserData(false);
+            textArea.setOnScroll(scrollEvent -> {
+                ScrollPane scrollPane = (ScrollPane) textArea.lookup(".scroll-pane");
+                setFasterScrollBar(scrollPane);
+            });
+        }
     }
 
     public static Pane getImagePaneFor(Pane imagePane, BufferedImage bufferedImage){
