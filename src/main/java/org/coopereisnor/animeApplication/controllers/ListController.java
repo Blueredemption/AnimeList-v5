@@ -88,36 +88,34 @@ public class ListController implements Controller{
         int iterator = 0;
         if(singletonDao.getType().equals("Anime")) {
             for(Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())){
-                int earliestYear = OccurrenceStatistics.getEarliestYear(anime.getOccurrences());
-
                 String number = ++iterator +":";
                 String name = anime.getName();
-                String rank = anime.getRank() +"";
-                String score = anime.getScore() == -1 ? "" : anime.getScore()  == 10 || anime.getScore() == 0 ? (int)anime.getScore() +"" : anime.getScore() +"";
-                String year = earliestYear == Integer.MAX_VALUE ? "" : earliestYear +"";
                 String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
+                String season = anime.getFocusedOccurrence().getPremieredSeason();
+                String year = anime.getFocusedOccurrence().getPremieredYear() == -1 ? "" : anime.getFocusedOccurrence().getPremieredYear() +"";
+
+
                 double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
                 EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, rank, score, year, episodes, progress, eventHandler, anime, null);
+                addListComponents(number, name, episodes, season, year, progress, eventHandler, anime, null);
             }
         }else{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
                 String number = ++iterator +":";
                 String name = pair.getOccurrence().getName();
-                String rank = pair.getAnime().getRank() +"";
-                String score = pair.getOccurrence().getScore() == -1 ? "" : pair.getOccurrence().getScore()  == 10 || pair.getOccurrence().getScore() == 0 ? (int)pair.getOccurrence().getScore() +"" : pair.getOccurrence().getScore() +"";
-                String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
                 String episodes = pair.getOccurrence().getEpisodes() == 0 ? "" : pair.getOccurrence().getEpisodes() +"";
+                String season = pair.getOccurrence().getPremieredSeason();
+                String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
                 double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
                 EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, rank, score, year, episodes, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
+                addListComponents(number, name,episodes, season, year, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
             }
         }
     }
 
-    private void addListComponents(String number, String name, String rank, String score, String year, String episodes, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
+    private void addListComponents(String number, String name, String episodes, String season, String year, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -161,26 +159,20 @@ public class ListController implements Controller{
         containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
-        label = new Label(rank);
-        label.setMinWidth(70);
-        label.setTextOverrun(OverrunStyle.CLIP);
-        containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
-
-        label = new Label(score);
-        label.setMinWidth(70);
+        label = new Label(season);
+        label.setMinWidth(82);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(year);
-        label.setMinWidth(80);
+        label.setMinWidth(70);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
 
         label = new Label(episodes);
-        label.setMinWidth(75);
+        label.setMinWidth(80);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
         GridPane.setMargin(label, new Insets(0, 5, 0, 5));
