@@ -121,8 +121,6 @@ public class Common {
     public static Pane getImagePaneFor(Pane imagePane, BufferedImage bufferedImage){
         Pane workingPane = imagePane != null ? imagePane : new Pane();
         workingPane.setBackground(new Background(makeBackgroundImage(bufferedImage)));
-
-        // set the border
         setBorder(workingPane);
         return workingPane;
     }

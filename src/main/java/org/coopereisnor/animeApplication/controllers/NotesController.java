@@ -30,7 +30,6 @@ public class NotesController {
         Common.configureNavigation(gridPane, this.getClass());
 
         innerHBox.setBackground(new Background(Common.makeBackgroundImage(Common.makeFilteredImage(UtilityMethods.toBufferedImage(settingsDao.getSettings().getHomeImage().getImage())))));
-        Common.setBorder(innerHBox);
         textArea.setUserData(true);
         textArea.setId("transparent");
         textArea.setText(settingsDao.getSettings().getNotesString());
