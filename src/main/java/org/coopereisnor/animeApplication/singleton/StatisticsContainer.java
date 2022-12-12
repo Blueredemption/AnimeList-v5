@@ -1,62 +1,57 @@
 package org.coopereisnor.animeApplication.singleton;
 
-import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class StatisticsContainer {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
 
-    private final double MAX_THREADS = 1;
+    public static final double MAX_THREADS = 1;
 
     private final ArrayList<Pair> filteredPairs;
 
+    // define things to store in container
     private String[] testStats;
-
-
-    double currentPercent = 0.0;
+    private String[] testStats2; // etc
 
     public StatisticsContainer(){
         System.out.println("Statistics Container");
 
         filteredPairs = AnimeAggregate.getPairs(singletonDao.getAnimeDao().getCollection());
 
-        Executor executor = Executors.newFixedThreadPool((int) MAX_THREADS, runnable -> {
-            Thread thread = new Thread(runnable);
-            thread.setDaemon(true);
-            return thread;
+        Executors.newSingleThreadExecutor().execute(() -> {
+            ThreadPoolExecutor executor = (ThreadPoolExecutor)Executors.newFixedThreadPool((int)MAX_THREADS);
+            try{
+                executor.execute(() -> {
+                    // do something
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+
+                executor.shutdown();
+                if(!executor.awaitTermination(60, TimeUnit.SECONDS)){
+                    System.out.println("Executor has timed out before all processes are finished"); // todo logging
+                }
+            }catch(InterruptedException ex){
+                System.out.println("InterruptedException in StatisticsContainer"); // todo logging
+            }
+
+            isComplete();
         });
-        executor.execute(() -> {
-            testStats = new String[5];
-            markComplete();
-        });
+    }
+
+    public void isComplete(){
+        System.out.println("Statistics Container Complete");
+        singletonDao.updateProgressBar(getClass(), 0);
+        singletonDao.setStatisticsContainer(this);
     }
 
     // getters
     public String[] getTestStats() {
         return testStats;
-    }
-
-    public void markComplete(){
-        currentPercent += 1.0/MAX_THREADS;
-
-        if(testStats != null){
-            singletonDao.setStatisticsContainer(this);
-        }
-
-        if(singletonDao.getCurrentController() != null){
-            ProgressBar progressBar = singletonDao.getCurrentController().getUpdateProgressBar();
-            Platform.runLater(() -> {
-                if(progressBar != null){
-                    progressBar.setProgress(.5 + (currentPercent/2.0));
-                    progressBar.setVisible(testStats == null);
-                }
-            });
-        }
     }
 }

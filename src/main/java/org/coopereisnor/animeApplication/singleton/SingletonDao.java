@@ -1,6 +1,5 @@
 package org.coopereisnor.animeApplication.singleton;
 
-
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 import org.coopereisnor.animeApplication.Application;
@@ -8,11 +7,7 @@ import org.coopereisnor.animeApplication.controllers.Controller;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.manipulation.AnimeAggregate;
-import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.settingsDao.SettingsDao;
-
-import java.util.ArrayList;
 
 public final class SingletonDao {
 
@@ -137,5 +132,21 @@ public final class SingletonDao {
     // this method is only called by the statisticsContainer itself
     public void setStatisticsContainer(StatisticsContainer statisticsContainer){
         this.statisticsContainer = statisticsContainer;
+    }
+
+    // this method is called by statisticsContainer and filterContainer to update the visible progressbar
+    public void updateProgressBar(Class<?> c, double threadsRemaining){
+        if(currentController == null) return; // when program is first launching there is no controller, gui not visible to update
+
+        ProgressBar progressBar = currentController.getUpdateProgressBar();
+        if(c.equals(FilterContainer.class)){
+            progressBar.setProgress(((FilterContainer.MAX_THREADS - threadsRemaining)/FilterContainer.MAX_THREADS)/2.0);
+        }else if(c.equals(StatisticsContainer.class)){
+            progressBar.setProgress(((StatisticsContainer.MAX_THREADS - threadsRemaining)/StatisticsContainer.MAX_THREADS)/2.0 +.5);
+        }
+
+        Platform.runLater(() -> {
+            progressBar.setVisible(threadsRemaining != 0 || c.equals(FilterContainer.class));
+        });
     }
 }

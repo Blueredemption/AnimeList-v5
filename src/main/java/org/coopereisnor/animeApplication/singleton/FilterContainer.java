@@ -1,19 +1,17 @@
 package org.coopereisnor.animeApplication.singleton;
 
-import javafx.application.Platform;
-import javafx.scene.control.ProgressBar;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class FilterContainer {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
 
-    private final double MAX_THREADS = 12;
+    public static final double MAX_THREADS = 12;
 
     private final ArrayList<Pair> allPairs;
 
@@ -30,67 +28,80 @@ public class FilterContainer {
     private String[] watchStatuses;
     private String[] languages;
 
-    double currentPercent = 0.0;
-
     public FilterContainer(){
         System.out.println("Filter Container");
 
         allPairs = AnimeAggregate.getPairs(singletonDao.getAnimeDao().getCollection());
 
-        Executor executor = Executors.newFixedThreadPool((int) MAX_THREADS, runnable -> {
-            Thread thread = new Thread(runnable);
-            thread.setDaemon(true);
-            return thread;
-        });
-        executor.execute(() -> {
-            types = AnimeAggregate.getTypes(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            statuses = AnimeAggregate.getStatuses(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            seasons = AnimeAggregate.getSeasons(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            genres = AnimeAggregate.getGenres(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            themes = AnimeAggregate.getThemes(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            ratings = AnimeAggregate.getRatings(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            sources = AnimeAggregate.getSources(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            studios = AnimeAggregate.getStudios(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            producers = AnimeAggregate.getProducers(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            licensors = AnimeAggregate.getLicensors(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            watchStatuses = AnimeAggregate.getWatchStatuses(allPairs);
-            checkComplete();
-        });
-        executor.execute(() -> {
-            languages = AnimeAggregate.getLanguages(allPairs);
-            checkComplete();
-        });
+        Executors.newSingleThreadExecutor().execute(() -> {
+            ThreadPoolExecutor executor = (ThreadPoolExecutor)Executors.newFixedThreadPool((int)MAX_THREADS);
+            try{
+                executor.execute(() -> {
+                    types = AnimeAggregate.getTypes(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    statuses = AnimeAggregate.getStatuses(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    seasons = AnimeAggregate.getSeasons(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    genres = AnimeAggregate.getGenres(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    themes = AnimeAggregate.getThemes(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    ratings = AnimeAggregate.getRatings(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    sources = AnimeAggregate.getSources(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    studios = AnimeAggregate.getStudios(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    producers = AnimeAggregate.getProducers(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    licensors = AnimeAggregate.getLicensors(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    watchStatuses = AnimeAggregate.getWatchStatuses(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    languages = AnimeAggregate.getLanguages(allPairs);
+                    singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
 
+                executor.shutdown();
+                if(!executor.awaitTermination(60, TimeUnit.SECONDS)){
+                    System.out.println("Executor has timed out before all processes are finished"); // todo logging
+                }
+            }catch(InterruptedException ex){
+                System.out.println("InterruptedException in StatisticsContainer"); // todo logging
+            }
+
+            isComplete();
+        });
+    }
+
+    public void isComplete(){
+        System.out.println("Filter Container Complete");
+        singletonDao.updateProgressBar(getClass(), 0);
+        singletonDao.setFilterContainer(this);
+        singletonDao.updateStatistics();
     }
 
     // getters
@@ -140,25 +151,5 @@ public class FilterContainer {
 
     public String[] getLanguages() {
         return languages;
-    }
-
-    public void checkComplete(){
-        currentPercent += 1.0/MAX_THREADS;
-
-        if(types != null && statuses != null && seasons != null && genres != null && themes != null && ratings != null && sources != null && studios != null &&
-        producers != null && licensors != null && watchStatuses != null && languages != null){
-            singletonDao.setFilterContainer(this);
-            singletonDao.updateStatistics();
-        }
-
-        if(singletonDao.getCurrentController() != null){
-            ProgressBar progressBar = singletonDao.getCurrentController().getUpdateProgressBar();
-            Platform.runLater(() -> {
-                if(progressBar != null){
-                    progressBar.setProgress(currentPercent/2.0);
-                    progressBar.setVisible(true);
-                }
-            });
-        }
     }
 }
