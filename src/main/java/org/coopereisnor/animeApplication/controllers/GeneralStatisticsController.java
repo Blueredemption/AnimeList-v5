@@ -47,11 +47,9 @@ public class GeneralStatisticsController {
 
 
     public void initialize() {
-        // todo grab totalTimeInSeconds from StatisticsContainer when that is completed
-        int totalTimeInSeconds = AnimeStatistics.getTotalTimeInSeconds(singletonDao.getListContainer().getFilteredAndSortedAnime());
+        int totalTimeInSeconds = AnimeStatistics.getTotalTimeInSeconds(singletonDao.getAnimeDao().getCollection()); // we don't want this to be the filtered list
         int animeTimeInSeconds = OccurrenceStatistics.getTotalTimeInSeconds(anime.getOccurrences());
 
-        // todo make sure this is correctly represented when "real" data exists
         int minutes = animeTimeInSeconds/60;
         int hours = minutes/60;
         int displayedDays = hours/24;

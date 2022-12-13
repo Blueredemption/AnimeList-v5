@@ -93,12 +93,9 @@ public class ListController implements Controller{
                 String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
                 String season = anime.getFocusedOccurrence().getPremieredSeason();
                 String year = anime.getFocusedOccurrence().getPremieredYear() == -1 ? "" : anime.getFocusedOccurrence().getPremieredYear() +"";
-
-
                 double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
-                EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name, episodes, season, year, progress, eventHandler, anime, null);
+                addListComponent(number, name, episodes, season, year, progress, anime, null);
             }
         }else{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
@@ -108,14 +105,13 @@ public class ListController implements Controller{
                 String season = pair.getOccurrence().getPremieredSeason();
                 String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
                 double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
-                EventHandler eventHandler = event -> {};
 
-                addListComponents(number, name,episodes, season, year, progress, eventHandler, pair.getAnime(), pair.getOccurrence());
+                addListComponent(number, name,episodes, season, year, progress, pair.getAnime(), pair.getOccurrence());
             }
         }
     }
 
-    private void addListComponents(String number, String name, String episodes, String season, String year, double progress, EventHandler eventHandler, Anime anime, Occurrence occurrence){
+    private void addListComponent(String number, String name, String episodes, String season, String year, double progress, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -145,46 +141,46 @@ public class ListController implements Controller{
         ColumnConstraints col7 = new ColumnConstraints();
         col7.setHgrow(Priority.NEVER);
         containerPane.getColumnConstraints().addAll(col0, col1, col2, col3, col4, col5, col6, col7);
+        Insets insets = new Insets(0, 5, 0, 5);
 
         int i = 0;
         Label label = new Label(number);
         label.setMinWidth(35);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(label, insets);
 
         label = new Label(name);
         label.setPrefWidth(Integer.MAX_VALUE);
         label.setTextOverrun(OverrunStyle.ELLIPSIS);
         containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(label, insets);
 
         label = new Label(season);
         label.setMinWidth(82);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(label, insets);
 
         label = new Label(year);
         label.setMinWidth(70);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(label, insets);
 
         label = new Label(episodes);
         label.setMinWidth(80);
         label.setTextOverrun(OverrunStyle.CLIP);
         containerPane.add(label, i++, 0);
-        GridPane.setMargin(label, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(label, insets);
 
         PercentProgressBar progressBar = new PercentProgressBar(progress);
         progressBar.setMinWidth(110);
         progressBar.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop() - 4);
         containerPane.add(progressBar, i++, 0);
-        GridPane.setMargin(progressBar, new Insets(0, 5, 0, 5));
+        GridPane.setMargin(progressBar, insets);
 
         Button viewButton = new Button("View");
-        viewButton.setOnAction(eventHandler);
         viewButton.setMinWidth(100);
         viewButton.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop());
         viewButton.setOnAction(actionEvent -> {
@@ -203,16 +199,16 @@ public class ListController implements Controller{
 
         if(singletonDao.getType().equals("Anime")){
             for (Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())) {
-                addImageComponents(UtilityMethods.toBufferedImage(anime.getFocusedOccurrence().getImageIcon().getImage()), anime, null);
+                addImageComponent(UtilityMethods.toBufferedImage(anime.getFocusedOccurrence().getImageIcon().getImage()), anime, null);
             }
         } else{
             for (Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())) {
-                addImageComponents(UtilityMethods.toBufferedImage(pair.getOccurrence().getImageIcon().getImage()), pair.getAnime(), pair.getOccurrence());
+                addImageComponent(UtilityMethods.toBufferedImage(pair.getOccurrence().getImageIcon().getImage()), pair.getAnime(), pair.getOccurrence());
             }
         }
     }
 
-    private void addImageComponents(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
+    private void addImageComponent(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
         double width = 157;
         double height = 225;
 
@@ -220,7 +216,6 @@ public class ListController implements Controller{
         imagePane.setMinSize(width, height);
         imagePane.setPrefSize(width, height);
         imagePane.setMaxSize(width, height);
-        imagePane.setPadding(new Insets(5,0,0,5));
         imagePane.setOnMouseClicked(event -> {
             if(event.getButton() == MouseButton.PRIMARY){
                 singletonDao.setCurrentAnime(anime, occurrence);

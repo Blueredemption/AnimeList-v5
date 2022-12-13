@@ -116,7 +116,7 @@ public class ListContainer {
             case "Eps. Total" -> anime.sort(Anime.SORT_BY_EPISODES_TOTAL);
             case "Year" -> anime.sort(Anime.SORT_BY_YEAR);
             case "Progress" -> anime.sort(Anime.SORT_BY_PROGRESS);
-            default -> System.out.println("Reached Default in ListContainer sortAnime");
+            default -> System.out.println("Reached Default in ListContainer sortAnime : " +sort);
         }
         return anime;
     }
@@ -145,7 +145,7 @@ public class ListContainer {
             case "Eps. Total" -> pairs.sort(Pair.SORT_BY_EPISODES_TOTAL);
             case "Year" -> pairs.sort(Pair.SORT_BY_YEAR);
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
-            default -> System.out.println("Reached Default in ListContainer sortPairs");
+            default -> System.out.println("Reached Default in ListContainer sortPairs : " +sortBy);
         }
         return pairs;
     }
@@ -156,7 +156,7 @@ public class ListContainer {
             case "Type" -> returnValue = pair.getOccurrence().getType().equals(tag.getAttribute());
             case "Status" -> returnValue = pair.getOccurrence().getStatus().equals(tag.getAttribute());
             case "Season" -> returnValue = pair.getOccurrence().getPremieredSeason().equals(tag.getAttribute());
-            case "Genres" -> returnValue = Arrays.asList(pair.getOccurrence().getGenres()).contains(tag.getAttribute());
+            case "Genre" -> returnValue = Arrays.asList(pair.getOccurrence().getGenres()).contains(tag.getAttribute());
             case "Theme" -> returnValue = Arrays.asList(pair.getOccurrence().getThemes()).contains(tag.getAttribute());
             case "Rating" -> returnValue = pair.getOccurrence().getRating().equals(tag.getAttribute());
             case "Source" -> returnValue = pair.getOccurrence().getSource().equals(tag.getAttribute());
@@ -166,7 +166,7 @@ public class ListContainer {
             case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
             case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
             default -> {
-                System.out.println("Reached Default in ListContainer filter");
+                System.out.println("Reached Default in ListContainer filter : " +tag.getFilter());
                 returnValue = false; // should never happen
             }
         }

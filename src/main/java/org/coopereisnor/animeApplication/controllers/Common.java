@@ -125,8 +125,19 @@ public class Common {
         return workingPane;
     }
 
+    public static Pane getImagePaneFor(Pane imagePane, BufferedImage bufferedImage, Color color){
+        Pane workingPane = imagePane != null ? imagePane : new Pane();
+        workingPane.setBackground(new Background(makeBackgroundImage(bufferedImage)));
+        setBorder(workingPane, color);
+        return workingPane;
+    }
+
     public static void setBorder(Pane pane){
-        pane.setBorder(new Border(new BorderStroke(UtilityMethods.convertColor(SingletonDao.getInstance().getSettingsDao().getSettings().getBorderColor()), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
+        setBorder(pane, SingletonDao.getInstance().getSettingsDao().getSettings().getBorderColor());
+    }
+
+    public static void setBorder(Pane pane, Color color){
+        pane.setBorder(new Border(new BorderStroke(UtilityMethods.convertColor(color), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1))));
     }
 
     public static BackgroundImage makeBackgroundImage(BufferedImage bufferedImage){

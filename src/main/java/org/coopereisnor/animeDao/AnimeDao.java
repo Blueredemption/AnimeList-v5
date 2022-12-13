@@ -115,7 +115,7 @@ public class AnimeDao {
     }
 
     public ArrayList<Anime> getCollection(){
-        return (ArrayList)collection.clone();
+        return (ArrayList)collection.clone(); //todo: parameterized class
     }
 
     // danger zone!

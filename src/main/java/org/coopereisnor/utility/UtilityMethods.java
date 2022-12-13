@@ -12,6 +12,8 @@ import java.util.*;
 
 public class UtilityMethods {
 
+    public static Color[] medalColors = new Color[]{new Color(255, 215, 0), new Color(192, 192, 192), new Color(205, 127, 50)};
+
     public static BufferedImage toBufferedImage(Image img)
     {
         if (img instanceof BufferedImage)

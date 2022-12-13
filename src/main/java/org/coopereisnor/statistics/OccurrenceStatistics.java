@@ -3,6 +3,7 @@ package org.coopereisnor.statistics;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
+import org.coopereisnor.manipulation.Pair;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -86,5 +87,15 @@ public class OccurrenceStatistics {
             }
         }
         return earliestDate;
+    }
+
+    public static ArrayList<Occurrence> getListOfOccurrences(ArrayList<Pair> occurrences){
+        ArrayList<Occurrence> onlyOccurrences = new ArrayList<>();
+
+        for(Pair pair : occurrences){
+            onlyOccurrences.add(pair.getOccurrence());
+        }
+
+        return onlyOccurrences;
     }
 }
