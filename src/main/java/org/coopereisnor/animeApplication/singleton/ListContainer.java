@@ -8,6 +8,7 @@ import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.statistics.AnimeStatistics;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -175,8 +176,12 @@ public class ListContainer {
     }
 
     public boolean containsAtLeastOneOccurrence(Anime anime){
+        return containsAtLeastOneOccurrence(anime, filteredAndSortedOccurrences);
+    }
+
+    public boolean containsAtLeastOneOccurrence(Anime anime, ArrayList<Pair> pairs){
         boolean contains = false;
-        for(Pair pair : filteredAndSortedOccurrences){
+        for(Pair pair : pairs){
             if(anime.getOccurrences().contains(pair.getOccurrence())) {
                 contains = true;
                 break;
@@ -225,4 +230,20 @@ public class ListContainer {
         return returnList;
     }
 
+    // methods used by to calculate statistics (hijacked above methods for counting instead of explicit filtering)
+    public ArrayList<Anime> getAnime(ArrayList<Anime> collection, ArrayList<Pair> pairs){
+        ArrayList<Anime> toKeep = new ArrayList<>();
+        for(Anime anime : collection){
+            if(containsAtLeastOneOccurrence(anime, pairs)) toKeep.add(anime);
+        }
+        return toKeep;
+    }
+
+    public ArrayList<Pair> getPairs(ArrayList<Pair> pairs, Tag tag){
+        ArrayList<Pair> toKeep = new ArrayList<>();
+        for(Pair pair : pairs){
+            if(getFilterApply(pair, tag)) toKeep.add(pair);
+        }
+        return toKeep;
+    }
 }

@@ -9,6 +9,8 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
 
+import java.util.ArrayList;
+
 public final class SingletonDao {
 
     private final AnimeDao animeDao;
@@ -21,6 +23,7 @@ public final class SingletonDao {
     private Anime currentAnime = null;
     private Occurrence currentOccurrence = null;
     private String currentField = "";
+    private ArrayList<?> miniListItems = null;
 
     private final ListContainer listContainer;
     private FilterContainer filterContainer;
@@ -97,6 +100,14 @@ public final class SingletonDao {
 
     public void setCurrentField(String currentField) {
         this.currentField = currentField;
+    }
+
+    public ArrayList<?> getMiniListItems() {
+        return miniListItems;
+    }
+
+    public void setMiniListItems(ArrayList<?> miniListItems) {
+        this.miniListItems = miniListItems;
     }
 
     public ListContainer getListContainer() {

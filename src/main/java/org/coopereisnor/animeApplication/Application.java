@@ -51,8 +51,6 @@ public class Application extends javafx.application.Application {
             }
         }
 
-        System.out.println(AnimeStatistics.getTotalEpisodesWatched(SingletonDao.getInstance().getAnimeDao().getCollection()));
-
         // with all the initialization over, we can create the GUI:
         this.stage = stage;
         stage.setMinWidth(width);
