@@ -13,10 +13,10 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.*;
@@ -56,7 +56,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(!cls.equals(SettingsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("settings.fxml"));
                 }
-                default -> Log.logger.error("Reached Default in Common configureNavigation");
+                default -> Program.logger.error("Reached Default in Common configureNavigation");
             }
         }
 
@@ -88,7 +88,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(cls.equals(SettingsController.class)) Platform.runLater(node::requestFocus);
                 }
-                default -> Log.logger.error("Reached Default in Common requestProperFocus");
+                default -> Program.logger.error("Reached Default in Common requestProperFocus");
             }
         }
     }

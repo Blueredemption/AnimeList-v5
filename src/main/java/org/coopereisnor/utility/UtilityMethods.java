@@ -1,5 +1,7 @@
 package org.coopereisnor.utility;
 
+import org.coopereisnor.Program;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -40,7 +42,7 @@ public class UtilityMethods {
                     .map(Path::toFile)
                     .forEach(File::delete);
         }catch(IOException ex){
-            Log.logger.error("IOException", ex);
+            Program.logger.error("IOException", ex);
         }
     }
 

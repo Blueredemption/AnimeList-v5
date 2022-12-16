@@ -1,9 +1,8 @@
 package org.coopereisnor.animeDao;
 
-import org.coopereisnor.utility.Log;
+import org.coopereisnor.Program;
 import org.coopereisnor.utility.UtilityMethods;
 
-import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -48,7 +47,7 @@ public class AnimeDao {
             objectStream.close();
             fileStream.close();
         } catch (IOException | ClassNotFoundException ex) {
-            Log.logger.error("IOException | ClassNotFoundException", ex);
+            Program.logger.error("IOException | ClassNotFoundException", ex);
         }
     }
 
@@ -56,9 +55,9 @@ public class AnimeDao {
     public void save(Anime anime){
         if(collection.contains(anime)){
             save(collection.indexOf(anime));
-            Log.logger.debug("Saving Anime " +anime.getName());
+            Program.logger.debug("Saving Anime " +anime.getName());
         } else{
-            Log.logger.error("Anime Does not exist in collection, cannot save!");
+            Program.logger.error("Anime Does not exist in collection, cannot save!");
         }
     }
 
@@ -74,7 +73,7 @@ public class AnimeDao {
                 objectStream.close();
                 fileStream.close();
             } catch (IOException ex) {
-                Log.logger.error("IOException", ex);
+                Program.logger.error("IOException", ex);
             }
         });
     }

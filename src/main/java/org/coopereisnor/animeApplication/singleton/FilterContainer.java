@@ -1,5 +1,6 @@
 package org.coopereisnor.animeApplication.singleton;
 
+import org.coopereisnor.Program;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import org.coopereisnor.utility.Log;
 
 public class FilterContainer {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -30,7 +30,7 @@ public class FilterContainer {
     private String[] languages;
 
     public FilterContainer(){
-        Log.logger.debug("Filter Container");
+        Program.logger.debug("Filter Container");
 
         allPairs = AnimeAggregate.getPairs(singletonDao.getAnimeDao().getCollection());
 
@@ -88,10 +88,10 @@ public class FilterContainer {
 
                 executor.shutdown();
                 if(!executor.awaitTermination(60, TimeUnit.SECONDS)){
-                    Log.logger.error("Executor has timed out before all processes are finished");
+                    Program.logger.error("Executor has timed out before all processes are finished");
                 }
             }catch(InterruptedException ex){
-                Log.logger.error("InterruptedException in StatisticsContainer", ex);
+                Program.logger.error("InterruptedException in StatisticsContainer", ex);
             }
 
             isComplete();
@@ -99,7 +99,7 @@ public class FilterContainer {
     }
 
     public void isComplete(){
-        Log.logger.debug("Filter Container Complete");
+        Program.logger.debug("Filter Container Complete");
         singletonDao.updateProgressBar(getClass(), 0);
         singletonDao.setFilterContainer(this);
         singletonDao.updateStatistics();

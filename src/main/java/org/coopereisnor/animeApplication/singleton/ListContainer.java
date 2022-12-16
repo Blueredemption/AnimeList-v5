@@ -1,16 +1,13 @@
 package org.coopereisnor.animeApplication.singleton;
 
-import javafx.collections.FXCollections;
+import org.coopereisnor.Program;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.statistics.AnimeStatistics;
-import org.coopereisnor.utility.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -80,7 +77,7 @@ public class ListContainer {
 
     // update methods
     public void silentUpdate(){
-        Log.logger.debug("Silent Update");
+        Program.logger.debug("Silent Update");
         // it is important that occurrences are filtered first because anime are filtered using the occurrences list
         filteredAndSortedOccurrences = sortPairs(filterPairs(AnimeAggregate.getPairs(animeDao.getCollection())));
         filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
@@ -92,7 +89,7 @@ public class ListContainer {
     }
 
     public void update(){
-        Log.logger.debug("Update");
+        Program.logger.debug("Update");
         silentUpdate();
         new StatisticsContainer();
     }
@@ -122,7 +119,7 @@ public class ListContainer {
             case "Eps. Total" -> collection.sort(Anime.SORT_BY_EPISODES_TOTAL);
             case "Year" -> collection.sort(Anime.SORT_BY_YEAR);
             case "Progress" -> collection.sort(Anime.SORT_BY_PROGRESS);
-            default -> Log.logger.error("Reached Default in ListContainer sortAnime : " +sort);
+            default -> Program.logger.error("Reached Default in ListContainer sortAnime : " +sort);
         }
         return collection;
     }
@@ -151,7 +148,7 @@ public class ListContainer {
             case "Eps. Total" -> pairs.sort(Pair.SORT_BY_EPISODES_TOTAL);
             case "Year" -> pairs.sort(Pair.SORT_BY_YEAR);
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
-            default -> Log.logger.error("Reached Default in ListContainer sortPairs : " +sortBy);
+            default -> Program.logger.error("Reached Default in ListContainer sortPairs : " +sortBy);
         }
         return pairs;
     }
@@ -172,7 +169,7 @@ public class ListContainer {
             case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
             case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
             default -> {
-                Log.logger.error("Reached Default in ListContainer filter : " +tag.getFilter());
+                Program.logger.error("Reached Default in ListContainer filter : " +tag.getFilter());
                 returnValue = false; // should never happen
             }
         }

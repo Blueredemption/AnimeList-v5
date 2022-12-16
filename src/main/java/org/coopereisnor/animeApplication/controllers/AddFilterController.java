@@ -2,8 +2,6 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -12,12 +10,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.utility.Log;
 
 import java.util.ArrayList;
 
@@ -119,7 +117,7 @@ public class AddFilterController {
             case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLicensors()));
             case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getWatchStatuses()));
             case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLanguages()));
-            default -> Log.logger.error("Reached Default in AddFilterController populateAttributeComboBox");
+            default -> Program.logger.error("Reached Default in AddFilterController populateAttributeComboBox");
         }
     }
 

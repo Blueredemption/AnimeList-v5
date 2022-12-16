@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -14,7 +15,6 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.utility.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class EditTagsController {
             case "Studios" -> currentParams = new ArrayList<>(List.of(occurrence.getStudios()));
             case "Producers" -> currentParams = new ArrayList<>(List.of(occurrence.getProducers()));
             case "Licensors" -> currentParams = new ArrayList<>(List.of(occurrence.getLicensors()));
-            default -> Log.logger.error("Reached Default in EditTagsController setCurrentParams");
+            default -> Program.logger.error("Reached Default in EditTagsController setCurrentParams");
         }
     }
 
@@ -75,7 +75,7 @@ public class EditTagsController {
             case "Studios" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getStudios()));
             case "Producers" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getProducers()));
             case "Licensors" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLicensors()));
-            default -> Log.logger.error("Reached Default in EditTagsController setParamOptions");
+            default -> Program.logger.error("Reached Default in EditTagsController setParamOptions");
         }
 
         for(String string : currentParams){
@@ -185,7 +185,7 @@ public class EditTagsController {
                 for(Node node : optionsFlowPane.getChildren()) occurrence.removeLicensor(((Tag)node.getUserData()).getAttribute());
                 for(Node node : selectedFlowPane.getChildren()) occurrence.addLicensor(((Tag)node.getUserData()).getAttribute());
             }
-            default -> Log.logger.error("Reached Default in EditTagsController endAction");
+            default -> Program.logger.error("Reached Default in EditTagsController endAction");
         }
         animeDao.save(anime);
         application.changeScene("anime.fxml");

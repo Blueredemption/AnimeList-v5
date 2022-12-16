@@ -1,19 +1,15 @@
 package org.coopereisnor.animeApplication.controllers;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -21,11 +17,8 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.utility.Log;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class EditEpisodesController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -180,7 +173,7 @@ public class EditEpisodesController {
 
             ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         }catch(Exception ex){
-            Log.logger.error("Null Pointer Exception voiding endAction", ex);
+            Program.logger.error("Null Pointer Exception voiding endAction", ex);
         }
     }
 

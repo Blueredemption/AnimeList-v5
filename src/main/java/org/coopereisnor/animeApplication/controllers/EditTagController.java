@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -14,7 +15,6 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.utility.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class EditTagController {
             case "Source" -> currentParam = occurrence.getSource();
             case "Watch Status" -> currentParam = occurrence.getWatchStatus();
             case "Language" -> currentParam = occurrence.getLanguage();
-            default -> Log.logger.error("Reached Default in EditTagController setCurrentParam");
+            default -> Program.logger.error("Reached Default in EditTagController setCurrentParam");
         }
     }
 
@@ -77,7 +77,7 @@ public class EditTagController {
             case "Source" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getSources()));
             case "Watch Status" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getWatchStatuses()));
             case "Language" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLanguages()));
-            default -> Log.logger.error("Reached Default in EditTagController setParamOptions");
+            default -> Program.logger.error("Reached Default in EditTagController setParamOptions");
         }
 
         paramOptions.remove(currentParam);
@@ -187,7 +187,7 @@ public class EditTagController {
             case "Source" -> occurrence.setSource(param);
             case "Watch Status" -> occurrence.setWatchStatus(param);
             case "Language" -> occurrence.setLanguage(param);
-            default -> Log.logger.error("Reached Default in EditTagController endAction");
+            default -> Program.logger.error("Reached Default in EditTagController endAction");
         }
         animeDao.save(anime);
         application.changeScene("anime.fxml");

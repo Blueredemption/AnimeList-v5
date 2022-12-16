@@ -1,8 +1,6 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -10,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
@@ -17,7 +16,6 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.utility.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -63,7 +61,7 @@ public class EditOccurrenceController {
                 currentURL = new URL(urlTextField.getText());
             } catch (MalformedURLException ex) {
                 currentURL = null;
-                Log.logger.error("URL Not Valid!", ex);
+                Program.logger.error("URL Not Valid!", ex);
             }
             setValid();
         });

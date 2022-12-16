@@ -1,20 +1,10 @@
 package org.coopereisnor.settingsDao;
 
-import org.coopereisnor.utility.Log;
+import org.coopereisnor.Program;
 import org.coopereisnor.utility.UtilityMethods;
 
-import javax.swing.filechooser.FileSystemView;
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -58,7 +48,7 @@ public class SettingsDao {
                 objectStream.close();
                 fileStream.close();
             } catch (IOException ex) {
-                Log.logger.error("IOException", ex);
+                Program.logger.error("IOException", ex);
             }
         });
     }
@@ -105,7 +95,7 @@ public class SettingsDao {
             writer.write(cssFile);
             writer.close();
         } catch (IOException ex) {
-            Log.logger.error("IOException", ex);
+            Program.logger.error("IOException", ex);
         }
     }
 
