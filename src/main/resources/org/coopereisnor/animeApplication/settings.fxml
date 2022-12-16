@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.SettingsController">
+<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.SettingsController">
     <children>
         <GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="60.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -261,6 +261,12 @@
                            </GridPane.margin></Label>
                         <ColorPicker fx:id="borderColorPicker" layoutX="738.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                         <Button fx:id="borderColorDefault" layoutX="888.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                        <Label layoutX="509.0" layoutY="507.0" text="Default State of List Page" GridPane.columnIndex="3" GridPane.rowIndex="23">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Button fx:id="listStateSave" layoutX="908.0" layoutY="593.0" mnemonicParsing="false" prefWidth="70.0" text="Save" GridPane.columnIndex="5" GridPane.rowIndex="23" />
                      </children>
                   </GridPane>
                </content>

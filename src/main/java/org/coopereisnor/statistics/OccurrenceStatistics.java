@@ -13,9 +13,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-// this class contains methods that return information given an ArrayList of Occurrences
+// this class contains methods that return information given an ArrayList of Occurrences (could be made with less duplicate code)
 public class OccurrenceStatistics {
-    // public methods
 
     public static int getTotalEpisodesWatched(ArrayList<Occurrence> occurrences){
         int total = 0;
@@ -71,7 +70,6 @@ public class OccurrenceStatistics {
         return date;
     }
 
-
     public static LocalDate getLatestEndDate(ArrayList<Occurrence> occurrences) {
         LocalDate latestDate = LocalDate.MIN;
         for(Occurrence occurrence : occurrences){
@@ -94,10 +92,10 @@ public class OccurrenceStatistics {
         return earliestDate;
     }
 
-    public static ArrayList<Occurrence> getListOfOccurrences(ArrayList<Pair> occurrences){
+    public static ArrayList<Occurrence> getListOfOccurrences(ArrayList<Pair> pairs){
         ArrayList<Occurrence> onlyOccurrences = new ArrayList<>();
 
-        for(Pair pair : occurrences){
+        for(Pair pair : pairs){
             onlyOccurrences.add(pair.getOccurrence());
         }
 
@@ -112,15 +110,13 @@ public class OccurrenceStatistics {
             ArrayList<Anime> filteredAnime = listContainer.getAnime((ArrayList<Anime>) collection.clone(), filteredPairs);
             counts.add(new Count(attribute, filteredAnime, filteredPairs));
         }
-        counts.sort(Comparator.comparingInt((Count o) -> o.getAnime().size()).reversed());
-
+        counts.sort(Comparator.comparingInt((Count o) -> o.getCollection().size()).reversed());
         return counts;
     }
 
     // wildcard related
     public static Wildcard getNewestOccurrence(ArrayList<Pair> pairs){
         Pair pair = null;
-
         for(Pair currentPair : pairs){
             if(currentPair.getOccurrence().getAiredStartDate() != null){
                 if(pair == null || currentPair.getOccurrence().getAiredStartDate().isAfter(pair.getOccurrence().getAiredStartDate())){
@@ -128,19 +124,12 @@ public class OccurrenceStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("Newest Occurrence: ", "", null);
-        }else{
-            return new Wildcard("Newest Occurrence: ",
-                    pair.getOccurrence().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getOccurrence().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        return new Wildcard("Newest Occurrence: ", resultString, pair);
     }
 
     public static Wildcard getMostRecentlyStartedOccurrence(ArrayList<Pair> pairs){
         Pair pair = null;
-
         for(Pair currentPair : pairs){
             if(currentPair.getOccurrence().getStartedWatching() != null){
                 if(pair == null || currentPair.getOccurrence().getStartedWatching().isAfter(pair.getOccurrence().getStartedWatching())){
@@ -148,13 +137,7 @@ public class OccurrenceStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("Most Recently Started Occurrence: ", "", null);
-        }else{
-            return new Wildcard("Most Recently Started Occurrence: ",
-                    pair.getOccurrence().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getOccurrence().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        return new Wildcard("Most Recently Started Occurrence: ", resultString, pair);
     }
 }

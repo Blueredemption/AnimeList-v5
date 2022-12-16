@@ -1,5 +1,7 @@
 package org.coopereisnor.animeApplication.controllers;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -117,6 +119,8 @@ public class SettingsController {
     private Button progressBarEmptyColorDefault;
     @FXML
     private Button progressBarFullColorDefault;
+    @FXML
+    private Button listStateSave;
 
 
     // other
@@ -135,6 +139,7 @@ public class SettingsController {
         setColorActions();
 
         configureTracking();
+        configureListDefaults();
     }
 
     private void simpleModifications() {
@@ -363,7 +368,7 @@ public class SettingsController {
         application.changeScene("settings.fxml");
     }
 
-    private void configureTracking() {
+    private void configureTracking(){
         trackingToggleButton.setSelected(settingsDao.getSettings().isTracking());
         trackingToggleButton.setText(settingsDao.getSettings().isTracking() ? "On" : "Off");
         trackingToggleButton.setId("toggleButtonColored");
@@ -374,5 +379,14 @@ public class SettingsController {
                 settingsDao.save();
             }
         }));
+    }
+
+    private void configureListDefaults(){
+        listStateSave.setOnAction(actionEvent -> {
+            settingsDao.getSettings().setDefaultDirectionState(singletonDao.getListContainer().getOrder());
+            settingsDao.getSettings().setDefaultAttributeState(singletonDao.getListContainer().getSortBy());
+            settingsDao.getSettings().setDefaultListState(singletonDao.getListFXML());
+            settingsDao.save();
+        });
     }
 }

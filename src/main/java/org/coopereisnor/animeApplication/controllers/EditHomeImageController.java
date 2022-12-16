@@ -19,6 +19,7 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
+import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
 
 import javax.imageio.ImageIO;
@@ -61,7 +62,7 @@ public class EditHomeImageController {
             try{
                 fileLocationTextField.setText(selectedFile.getAbsolutePath());
             }catch(Exception ex){
-                System.out.println("File Not Valid!");
+                Log.logger.error("File Not Valid!", ex);
             }
             checkFilePath();
         });
@@ -71,11 +72,11 @@ public class EditHomeImageController {
                 URL currentURL = new URL(urlTextField.getText());
                 currentImageIcon = new ImageIcon(ImageIO.read(currentURL));
                 setImage(currentImageIcon);
-            } catch (MalformedURLException e) {
-                System.out.println("URL Not Valid!");
+            } catch (MalformedURLException ex) {
+                Log.logger.error("URL Not Valid!", ex);
                 currentImageIcon = null;
-            } catch (IOException e) {
-                System.out.println("Image Not Valid!");
+            } catch (IOException ex) {
+                Log.logger.error("Image Not Valid!", ex);
                 currentImageIcon = null;
             }
             setValid();
@@ -106,7 +107,7 @@ public class EditHomeImageController {
             currentImageIcon = new ImageIcon(fileLocationTextField.getText());
             setImage(currentImageIcon);
         }catch(Exception ex){
-            System.out.println("File Not Valid!");
+            Log.logger.error("File Not Valid!", ex);
             currentImageIcon = null;
         }
     }

@@ -40,7 +40,7 @@ public class UtilityMethods {
                     .map(Path::toFile)
                     .forEach(File::delete);
         }catch(IOException ex){
-            ex.printStackTrace();
+            Log.logger.error("IOException", ex);
         }
     }
 
@@ -112,5 +112,18 @@ public class UtilityMethods {
 
     public static javafx.scene.paint.Color convertColor(Color color){
         return javafx.scene.paint.Color.rgb(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha() / 255.0);
+    }
+
+    public static Path getLocalDataDirectory(){
+        String workingDirectory;
+        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS"))
+        {
+            workingDirectory = System.getenv("AppData");
+        } else
+        {
+            // todo: test if this works on linux the way I expect (the same as it was before)
+            workingDirectory = System.getProperty("user.home");
+        }
+        return Path.of(workingDirectory);
     }
 }

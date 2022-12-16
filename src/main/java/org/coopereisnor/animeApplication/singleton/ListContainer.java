@@ -6,7 +6,9 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.AnimeAggregate;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
+import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.statistics.AnimeStatistics;
+import org.coopereisnor.utility.Log;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,16 +18,19 @@ import java.util.Collections;
 public class ListContainer {
     private final AnimeDao animeDao;
 
-    private String sortBy = "Added";
-    private String order = "Descending";
+    private String sortBy;
+    private String order;
     private String search = "";
     private ArrayList<Tag> tags = new ArrayList<>(); // starts as empty
 
     private ArrayList<Anime> filteredAndSortedAnime = null;
     private ArrayList<Pair> filteredAndSortedOccurrences = null;
 
-    public ListContainer(AnimeDao animeDao){
+    public ListContainer(AnimeDao animeDao, SettingsDao settingsDao){
         this.animeDao = animeDao;
+
+        sortBy = settingsDao.getSettings().getDefaultAttributeState();
+        order = settingsDao.getSettings().getDefaultDirectionState();
     }
 
     public String getSortBy() {
@@ -75,7 +80,7 @@ public class ListContainer {
 
     // update methods
     public void silentUpdate(){
-        System.out.println("Silent Update");
+        Log.logger.debug("Silent Update");
         // it is important that occurrences are filtered first because anime are filtered using the occurrences list
         filteredAndSortedOccurrences = sortPairs(filterPairs(AnimeAggregate.getPairs(animeDao.getCollection())));
         filteredAndSortedAnime = sortAnime(filterAnime(animeDao.getCollection()));
@@ -87,7 +92,7 @@ public class ListContainer {
     }
 
     public void update(){
-        System.out.println("Update");
+        Log.logger.debug("Update");
         silentUpdate();
         new StatisticsContainer();
     }
@@ -101,25 +106,25 @@ public class ListContainer {
         return collection;
     }
 
-    public ArrayList<Anime> sortAnime(ArrayList<Anime> anime){
-        return sortAnime(anime, sortBy);
+    public ArrayList<Anime> sortAnime(ArrayList<Anime> collection){
+        return sortAnime(collection, sortBy);
     }
 
-    public ArrayList<Anime> sortAnime(ArrayList<Anime> anime, String sort){
+    public ArrayList<Anime> sortAnime(ArrayList<Anime> collection, String sort){
         switch (sort) {
-            case "Added" -> anime.sort(Anime.SORT_BY_ADDED);
-            case "Score" -> anime.sort(Anime.SORT_BY_SCORE);
-            case "Name" -> anime.sort(Anime.SORT_BY_NAME);
-            case "Rank" -> anime.sort(Anime.SORT_BY_RANK);
-            case "Started" -> anime.sort(Anime.SORT_BY_STARTED_WATCHING_DATE);
-            case "Finished" -> anime.sort(Anime.SORT_BY_FINISHED_WATCHING_DATE);
-            case "Eps. Watched" -> anime.sort(Anime.SORT_BY_EPISODES_WATCHED);
-            case "Eps. Total" -> anime.sort(Anime.SORT_BY_EPISODES_TOTAL);
-            case "Year" -> anime.sort(Anime.SORT_BY_YEAR);
-            case "Progress" -> anime.sort(Anime.SORT_BY_PROGRESS);
-            default -> System.out.println("Reached Default in ListContainer sortAnime : " +sort);
+            case "Added" -> collection.sort(Anime.SORT_BY_ADDED);
+            case "Score" -> collection.sort(Anime.SORT_BY_SCORE);
+            case "Name" -> collection.sort(Anime.SORT_BY_NAME);
+            case "Rank" -> collection.sort(Anime.SORT_BY_RANK);
+            case "Started" -> collection.sort(Anime.SORT_BY_STARTED_WATCHING_DATE);
+            case "Finished" -> collection.sort(Anime.SORT_BY_FINISHED_WATCHING_DATE);
+            case "Eps. Watched" -> collection.sort(Anime.SORT_BY_EPISODES_WATCHED);
+            case "Eps. Total" -> collection.sort(Anime.SORT_BY_EPISODES_TOTAL);
+            case "Year" -> collection.sort(Anime.SORT_BY_YEAR);
+            case "Progress" -> collection.sort(Anime.SORT_BY_PROGRESS);
+            default -> Log.logger.error("Reached Default in ListContainer sortAnime : " +sort);
         }
-        return anime;
+        return collection;
     }
 
     public ArrayList<Pair> filterPairs(ArrayList<Pair> pairs){
@@ -146,7 +151,7 @@ public class ListContainer {
             case "Eps. Total" -> pairs.sort(Pair.SORT_BY_EPISODES_TOTAL);
             case "Year" -> pairs.sort(Pair.SORT_BY_YEAR);
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
-            default -> System.out.println("Reached Default in ListContainer sortPairs : " +sortBy);
+            default -> Log.logger.error("Reached Default in ListContainer sortPairs : " +sortBy);
         }
         return pairs;
     }
@@ -167,7 +172,7 @@ public class ListContainer {
             case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
             case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
             default -> {
-                System.out.println("Reached Default in ListContainer filter : " +tag.getFilter());
+                Log.logger.error("Reached Default in ListContainer filter : " +tag.getFilter());
                 returnValue = false; // should never happen
             }
         }

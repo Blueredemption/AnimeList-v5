@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.controllers.Common;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.statistics.AnimeStatistics;
+import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
+import org.slf4j.Logger;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -32,7 +34,7 @@ public class Application extends javafx.application.Application {
 
         if(System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
             width = 1227;
-            height = 806;
+            height = 826;
         }else{
             width = 1212;
             height = 798;
@@ -79,7 +81,7 @@ public class Application extends javafx.application.Application {
             Parent pane = FXMLLoader.load(Objects.requireNonNull(Application.class.getResource(fxml)));
             stage.getScene().setRoot(pane);
         }catch(IOException ex){
-            ex.printStackTrace();
+            Log.logger.error("IOException", ex);
         }
     }
 

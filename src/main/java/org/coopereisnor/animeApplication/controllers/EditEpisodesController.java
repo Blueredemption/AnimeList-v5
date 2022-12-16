@@ -21,6 +21,7 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
+import org.coopereisnor.utility.Log;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -172,12 +173,27 @@ public class EditEpisodesController {
                 newEpisode.setWatchDate(((DatePicker)node.getUserData()).getValue());
                 occurrence.addEpisodeWatched(newEpisode);
             }
+            applyStartAndEndConditionally(occurrence);
             animeDao.save(anime);
             application.changeScene("anime.fxml");
             singletonDao.update();
+
             ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
         }catch(Exception ex){
-            System.out.println("Null Pointer Exception voiding endAction in EditEpisodesController");
+            Log.logger.error("Null Pointer Exception voiding endAction", ex);
+        }
+    }
+
+    private void applyStartAndEndConditionally(Occurrence occurrence) {
+        if(occurrence.isTracked()){
+            if(occurrence.getStartedWatching() == null && occurrence.getEpisodesWatched().length != 0){
+                occurrence.setStartedWatching(occurrence.getEpisodesWatched()[0].getWatchDate());
+            }
+            if(occurrence.getFinishedWatching() == null && occurrence.getEpisodesWatched().length != 0){
+                if(occurrence.getEpisodesWatched().length == occurrence.getEpisodes()){
+                    occurrence.setFinishedWatching(occurrence.getEpisodesWatched()[occurrence.getEpisodes() - 1].getWatchDate());
+                }
+            }
         }
     }
 }

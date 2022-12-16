@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
+import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Common {
-    public static void configureNavigation(GridPane gridPane, Class cls){
+    public static void configureNavigation(GridPane gridPane, Class<?> cls){
         Application application = SingletonDao.getInstance().getApplication();
 
         for(Node node : gridPane.getChildren()){
@@ -55,7 +56,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(!cls.equals(SettingsController.class)) ((Button)node).setOnAction(actionEvent -> application.changeScene("settings.fxml"));
                 }
-                default -> System.out.println("Reached Default in Common configureNavigation");
+                default -> Log.logger.error("Reached Default in Common configureNavigation");
             }
         }
 
@@ -63,7 +64,7 @@ public class Common {
     }
 
     // ensures correct button has focus
-    public static void requestProperFocus(GridPane gridPane, Class cls){
+    public static void requestProperFocus(GridPane gridPane, Class<?> cls){
         for(Node node : gridPane.getChildren()){
             switch (node.getId()) {
                 case "homeButton" -> {
@@ -87,7 +88,7 @@ public class Common {
                 case "settingsButton" -> {
                     if(cls.equals(SettingsController.class)) Platform.runLater(node::requestFocus);
                 }
-                default -> System.out.println("Reached Default in Common requestProperFocus");
+                default -> Log.logger.error("Reached Default in Common requestProperFocus");
             }
         }
     }
@@ -194,6 +195,7 @@ public class Common {
         try {
             final Stage popup = new Stage();
             popup.setResizable(false);
+            popup.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("/images/Icon.png"))));
 
             popup.initModality(Modality.APPLICATION_MODAL); // makes it act like JDialog
 

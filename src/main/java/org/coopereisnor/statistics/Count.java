@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class Count {
     private final String value;
-    private final ArrayList<Anime> anime;
+    private final ArrayList<Anime> collection;
     private final ArrayList<Pair> pairs;
 
-    public Count(String value, ArrayList<Anime> anime, ArrayList<Pair> pairs){
+    public Count(String value, ArrayList<Anime> collection, ArrayList<Pair> pairs){
         this.value = value;
-        this.anime = anime;
+        this.collection = collection;
         this.pairs = pairs;
     }
 
@@ -20,8 +20,8 @@ public class Count {
         return value;
     }
 
-    public ArrayList<Anime> getAnime() {
-        return anime;
+    public ArrayList<Anime> getCollection() {
+        return collection;
     }
 
     public ArrayList<Pair> getPairs() {

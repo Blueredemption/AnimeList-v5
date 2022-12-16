@@ -13,6 +13,7 @@ module org.coopereisnor.animelist {
     requires com.almasb.fxgl.all;
     requires java.desktop;
     requires org.jsoup;
+    requires org.slf4j;
 
     opens org.coopereisnor.animeApplication to javafx.fxml;
     exports org.coopereisnor.animeApplication;

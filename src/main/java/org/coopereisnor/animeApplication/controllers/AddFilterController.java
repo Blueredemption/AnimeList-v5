@@ -17,6 +17,7 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.settingsDao.SettingsDao;
+import org.coopereisnor.utility.Log;
 
 import java.util.ArrayList;
 
@@ -118,7 +119,7 @@ public class AddFilterController {
             case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLicensors()));
             case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getWatchStatuses()));
             case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLanguages()));
-            default -> System.out.println("Reached Default in AddFilterController populateAttributeComboBox");
+            default -> Log.logger.error("Reached Default in AddFilterController populateAttributeComboBox");
         }
     }
 

@@ -1,5 +1,6 @@
 package org.coopereisnor.animeDao;
 
+import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
 
 import javax.swing.filechooser.FileSystemView;
@@ -10,7 +11,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class AnimeDao {
-    static File root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"animeObjects");
+    static File root = new File(UtilityMethods.getLocalDataDirectory() +File.separator +"AnimeList-v5" +File.separator +"animeObjects");
     ArrayList<Anime> collection;
 
     public AnimeDao(){ // constructor
@@ -47,7 +48,7 @@ public class AnimeDao {
             objectStream.close();
             fileStream.close();
         } catch (IOException | ClassNotFoundException ex) {
-            ex.printStackTrace();
+            Log.logger.error("IOException | ClassNotFoundException", ex);
         }
     }
 
@@ -55,9 +56,9 @@ public class AnimeDao {
     public void save(Anime anime){
         if(collection.contains(anime)){
             save(collection.indexOf(anime));
-            System.out.println("Saving Anime " +anime.getName());
+            Log.logger.debug("Saving Anime " +anime.getName());
         } else{
-            System.out.println("Anime Does not exist in collection, cannot save!");
+            Log.logger.error("Anime Does not exist in collection, cannot save!");
         }
     }
 
@@ -73,7 +74,7 @@ public class AnimeDao {
                 objectStream.close();
                 fileStream.close();
             } catch (IOException ex) {
-                ex.printStackTrace();
+                Log.logger.error("IOException", ex);
             }
         });
     }
@@ -115,7 +116,7 @@ public class AnimeDao {
     }
 
     public ArrayList<Anime> getCollection(){
-        return (ArrayList)collection.clone(); //todo: parameterized class
+        return (ArrayList<Anime>)collection.clone();
     }
 
     // danger zone!

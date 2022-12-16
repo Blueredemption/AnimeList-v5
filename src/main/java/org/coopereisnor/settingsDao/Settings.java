@@ -2,10 +2,6 @@ package org.coopereisnor.settingsDao;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Objects;
 
 public class Settings implements java.io.Serializable {
@@ -60,6 +56,9 @@ public class Settings implements java.io.Serializable {
     private Color textColor;
     private String notesString;
     private boolean tracking;
+    private String defaultListState;
+    private String defaultAttributeState;
+    private String defaultDirectionState;
 
 
     public Settings(){ // constructor
@@ -89,6 +88,9 @@ public class Settings implements java.io.Serializable {
         textColor = defaultTextColor;
         notesString = "";
         tracking = true;
+        defaultListState = "list.fxml"; // list over image
+        defaultAttributeState = "Added";
+        defaultDirectionState = "Descending"; // ascending over descending
     }
 
     // getters and setters
@@ -300,4 +302,27 @@ public class Settings implements java.io.Serializable {
         this.tracking = tracking;
     }
 
+    public String getDefaultListState() {
+        return defaultListState;
+    }
+
+    public void setDefaultListState(String defaultListState) {
+        this.defaultListState = defaultListState;
+    }
+
+    public String getDefaultAttributeState() {
+        return defaultAttributeState;
+    }
+
+    public void setDefaultAttributeState(String defaultAttributeState) {
+        this.defaultAttributeState = defaultAttributeState;
+    }
+
+    public String getDefaultDirectionState() {
+        return defaultDirectionState;
+    }
+
+    public void setDefaultDirectionState(String defaultDirectionState) {
+        this.defaultDirectionState = defaultDirectionState;
+    }
 }

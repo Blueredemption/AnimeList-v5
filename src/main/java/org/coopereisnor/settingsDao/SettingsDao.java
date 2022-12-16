@@ -1,5 +1,6 @@
 package org.coopereisnor.settingsDao;
 
+import org.coopereisnor.utility.Log;
 import org.coopereisnor.utility.UtilityMethods;
 
 import javax.swing.filechooser.FileSystemView;
@@ -18,7 +19,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class SettingsDao {
-    static File root = new File(FileSystemView.getFileSystemView().getHomeDirectory().toPath() +File.separator +"AnimeList-v5" +File.separator +"settings");
+    static File root = new File(UtilityMethods.getLocalDataDirectory() +File.separator +"AnimeList-v5" +File.separator +"settings");
     Settings settings;
 
     public SettingsDao(){ // constructor
@@ -57,7 +58,7 @@ public class SettingsDao {
                 objectStream.close();
                 fileStream.close();
             } catch (IOException ex) {
-                ex.printStackTrace(); // todo: logger this, and the one in AnimeDao as well
+                Log.logger.error("IOException", ex);
             }
         });
     }
@@ -103,8 +104,8 @@ public class SettingsDao {
 
             writer.write(cssFile);
             writer.close();
-        } catch (IOException ex) { // todo: logger this
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            Log.logger.error("IOException", ex);
         }
     }
 

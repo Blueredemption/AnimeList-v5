@@ -40,7 +40,9 @@ public class StatisticsController implements Controller {
     @FXML
     private VBox rankedVBox;
     @FXML
-    private Label animeWatchedLabel;
+    private Label animeLabel;
+    @FXML
+    private Label occurrencesLabel;
     @FXML
     private Label episodesWatchedLabel;
     @FXML
@@ -128,16 +130,6 @@ public class StatisticsController implements Controller {
     }
 
     private void loadStatistics(){
-        addStatisticsHeader("Wildcards");
-
-        ArrayList<Wildcard> wildcards = singletonDao.getStatisticsContainer().getWildcards();
-        for(Wildcard wildcard : wildcards){
-            addWildcardStatistics(wildcard.getDescription(), wildcard.getValue(), mouseEvent -> {
-                singletonDao.setCurrentAnime(wildcard.getPair().getAnime(), wildcard.getPair().getOccurrence());
-                application.changeScene("anime.fxml");
-            });
-        }
-
         addStatisticsComponentGrid("Type", singletonDao.getStatisticsContainer().getTypeCounts());
         addStatisticsComponentGrid("Status", singletonDao.getStatisticsContainer().getStatusCounts());
         addStatisticsComponentGrid("Season", singletonDao.getStatisticsContainer().getSeasonCounts());
@@ -150,6 +142,15 @@ public class StatisticsController implements Controller {
         addStatisticsComponentGrid("Licensor", singletonDao.getStatisticsContainer().getLicensorCounts());
         addStatisticsComponentGrid("Watch Status", singletonDao.getStatisticsContainer().getWatchStatusCounts());
         addStatisticsComponentGrid("Language", singletonDao.getStatisticsContainer().getLanguageCounts());
+
+        addStatisticsHeader("Wildcards");
+        ArrayList<Wildcard> wildcards = singletonDao.getStatisticsContainer().getWildcards();
+        for(Wildcard wildcard : wildcards){
+            addWildcardStatistics(wildcard.getDescription(), wildcard.getValue(), mouseEvent -> {
+                singletonDao.setCurrentAnime(wildcard.getPair().getAnime(), wildcard.getPair().getOccurrence());
+                application.changeScene("anime.fxml");
+            });
+        }
     }
 
     private GridPane getGridPane(int height){
@@ -185,7 +186,7 @@ public class StatisticsController implements Controller {
     }
 
     private void addWildcardStatistics(String description, String result, EventHandler<MouseEvent> eventHandler){
-        GridPane containerPane = getGridPane(24);
+        GridPane containerPane = getGridPane(26);
         statisticsVBox.getChildren().add(containerPane);
 
         ColumnConstraints col0 = new ColumnConstraints();
@@ -215,11 +216,9 @@ public class StatisticsController implements Controller {
         int rowCount = counts.size()/columnCount +((counts.size()%columnCount) == 0 ? 0 : 1);
 
         addStatisticsHeader(header +" Totals");
-
         GridPane containerPane = getGridPane((rowCount + 1)*20);
         statisticsVBox.getChildren().add(containerPane);
         Insets insets = new Insets(0, 5, 0, 5);
-
 
         for(int i = 0; i < columnCount; i++){
             ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -245,8 +244,8 @@ public class StatisticsController implements Controller {
             GridPane.setMargin(label, insets);
 
             int index = i;
-            label = makeSimpleLabel(counts.get(i).getAnime().size() + "", mouseEvent -> {
-                singletonDao.setMiniListItems(counts.get(index).getAnime());
+            label = makeSimpleLabel(counts.get(i).getCollection().size() + "", mouseEvent -> {
+                singletonDao.setMiniListItems(counts.get(index).getCollection());
                 Common.popup("miniList.fxml");
             });
             containerPane.add(label, 1 + (i/rowCount)*columnCount, i%rowCount + 1);
@@ -273,7 +272,8 @@ public class StatisticsController implements Controller {
     private void populateTimeSpent(){
         TimeSpentCalculated timeSpentCalculated = singletonDao.getStatisticsContainer().getTimeSpentCalculated();
 
-        animeWatchedLabel.setText(timeSpentCalculated.getAnimeWatched() +"");
+        animeLabel.setText(timeSpentCalculated.getAnimeCount() +"");
+        occurrencesLabel.setText(timeSpentCalculated.getOccurrencesCount() +"");
         episodesWatchedLabel.setText(timeSpentCalculated.getEpisodesWatched() +"");
         daysLabel.setText(timeSpentCalculated.getDaysSpent() +"");
         hoursLabel.setText(timeSpentCalculated.getHoursSpent() +"");

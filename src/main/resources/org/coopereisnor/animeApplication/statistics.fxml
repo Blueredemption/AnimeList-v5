@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.StatisticsController">
+<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.StatisticsController">
     <children>
         <GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="60.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -131,6 +131,8 @@
                     <rowConstraints>
                   <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="20.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="30.0" vgrow="NEVER" />
                         <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
                         <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="20.0" vgrow="NEVER" />
                         <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
@@ -146,7 +148,7 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
-                        <Label fx:id="animeWatchedLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="1">
+                        <Label fx:id="animeLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -154,7 +156,7 @@
                                 <Font size="96.0" />
                             </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" maxWidth="1.7976931348623157E308" text="Episodes Watched" GridPane.rowIndex="4">
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="77.0" maxWidth="1.7976931348623157E308" text="Episodes Watched" GridPane.rowIndex="6">
                             <GridPane.margin>
                                 <Insets left="10.0" />
                             </GridPane.margin>
@@ -162,12 +164,12 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="14" GridPane.vgrow="NEVER">
+                        <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="16" GridPane.vgrow="NEVER">
                             <GridPane.margin>
                                 <Insets left="10.0" top="10.0" />
                             </GridPane.margin>
                         </ProgressBar>
-                  <Label fx:id="episodesWatchedLabel" alignment="CENTER" layoutX="10.0" layoutY="134.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="3">
+                  <Label fx:id="episodesWatchedLabel" alignment="CENTER" layoutX="10.0" layoutY="134.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="5">
                      <font>
                         <Font size="96.0" />
                      </font>
@@ -175,7 +177,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" layoutX="20.0" layoutY="112.0" maxWidth="1.7976931348623157E308" text="Anime Watched" GridPane.rowIndex="2">
+                  <Label alignment="CENTER" layoutX="20.0" layoutY="112.0" maxWidth="1.7976931348623157E308" text="Occurrences Contained" GridPane.rowIndex="4">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -183,7 +185,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" text="Overall Time Spent" GridPane.rowIndex="6">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="60.0" maxWidth="1.7976931348623157E308" text="Overall Time Spent" GridPane.rowIndex="8">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -191,7 +193,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="daysLabel" alignment="CENTER" layoutX="20.0" layoutY="134.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="7">
+                  <Label fx:id="daysLabel" alignment="CENTER" layoutX="20.0" layoutY="134.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="9">
                      <font>
                         <Font size="46.0" />
                      </font>
@@ -199,7 +201,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="241.0" maxWidth="1.7976931348623157E308" text="Days" GridPane.rowIndex="8">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="241.0" maxWidth="1.7976931348623157E308" text="Days" GridPane.rowIndex="10">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -207,7 +209,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="hoursLabel" alignment="CENTER" layoutX="10.0" layoutY="369.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="9">
+                  <Label fx:id="hoursLabel" alignment="CENTER" layoutX="10.0" layoutY="369.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="11">
                      <font>
                         <Font size="46.0" />
                      </font>
@@ -215,7 +217,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="369.0" maxWidth="1.7976931348623157E308" text="Hours" GridPane.rowIndex="10">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="369.0" maxWidth="1.7976931348623157E308" text="Hours" GridPane.rowIndex="12">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -223,7 +225,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER" layoutX="10.0" layoutY="497.0" maxWidth="1.7976931348623157E308" text="Minutes" GridPane.rowIndex="12">
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="497.0" maxWidth="1.7976931348623157E308" text="Minutes" GridPane.rowIndex="14">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -231,9 +233,25 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="minutesLabel" alignment="CENTER" layoutX="20.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="11">
+                  <Label fx:id="minutesLabel" alignment="CENTER" layoutX="20.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="13">
                      <font>
                         <Font size="46.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="20.0" layoutY="250.0" maxWidth="1.7976931348623157E308" text="Anime Added" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="occurrencesLabel" alignment="CENTER" layoutX="20.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="##" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="96.0" />
                      </font>
                      <GridPane.margin>
                         <Insets left="10.0" />

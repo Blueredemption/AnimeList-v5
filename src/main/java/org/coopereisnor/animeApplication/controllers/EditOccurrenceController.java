@@ -17,6 +17,7 @@ import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.settingsDao.SettingsDao;
+import org.coopereisnor.utility.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -60,9 +61,9 @@ public class EditOccurrenceController {
         urlTextField.setOnKeyTyped(keyEvent -> {
             try {
                 currentURL = new URL(urlTextField.getText());
-            } catch (MalformedURLException e) {
+            } catch (MalformedURLException ex) {
                 currentURL = null;
-                System.out.println("URL Not Valid!");
+                Log.logger.error("URL Not Valid!", ex);
             }
             setValid();
         });

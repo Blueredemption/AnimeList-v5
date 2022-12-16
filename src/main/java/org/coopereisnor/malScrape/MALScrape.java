@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
+import org.coopereisnor.utility.Log;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -31,8 +32,7 @@ public class MALScrape {
         try{
             return parseWebpage(getWebpage(url), url);
         } catch (IOException ex) {
-            System.out.println("Failure in MalScrape.java"); // todo logger this
-            ex.printStackTrace();
+            Log.logger.error("Failure in MalScrape.java", ex);
             return new Occurrence(System.currentTimeMillis());
         }
     }
@@ -111,8 +111,7 @@ public class MALScrape {
             try{
                 occurrence.setEpisodes(Integer.parseInt(removeHeader(typeString)));
             }catch(Exception ex){
-                System.out.println("Could not parse Episodes string value"); // todo logger this
-                ex.printStackTrace();
+                Log.logger.error("Could not parse Episodes string value",ex);
             }
         }
 
@@ -131,19 +130,16 @@ public class MALScrape {
             try{
                 occurrence.setAiredStartDate(parseDate(split[0]));
             }catch(Exception ex){
-                System.out.println("Could not apply AiredStartDate"); // todo logger this
-                ex.printStackTrace();
+                Log.logger.error("Could not apply AiredStartDate", ex);
             }
 
             try{
                 occurrence.setAiredEndDate(parseDate(split[1]));
             }catch(ParseException ex){
-                System.out.println("Could not apply AiredEndDate"); // todo logger this
-                ex.printStackTrace();
+                Log.logger.error("Could not apply AiredEndDate", ex);
             }catch(ArrayIndexOutOfBoundsException ex){
                 occurrence.setAiredEndDate(occurrence.getAiredStartDate());
-                System.out.println("Index out of bounds exception, setting airedEndDate to airedStartDate"); // todo logger this
-                ex.printStackTrace();
+                Log.logger.error("Index out of bounds exception, setting airedEndDate to airedStartDate", ex);
             }
         }
 

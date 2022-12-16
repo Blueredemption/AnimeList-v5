@@ -1,6 +1,5 @@
 package org.coopereisnor.statistics;
 
-import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.manipulation.Pair;
@@ -9,21 +8,11 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-// this class contains methods that return information given an ArrayList of Anime
+// this class contains methods that return information given an ArrayList of Anime (could be made with less duplicate code)
 public class AnimeStatistics {
-    // public methods
-
-    public static int getTotalEpisodesWatched(ArrayList<Anime> collection){
-        int total = 0;
-        for(Anime anime : collection){
-            total += OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
-        }
-        return total;
-    }
 
     public static int getTotalTimeInSeconds(ArrayList<Anime> collection){
         int total = 0;
@@ -34,7 +23,7 @@ public class AnimeStatistics {
     }
 
     // wildcard related
-    public static Occurrence getOldestOccurrence(Anime anime){
+    private static Occurrence getOldestOccurrence(Anime anime){
         Occurrence toReturnOccurrence = null;
         for(Occurrence occurrence : anime.getOccurrences()){
             if(occurrence.getAiredStartDate() != null){
@@ -46,7 +35,7 @@ public class AnimeStatistics {
         return toReturnOccurrence;
     }
 
-    public static Occurrence getNewestOccurrence(Anime anime){
+    private static Occurrence getNewestOccurrence(Anime anime){
         Occurrence toReturnOccurrence = null;
         for(Occurrence occurrence : anime.getOccurrences()){
             if(occurrence.getAiredStartDate() != null){
@@ -60,7 +49,6 @@ public class AnimeStatistics {
 
     public static Wildcard getNewestAnime(ArrayList<Anime> collection) {
         Pair pair = null;
-
         for(Anime anime : collection){
             Occurrence occurrence = getNewestOccurrence(anime);
             if(occurrence != null && occurrence.getAiredStartDate() != null){
@@ -69,18 +57,11 @@ public class AnimeStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("Newest Anime: ", "", null);
-        }else{
-            return new Wildcard("Newest Anime: ",
-                    pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        return new Wildcard("Newest Anime: ", resultString, pair);
     }
     public static Wildcard getOldestAnime(ArrayList<Anime> collection) {
         Pair pair = null;
-
         for(Anime anime : collection){
             Occurrence occurrence = getOldestOccurrence(anime);
             if(occurrence != null && occurrence.getAiredStartDate() != null){
@@ -89,17 +70,11 @@ public class AnimeStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("Oldest Anime: ", "", null);
-        }else{
-            return new Wildcard("Oldest Anime: ",
-                    pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        return new Wildcard("Oldest Anime: ", resultString, pair);
     }
 
-    public static Occurrence getFirstStarted(Anime anime){
+    private static Occurrence getFirstStarted(Anime anime){
         Occurrence toReturnOccurrence = null;
         for(Occurrence occurrence : anime.getOccurrences()){
             if(occurrence.getStartedWatching() != null){
@@ -113,7 +88,6 @@ public class AnimeStatistics {
 
     public static Wildcard getMostRecentlyStartedAnime(ArrayList<Anime> collection) {
         Pair pair = null;
-
         for(Anime anime : collection){
             Occurrence occurrence = getFirstStarted(anime);
             if(occurrence != null && occurrence.getStartedWatching() != null){
@@ -122,19 +96,12 @@ public class AnimeStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("Most Recently Started Anime: ", "", null);
-        }else{
-            return new Wildcard("Most Recently Started Anime: ",
-                    pair.getAnime().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getAnime().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        return new Wildcard("Most Recently Started Anime: ", resultString, pair);
     }
 
     public static Wildcard getFirstStartedAnime(ArrayList<Anime> collection) {
         Pair pair = null;
-
         for(Anime anime : collection){
             Occurrence occurrence = getFirstStarted(anime);
             if(occurrence != null && occurrence.getStartedWatching() != null){
@@ -143,14 +110,8 @@ public class AnimeStatistics {
                 }
             }
         }
-
-        if(pair == null){
-            return new Wildcard("First (Recorded) Started Anime: ", "", null);
-        }else{
-            return new Wildcard("First (Recorded) Started Anime: ",
-                    pair.getAnime().getName() +" (" + UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")",
-                    pair);
-        }
+        String resultString = pair != null ? pair.getAnime().getName() +" (" + UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        return new Wildcard("First (Recorded) Started Anime: ", resultString, pair);
     }
 
     public static Wildcard getLongestAnime(ArrayList<Anime> collection){
@@ -163,14 +124,8 @@ public class AnimeStatistics {
                keepEpisodes = totalEpisodes;
             }
         }
-
-        if(keepAnime  == null){
-            return new Wildcard("Longest Anime: ", "", null);
-        }else{
-            return new Wildcard("Longest Anime: ",
-                    keepAnime.getName() +" (" + keepEpisodes +" Episodes)",
-                    new Pair(keepAnime, null));
-        }
+        String resultString = keepAnime != null ? keepAnime.getName() +" (" + keepEpisodes +" Episodes)" : "";
+        return new Wildcard("Longest Anime: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
     }
 
     public static Wildcard getShortestAnime(ArrayList<Anime> collection){
@@ -183,69 +138,41 @@ public class AnimeStatistics {
                 keepEpisodes = totalEpisodes;
             }
         }
-
-        if(keepAnime == null){
-            return new Wildcard("Shortest Anime: ", "", null);
-        }else{
-            return new Wildcard("Shortest Anime: ",
-                    keepAnime.getName() +" (" + keepEpisodes +" Episodes)",
-                    new Pair(keepAnime, null));
-        }
+        String resultString = keepAnime != null ? keepAnime.getName() +" (" + keepEpisodes +" Episodes)" : "";
+        return new Wildcard("Shortest Anime: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
     }
 
     public static Wildcard getLongestSpan(ArrayList<Anime> collection){
-
         Anime keepAnime = null;
         long keepDays = Integer.MIN_VALUE;
         for(Anime anime : collection){
             LocalDate start = OccurrenceStatistics.getEarliestStartDate(anime.getOccurrences());
             LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
-
-            if(start == null || end == null){
-                continue;
-            }
-
+            if(start == null || end == null) continue;
             long totalDays = DAYS.between(start, end);
             if(totalDays > keepDays){
                 keepAnime = anime;
                 keepDays = totalDays;
             }
         }
-
-        if(keepAnime == null){
-            return new Wildcard("Longest Span: ", "", null);
-        }else{
-            return new Wildcard("Longest Span: ",
-                    keepAnime.getName() +" (" + keepDays +" Days)",
-                    new Pair(keepAnime, null));
-        }
+        String resultString = keepAnime != null ? keepAnime.getName() +" (" + keepDays +" Days)" : "";
+        return new Wildcard("Longest Span: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
     }
 
     public static Wildcard getShortestSpan(ArrayList<Anime> collection){
-
         Anime keepAnime = null;
         long keepDays = Integer.MAX_VALUE;
         for(Anime anime : collection){
             LocalDate start = OccurrenceStatistics.getEarliestStartDate(anime.getOccurrences());
             LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
-
-            if(start == null || end == null){
-                continue;
-            }
-
+            if(start == null || end == null) continue;
             long totalDays = DAYS.between(start, end);
             if(totalDays < keepDays){
                 keepAnime = anime;
                 keepDays = totalDays;
             }
         }
-
-        if(keepAnime == null){
-            return new Wildcard("Shortest Span: ", "", null);
-        }else{
-            return new Wildcard("Shortest Span: ",
-                    keepAnime.getName() +" (" + keepDays +" Days)",
-                    new Pair(keepAnime, null));
-        }
+        String resultString = keepAnime != null ? keepAnime.getName() +" (" + keepDays +" Days)" : "";
+        return new Wildcard("Most Recently Started Occurrence: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
     }
 }
