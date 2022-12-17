@@ -35,7 +35,7 @@
             </children>
         </GridPane>
         <TextField fx:id="nameTextField" VBox.vgrow="ALWAYS" />
-      <Label maxWidth="1.7976931348623157E308" text="Occurrence Order:" />
+      <Label maxWidth="1.7976931348623157E308" text="Occurrence Order (Click to Move Upwards):" />
         <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="20.0" layoutY="60.0" maxHeight="-Infinity" minHeight="89.0" prefHeight="89.0" VBox.vgrow="ALWAYS">
             <content>
                 <FlowPane fx:id="flowPane" hgap="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="470.0" vgap="3.0">

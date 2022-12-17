@@ -137,7 +137,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> languages = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            languages.add(pair.getOccurrence().getLanguage());
+            languages.addAll(Arrays.asList(pair.getOccurrence().getLanguages()));
         }
 
         return UtilityMethods.convertToStringArray(languages);

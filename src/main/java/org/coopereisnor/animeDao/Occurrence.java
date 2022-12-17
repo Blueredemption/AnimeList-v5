@@ -7,12 +7,11 @@ import javax.swing.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 
 public class Occurrence implements java.io.Serializable {
-    private long identifier;
+    private final long identifier;
     private URL url;
     private String name;
     private String type; // Season, OVA, Movie, Other?
@@ -38,7 +37,7 @@ public class Occurrence implements java.io.Serializable {
     private boolean focused;
     private boolean tracked;
     private double score;
-    private String language;
+    private final LinkedHashSet<String> languages;
     private String watchStatus;
     private String notes;
 
@@ -70,7 +69,7 @@ public class Occurrence implements java.io.Serializable {
         focused = false;
         tracked = true;
         score = -1;
-        language = "";
+        languages = new LinkedHashSet<>();
         notes = "";
     }
 
@@ -139,6 +138,10 @@ public class Occurrence implements java.io.Serializable {
         return UtilityMethods.convertToStringArray(themes);
     }
 
+    public String[] getLanguages(){
+        return UtilityMethods.convertToStringArray(languages);
+    }
+
     public int getDuration() {
         return duration;
     }
@@ -174,10 +177,6 @@ public class Occurrence implements java.io.Serializable {
 
     public double getScore() {
         return score;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     public String getWatchStatus() {
@@ -259,10 +258,6 @@ public class Occurrence implements java.io.Serializable {
         this.score = score;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
     public void setWatchStatus(String watchStatus) {
         this.watchStatus = watchStatus;
     }
@@ -293,6 +288,10 @@ public class Occurrence implements java.io.Serializable {
         themes.add(theme);
     }
 
+    public void addLanguage(String language) {
+        languages.add(language);
+    }
+
     public void addEpisodeWatched(Episode episode){
         episodesWatched.add(episode);
     }
@@ -316,6 +315,10 @@ public class Occurrence implements java.io.Serializable {
 
     public void removeTheme(String theme) {
         themes.remove(theme);
+    }
+
+    public void removeLanguage(String language) {
+        languages.remove(language);
     }
 
     public void removeEpisodeWatched(Episode episode){

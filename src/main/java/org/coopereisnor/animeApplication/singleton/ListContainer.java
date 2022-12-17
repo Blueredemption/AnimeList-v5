@@ -167,7 +167,7 @@ public class ListContainer {
             case "Producer" -> returnValue = Arrays.asList(pair.getOccurrence().getProducers()).contains(tag.getAttribute());
             case "Licensor" -> returnValue = Arrays.asList(pair.getOccurrence().getLicensors()).contains(tag.getAttribute());
             case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
-            case "Language" ->  returnValue = pair.getOccurrence().getLanguage().equals(tag.getAttribute());
+            case "Language" ->  returnValue = Arrays.asList(pair.getOccurrence().getLanguages()).contains(tag.getAttribute());
             default -> {
                 Program.logger.error("Reached Default in ListContainer filter : " +tag.getFilter());
                 returnValue = false; // should never happen

@@ -7,9 +7,8 @@ import org.coopereisnor.malScrape.MALScrape;
 
 public class Main {
     public static void main(String[] args){
-        //addFamiliarOfZero();
-        //addTestAnime();
-        //random();
+        addFamiliarOfZero();
+        addTestAnime();
     }
 
     public static void addFamiliarOfZero(){
@@ -92,9 +91,5 @@ public class Main {
         anime.getOccurrences().get(0).setFocused(true);
         anime.setName("Trigun");
         animeDao.save(anime);
-    }
-
-    public static void random(){
-
     }
 }

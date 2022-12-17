@@ -46,9 +46,7 @@ public class HomeController implements Controller{
         Common.getImagePaneFor(imagePane, UtilityMethods.toBufferedImage(settingsDao.getSettings().getHomeImage().getImage()));
 
         imagePane.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                Common.popup("editHomeImage.fxml");
-            }
+            Common.popup("editHomeImage.fxml");
         });
     }
 

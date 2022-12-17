@@ -62,12 +62,6 @@ public class AnimeController implements Controller{
     }
 
     public void configureAnimeActions(){
-        nameLabel.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.SECONDARY){
-
-            }
-        });
-
         previousButton.setOnAction(actionEvent -> {
             Anime nextAnime = Common.getNextAnime(anime, false);
             singletonDao.setCurrentAnime(nextAnime, null);
@@ -85,16 +79,12 @@ public class AnimeController implements Controller{
         });
 
         rankLabel.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                Common.popup("editRank.fxml");
-            }
+            Common.popup("editRank.fxml");
         });
 
         scoreLabel.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                singletonDao.setCurrentField("AnimeScore");
-                Common.popup("editScore.fxml");
-            }
+            singletonDao.setCurrentField("AnimeScore");
+            Common.popup("editScore.fxml");
         });
 
         newOccurrenceButton.setOnAction(actionEvent -> {
@@ -140,9 +130,7 @@ public class AnimeController implements Controller{
         // the anime level information
         nameLabel.setText(anime.getName());
         nameLabel.setOnMouseClicked(mouseEvent -> {
-            if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                Common.popup("editAnime.fxml");
-            }
+            Common.popup("editAnime.fxml");
         });
 
         rankLabel.setText("Rank:   " +(anime.getRank() > animeDao.getCollection().size() ? "" : anime.getRank()));
@@ -230,137 +218,104 @@ public class AnimeController implements Controller{
             createDataLabels(counter++, gridPane, "Type:",
                     occurrence.getType(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Type");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Type");
+                        Common.popup("editTag.fxml");
                     });
             createDataLabels(counter++, gridPane, "Episodes:",
                     occurrence.getEpisodes() == 0 && occurrence.getEpisodesWatched().length == 0 ? "" : occurrence.getEpisodesWatched().length +" / " +occurrence.getEpisodes() +" Episodes",
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            Common.popup("editEpisodes.fxml");
-                        }
+                        Common.popup("editEpisodes.fxml");
                     });
             createDataLabels(counter++, gridPane, "Status:",
                     occurrence.getStatus(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Status");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Status");
+                        Common.popup("editTag.fxml");
                     });
             createDataLabels(counter++, gridPane, "Aired Dates:",
                     UtilityMethods.getDatesString(occurrence.getAiredStartDate(), occurrence.getAiredEndDate()),
                     mouseEvent -> {
-                if(mouseEvent.getButton() == MouseButton.SECONDARY){
                         singletonDao.setCurrentField("AiredDates");
                         Common.popup("editDates.fxml");
-                    }});
+                    });
             createDataLabels(counter++, gridPane, "Premiered:",
                     occurrence.getPremieredYear() <= 1900 ? "" : occurrence.getPremieredSeason() +" " +occurrence.getPremieredYear(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            Common.popup("editPremiered.fxml");
-                        }
+                        Common.popup("editPremiered.fxml");
                     });
             createDataLabels(counter++, gridPane, "Genres:",
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getGenres()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Genres");
-                            Common.popup("editTags.fxml");
-                        }
+                        singletonDao.setCurrentField("Genres");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter++, gridPane, "Themes:",
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getThemes()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Themes");
-                            Common.popup("editTags.fxml");
-                        }
+                        singletonDao.setCurrentField("Themes");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter++, gridPane, "Durration:",
                     occurrence.getDuration() > 0 ? occurrence.getDuration()/60 +" Minutes" : "",
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            Common.popup("editDurration.fxml");
-                        }});
+                        Common.popup("editDurration.fxml");
+                    });
             createDataLabels(counter++, gridPane, "Content Rating:",
                     occurrence.getRating(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Content Rating");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Content Rating");
+                        Common.popup("editTag.fxml");
                     });
             createDataLabels(counter++, gridPane, "", "", mouseEvent -> { }); // using as a spacer
             createDataLabels(counter++, gridPane, "Source:",
                     occurrence.getSource(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Source");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Source");
+                        Common.popup("editTag.fxml");
                     });
             createDataLabels(counter++, gridPane, "Studios:",
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getStudios()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Studios");
-                            Common.popup("editTags.fxml");
-                        }
+                        singletonDao.setCurrentField("Studios");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter++, gridPane, "Producers:",
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getProducers()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Producers");
-                            Common.popup("editTags.fxml");
-                        }
+                        singletonDao.setCurrentField("Producers");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter++, gridPane, "Licensors:",
                     UtilityMethods.getAsCommaSeperatedString(occurrence.getLicensors()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Licensors");
-                            Common.popup("editTags.fxml");
-                        }
+                        singletonDao.setCurrentField("Licensors");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter++, gridPane, "", "", mouseEvent -> { }); // using as a spacer
             createDataLabels(counter++, gridPane, "Watch Status:",
                     occurrence.getWatchStatus(),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Watch Status");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Watch Status");
+                        Common.popup("editTag.fxml");
                     });
             createDataLabels(counter++, gridPane, "Watch Dates:",
                     UtilityMethods.getDatesString(occurrence.getStartedWatching(), occurrence.getFinishedWatching()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("WatchDates");
-                            Common.popup("editDates.fxml");
-                        }
+                        singletonDao.setCurrentField("WatchDates");
+                        Common.popup("editDates.fxml");
                     });
             createDataLabels(counter++, gridPane, "Language:",
-                    occurrence.getLanguage(),
+                    UtilityMethods.getAsCommaSeperatedString(occurrence.getLanguages()),
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("Language");
-                            Common.popup("editTag.fxml");
-                        }
+                        singletonDao.setCurrentField("Languages");
+                        Common.popup("editTags.fxml");
                     });
             createDataLabels(counter, gridPane, "Score:",
                     occurrence.getScore() == -1 ? "" : occurrence.getScore() == 10 || occurrence.getScore() == 0 ? (int)occurrence.getScore() +"" : occurrence.getScore() +"",
                     mouseEvent -> {
-                        if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                            singletonDao.setCurrentField("OccurrenceScore");
-                            Common.popup("editScore.fxml");
-                        }
+                        singletonDao.setCurrentField("OccurrenceScore");
+                        Common.popup("editScore.fxml");
                     });
-
 
             BufferedImage bufferedImage = UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage());
             Pane imagePane = Common.getImagePaneFor(null, bufferedImage);
@@ -369,9 +324,7 @@ public class AnimeController implements Controller{
             imagePane.setMaxSize(imageWidth, imageHeight);
             imagePane.setPadding(new Insets(5,0,0,5));
             imagePane.setOnMouseClicked(mouseEvent -> {
-                if(mouseEvent.getButton() == MouseButton.SECONDARY){
-                    Common.popup("editImage.fxml");
-                }
+                Common.popup("editImage.fxml");
             });
 
             hBox.getChildren().add(imagePane);

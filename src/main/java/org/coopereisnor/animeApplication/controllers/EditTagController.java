@@ -64,7 +64,6 @@ public class EditTagController {
             case "Content Rating" -> currentParam = occurrence.getRating();
             case "Source" -> currentParam = occurrence.getSource();
             case "Watch Status" -> currentParam = occurrence.getWatchStatus();
-            case "Language" -> currentParam = occurrence.getLanguage();
             default -> Program.logger.error("Reached Default in EditTagController setCurrentParam");
         }
     }
@@ -76,7 +75,6 @@ public class EditTagController {
             case "Content Rating" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getRatings()));
             case "Source" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getSources()));
             case "Watch Status" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getWatchStatuses()));
-            case "Language" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLanguages()));
             default -> Program.logger.error("Reached Default in EditTagController setParamOptions");
         }
 
@@ -186,7 +184,6 @@ public class EditTagController {
             case "Content Rating" -> occurrence.setRating(param);
             case "Source" -> occurrence.setSource(param);
             case "Watch Status" -> occurrence.setWatchStatus(param);
-            case "Language" -> occurrence.setLanguage(param);
             default -> Program.logger.error("Reached Default in EditTagController endAction");
         }
         animeDao.save(anime);

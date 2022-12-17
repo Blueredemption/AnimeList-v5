@@ -64,6 +64,7 @@ public class EditTagsController {
             case "Studios" -> currentParams = new ArrayList<>(List.of(occurrence.getStudios()));
             case "Producers" -> currentParams = new ArrayList<>(List.of(occurrence.getProducers()));
             case "Licensors" -> currentParams = new ArrayList<>(List.of(occurrence.getLicensors()));
+            case "Languages" -> currentParams = new ArrayList<>(List.of(occurrence.getLanguages()));
             default -> Program.logger.error("Reached Default in EditTagsController setCurrentParams");
         }
     }
@@ -75,6 +76,7 @@ public class EditTagsController {
             case "Studios" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getStudios()));
             case "Producers" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getProducers()));
             case "Licensors" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLicensors()));
+            case "Languages" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLanguages()));
             default -> Program.logger.error("Reached Default in EditTagsController setParamOptions");
         }
 
@@ -184,6 +186,10 @@ public class EditTagsController {
             case "Licensors" -> {
                 for(Node node : optionsFlowPane.getChildren()) occurrence.removeLicensor(((Tag)node.getUserData()).getAttribute());
                 for(Node node : selectedFlowPane.getChildren()) occurrence.addLicensor(((Tag)node.getUserData()).getAttribute());
+            }
+            case "Languages" -> {
+                for(Node node : optionsFlowPane.getChildren()) occurrence.removeLanguage(((Tag)node.getUserData()).getAttribute());
+                for(Node node : selectedFlowPane.getChildren()) occurrence.addLanguage(((Tag)node.getUserData()).getAttribute());
             }
             default -> Program.logger.error("Reached Default in EditTagsController endAction");
         }
