@@ -5,8 +5,6 @@ import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class YearSet{
     private final int year;
@@ -24,10 +22,10 @@ public class YearSet{
     private ArrayList<XYChart.Series<String, Number>> getAggregateOfSeries(ArrayList<Pair> pairs, SeriesByInterface seriesByInterface, int year){
         ArrayList<XYChart.Series<String, Number>> aggregateOfSeries = new ArrayList<>();
         for(Pair pair : pairs){
-            if(pair.getOccurrence().isTracked()){
+            if(pair.occurrence().isTracked()){
                 XYChart.Series<String, Number> episodeSeries = new XYChart.Series<>();
-                episodeSeries.setName(pair.getOccurrence().getName());
-                for(Episode episode : pair.getOccurrence().getEpisodesWatched()){
+                episodeSeries.setName(pair.occurrence().getName());
+                for(Episode episode : pair.occurrence().getEpisodesWatched()){
                     if(episode.getWatchDate().getYear() == year){
                         XYChart.Data<String, Number> data = new XYChart.Data<>(seriesByInterface.columnName(episode), 1);
                         data.setExtraValue(pair);

@@ -1,30 +1,25 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.malScrape.MALScrape;
 import org.coopereisnor.manipulation.Pair;
-import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.util.ArrayList;
 
 public class MiniListController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
 
     @FXML
@@ -51,8 +46,8 @@ public class MiniListController {
             anime = ((Anime)object);
             occurrence = null;
         }else{
-            anime = ((Pair)object).getAnime();
-            occurrence = ((Pair)object).getOccurrence();
+            anime = ((Pair)object).anime();
+            occurrence = ((Pair)object).occurrence();
         }
         GridPane containerPane = getGridPane(24);
         listVBox.getChildren().add(containerPane);

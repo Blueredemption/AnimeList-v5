@@ -175,18 +175,18 @@ public class ListContainer {
     public boolean getFilterApply(Pair pair, Tag tag){
         boolean returnValue;
         switch(tag.getFilter()){
-            case "Type" -> returnValue = pair.getOccurrence().getType().equals(tag.getAttribute());
-            case "Status" -> returnValue = pair.getOccurrence().getStatus().equals(tag.getAttribute());
-            case "Season" -> returnValue = pair.getOccurrence().getPremieredSeason().equals(tag.getAttribute());
-            case "Genre" -> returnValue = Arrays.asList(pair.getOccurrence().getGenres()).contains(tag.getAttribute());
-            case "Theme" -> returnValue = Arrays.asList(pair.getOccurrence().getThemes()).contains(tag.getAttribute());
-            case "Rating" -> returnValue = pair.getOccurrence().getRating().equals(tag.getAttribute());
-            case "Source" -> returnValue = pair.getOccurrence().getSource().equals(tag.getAttribute());
-            case "Studio" -> returnValue = Arrays.asList(pair.getOccurrence().getStudios()).contains(tag.getAttribute());
-            case "Producer" -> returnValue = Arrays.asList(pair.getOccurrence().getProducers()).contains(tag.getAttribute());
-            case "Licensor" -> returnValue = Arrays.asList(pair.getOccurrence().getLicensors()).contains(tag.getAttribute());
-            case "Watch Status" -> returnValue = pair.getOccurrence().getWatchStatus().equals(tag.getAttribute());
-            case "Language" ->  returnValue = Arrays.asList(pair.getOccurrence().getLanguages()).contains(tag.getAttribute());
+            case "Type" -> returnValue = pair.occurrence().getType().equals(tag.getAttribute());
+            case "Status" -> returnValue = pair.occurrence().getStatus().equals(tag.getAttribute());
+            case "Season" -> returnValue = pair.occurrence().getPremieredSeason().equals(tag.getAttribute());
+            case "Genre" -> returnValue = Arrays.asList(pair.occurrence().getGenres()).contains(tag.getAttribute());
+            case "Theme" -> returnValue = Arrays.asList(pair.occurrence().getThemes()).contains(tag.getAttribute());
+            case "Rating" -> returnValue = pair.occurrence().getRating().equals(tag.getAttribute());
+            case "Source" -> returnValue = pair.occurrence().getSource().equals(tag.getAttribute());
+            case "Studio" -> returnValue = Arrays.asList(pair.occurrence().getStudios()).contains(tag.getAttribute());
+            case "Producer" -> returnValue = Arrays.asList(pair.occurrence().getProducers()).contains(tag.getAttribute());
+            case "Licensor" -> returnValue = Arrays.asList(pair.occurrence().getLicensors()).contains(tag.getAttribute());
+            case "Watch Status" -> returnValue = pair.occurrence().getWatchStatus().equals(tag.getAttribute());
+            case "Language" ->  returnValue = Arrays.asList(pair.occurrence().getLanguages()).contains(tag.getAttribute());
             default -> {
                 Program.logger.error("Reached Default in ListContainer filter : " +tag.getFilter());
                 returnValue = false; // should never happen
@@ -203,7 +203,7 @@ public class ListContainer {
     public boolean containsAtLeastOneOccurrence(Anime anime, ArrayList<Pair> pairs){
         boolean contains = false;
         for(Pair pair : pairs){
-            if(anime.getOccurrences().contains(pair.getOccurrence())) {
+            if(anime.getOccurrences().contains(pair.occurrence())) {
                 contains = true;
                 break;
             }
@@ -236,8 +236,8 @@ public class ListContainer {
         String inquiry = searchString.trim();
 
         for(Pair pair : pairs){
-            String[] split = pair.getOccurrence().getName().toUpperCase().split(" ");
-            if(pair.getOccurrence().getName().toUpperCase().startsWith(inquiry.toUpperCase())){
+            String[] split = pair.occurrence().getName().toUpperCase().split(" ");
+            if(pair.occurrence().getName().toUpperCase().startsWith(inquiry.toUpperCase())){
                 returnList.add(pair);
                 continue;
             }

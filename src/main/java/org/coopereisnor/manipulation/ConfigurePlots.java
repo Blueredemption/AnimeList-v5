@@ -27,8 +27,8 @@ public class ConfigurePlots {
     private ArrayList<Episode> aggregateEpisodes(ArrayList<Pair> pairs){
         ArrayList<Episode> episodes = new ArrayList<>();
         for(Pair pair : pairs){
-            if(pair.getOccurrence().isTracked()){
-                episodes.addAll(Arrays.asList(pair.getOccurrence().getEpisodesWatched()));
+            if(pair.occurrence().isTracked()){
+                episodes.addAll(Arrays.asList(pair.occurrence().getEpisodesWatched()));
             }
         }
         episodes.sort(Comparator.comparing(Episode::getWatchDate));

@@ -93,7 +93,7 @@ public class OccurrenceStatistics {
         ArrayList<Occurrence> onlyOccurrences = new ArrayList<>();
 
         for(Pair pair : pairs){
-            onlyOccurrences.add(pair.getOccurrence());
+            onlyOccurrences.add(pair.occurrence());
         }
 
         return onlyOccurrences;
@@ -115,26 +115,26 @@ public class OccurrenceStatistics {
     public static Wildcard getNewestOccurrence(ArrayList<Pair> pairs){
         Pair pair = null;
         for(Pair currentPair : pairs){
-            if(currentPair.getOccurrence().getAiredStartDate() != null){
-                if(pair == null || currentPair.getOccurrence().getAiredStartDate().isAfter(pair.getOccurrence().getAiredStartDate())){
+            if(currentPair.occurrence().getAiredStartDate() != null){
+                if(pair == null || currentPair.occurrence().getAiredStartDate().isAfter(pair.occurrence().getAiredStartDate())){
                     pair = currentPair;
                 }
             }
         }
-        String resultString = pair != null ? pair.getOccurrence().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        String resultString = pair != null ? pair.occurrence().getName() +" (" +pair.occurrence().getPremieredSeason() +" " +pair.occurrence().getPremieredYear() +")" : "";
         return new Wildcard("Newest Occurrence: ", resultString, pair);
     }
 
     public static Wildcard getMostRecentlyStartedOccurrence(ArrayList<Pair> pairs){
         Pair pair = null;
         for(Pair currentPair : pairs){
-            if(currentPair.getOccurrence().getStartedWatching() != null){
-                if(pair == null || currentPair.getOccurrence().getStartedWatching().isAfter(pair.getOccurrence().getStartedWatching())){
+            if(currentPair.occurrence().getStartedWatching() != null){
+                if(pair == null || currentPair.occurrence().getStartedWatching().isAfter(pair.occurrence().getStartedWatching())){
                     pair = currentPair;
                 }
             }
         }
-        String resultString = pair != null ? pair.getOccurrence().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        String resultString = pair != null ? pair.occurrence().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.occurrence().getStartedWatching()) +")" : "";
         return new Wildcard("Most Recently Started Occurrence: ", resultString, pair);
     }
 }

@@ -14,7 +14,7 @@ public class AnimeDao {
     ArrayList<Anime> collection;
 
     public AnimeDao(){ // constructor
-        collection = new ArrayList();
+        collection = new ArrayList<>();
         initialize();
     }
 

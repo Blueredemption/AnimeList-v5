@@ -12,12 +12,10 @@ import org.coopereisnor.animeApplication.customJavaFXObjects.PercentProgressBar;
 import org.coopereisnor.animeApplication.singleton.ListContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
+import org.coopereisnor.manipulation.OccurrenceStatistics;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
-import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.manipulation.OccurrenceStatistics;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
@@ -25,8 +23,6 @@ import java.util.ArrayList;
 
 public class ListController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
 
     @FXML
@@ -99,13 +95,13 @@ public class ListController implements Controller{
         }else{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
                 String number = ++iterator +":";
-                String name = pair.getOccurrence().getName();
-                String episodes = pair.getOccurrence().getEpisodes() == 0 ? "" : pair.getOccurrence().getEpisodes() +"";
-                String season = pair.getOccurrence().getPremieredSeason();
-                String year = pair.getOccurrence().getPremieredYear() == -1 ? "" : pair.getOccurrence().getPremieredYear() +"";
-                double progress = ((double)pair.getOccurrence().getEpisodesWatched().length)/((double)pair.getOccurrence().getEpisodes());
+                String name = pair.occurrence().getName();
+                String episodes = pair.occurrence().getEpisodes() == 0 ? "" : pair.occurrence().getEpisodes() +"";
+                String season = pair.occurrence().getPremieredSeason();
+                String year = pair.occurrence().getPremieredYear() == -1 ? "" : pair.occurrence().getPremieredYear() +"";
+                double progress = ((double)pair.occurrence().getEpisodesWatched().length)/((double)pair.occurrence().getEpisodes());
 
-                addListComponent(number, name,episodes, season, year, progress, pair.getAnime(), pair.getOccurrence());
+                addListComponent(number, name,episodes, season, year, progress, pair.anime(), pair.occurrence());
             }
         }
     }
@@ -202,7 +198,7 @@ public class ListController implements Controller{
             }
         } else{
             for (Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())) {
-                addImageComponent(UtilityMethods.toBufferedImage(pair.getOccurrence().getImageIcon().getImage()), pair.getAnime(), pair.getOccurrence());
+                addImageComponent(UtilityMethods.toBufferedImage(pair.occurrence().getImageIcon().getImage()), pair.anime(), pair.occurrence());
             }
         }
     }

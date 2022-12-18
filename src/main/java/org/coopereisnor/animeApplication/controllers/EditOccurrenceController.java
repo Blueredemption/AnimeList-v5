@@ -15,7 +15,6 @@ import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.malScrape.MALScrape;
-import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +22,6 @@ import java.net.URL;
 public class EditOccurrenceController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final Anime anime = singletonDao.getCurrentAnime();
     private final Occurrence occurrence = singletonDao.getCurrentOccurrence();

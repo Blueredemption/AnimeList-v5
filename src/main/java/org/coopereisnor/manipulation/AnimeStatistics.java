@@ -50,12 +50,12 @@ public class AnimeStatistics {
         for(Anime anime : collection){
             Occurrence occurrence = getNewestOccurrence(anime);
             if(occurrence != null && occurrence.getAiredStartDate() != null){
-                if(pair == null || occurrence.getAiredStartDate().isAfter(pair.getOccurrence().getAiredStartDate())){
+                if(pair == null || occurrence.getAiredStartDate().isAfter(pair.occurrence().getAiredStartDate())){
                     pair = new Pair(anime, occurrence);
                 }
             }
         }
-        String resultString = pair != null ? pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        String resultString = pair != null ? pair.anime().getName() +" (" +pair.occurrence().getPremieredSeason() +" " +pair.occurrence().getPremieredYear() +")" : "";
         return new Wildcard("Newest Anime: ", resultString, pair);
     }
     public static Wildcard getOldestAnime(ArrayList<Anime> collection) {
@@ -63,12 +63,12 @@ public class AnimeStatistics {
         for(Anime anime : collection){
             Occurrence occurrence = getOldestOccurrence(anime);
             if(occurrence != null && occurrence.getAiredStartDate() != null){
-                if(pair == null || occurrence.getAiredStartDate().isBefore(pair.getOccurrence().getAiredStartDate())){
+                if(pair == null || occurrence.getAiredStartDate().isBefore(pair.occurrence().getAiredStartDate())){
                     pair = new Pair(anime, occurrence);
                 }
             }
         }
-        String resultString = pair != null ? pair.getAnime().getName() +" (" +pair.getOccurrence().getPremieredSeason() +" " +pair.getOccurrence().getPremieredYear() +")" : "";
+        String resultString = pair != null ? pair.anime().getName() +" (" +pair.occurrence().getPremieredSeason() +" " +pair.occurrence().getPremieredYear() +")" : "";
         return new Wildcard("Oldest Anime: ", resultString, pair);
     }
 
@@ -89,12 +89,12 @@ public class AnimeStatistics {
         for(Anime anime : collection){
             Occurrence occurrence = getFirstStarted(anime);
             if(occurrence != null && occurrence.getStartedWatching() != null){
-                if(pair == null || occurrence.getStartedWatching().isAfter(pair.getOccurrence().getStartedWatching())){
+                if(pair == null || occurrence.getStartedWatching().isAfter(pair.occurrence().getStartedWatching())){
                     pair = new Pair(anime, occurrence);
                 }
             }
         }
-        String resultString = pair != null ? pair.getAnime().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        String resultString = pair != null ? pair.anime().getName() +" (" +UtilityMethods.getAsFormattedDate(pair.occurrence().getStartedWatching()) +")" : "";
         return new Wildcard("Most Recently Started Anime: ", resultString, pair);
     }
 
@@ -103,12 +103,12 @@ public class AnimeStatistics {
         for(Anime anime : collection){
             Occurrence occurrence = getFirstStarted(anime);
             if(occurrence != null && occurrence.getStartedWatching() != null){
-                if(pair == null || occurrence.getStartedWatching().isBefore(pair.getOccurrence().getStartedWatching())){
+                if(pair == null || occurrence.getStartedWatching().isBefore(pair.occurrence().getStartedWatching())){
                     pair = new Pair(anime, occurrence);
                 }
             }
         }
-        String resultString = pair != null ? pair.getAnime().getName() +" (" + UtilityMethods.getAsFormattedDate(pair.getOccurrence().getStartedWatching()) +")" : "";
+        String resultString = pair != null ? pair.anime().getName() +" (" + UtilityMethods.getAsFormattedDate(pair.occurrence().getStartedWatching()) +")" : "";
         return new Wildcard("First (Recorded) Started Anime: ", resultString, pair);
     }
 

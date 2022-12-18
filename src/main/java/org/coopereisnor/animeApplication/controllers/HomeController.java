@@ -1,33 +1,16 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import org.coopereisnor.animeApplication.Application;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.utility.UtilityMethods;
 
-import java.io.File;
-import java.nio.file.Paths;
-import java.util.Objects;
-
 public class HomeController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
-    private final Application application = singletonDao.getApplication();
 
     @FXML
     private GridPane gridPane;

@@ -124,7 +124,6 @@ public class UtilityMethods {
             workingDirectory = System.getenv("AppData");
         } else
         {
-            // todo: test if this works on linux the way I expect (the same as it was before)
             workingDirectory = System.getProperty("user.home");
         }
         return Path.of(workingDirectory);
@@ -133,9 +132,7 @@ public class UtilityMethods {
 
     public static Color averageColor(ImageIcon imageIcon) {
         BufferedImage bi = toBufferedImage(imageIcon.getImage());
-
         int step = 5;
-
         int sampled = 0;
         long sumr = 0, sumg = 0, sumb = 0;
         for (int x = 0; x < bi.getWidth(); x++) {
@@ -149,7 +146,6 @@ public class UtilityMethods {
                 }
             }
         }
-        int dim = bi.getWidth()*bi.getHeight();
         return new Color(Math.round(sumr / sampled), Math.round(sumg / sampled), Math.round(sumb / sampled));
     }
 

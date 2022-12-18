@@ -14,7 +14,6 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
@@ -22,7 +21,6 @@ import java.awt.image.BufferedImage;
 public class AnimeController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final Anime anime = singletonDao.getCurrentAnime();
     private Occurrence selectedOccurrence = null;
@@ -255,10 +253,10 @@ public class AnimeController implements Controller{
                         singletonDao.setCurrentField("Themes");
                         Common.popup("editTags.fxml");
                     });
-            createDataLabels(counter++, gridPane, "Durration:",
+            createDataLabels(counter++, gridPane, "Duration:",
                     occurrence.getDuration() > 0 ? occurrence.getDuration()/60 +" Minutes" : "",
                     mouseEvent -> {
-                        Common.popup("editDurration.fxml");
+                        Common.popup("editDuration.fxml");
                     });
             createDataLabels(counter++, gridPane, "Content Rating:",
                     occurrence.getRating(),

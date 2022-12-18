@@ -2,13 +2,8 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
-import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.animeDao.AnimeDao;
-import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.manipulation.AnimeStatistics;
 import org.coopereisnor.manipulation.OccurrenceStatistics;
 
@@ -18,11 +13,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class GeneralStatisticsController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
-    private final Application application = singletonDao.getApplication();
     private final Anime anime = singletonDao.getCurrentAnime();
-    private final Occurrence occurrence = singletonDao.getCurrentOccurrence();
 
     @FXML
     private Label numberOfDaysLabel;

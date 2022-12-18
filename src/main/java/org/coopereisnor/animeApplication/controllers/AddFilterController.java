@@ -14,16 +14,12 @@ import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.FilterContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Tag;
-import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.util.ArrayList;
 
 public class AddFilterController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final FilterContainer filterContainer = singletonDao.getFilterContainer();;
 

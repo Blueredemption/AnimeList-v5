@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args){
         addFamiliarOfZero();
         addTestAnime();
+        System.exit(0); // program doesn't seem to stop after execution? I know I close the streams...?
     }
 
     public static void addFamiliarOfZero(){

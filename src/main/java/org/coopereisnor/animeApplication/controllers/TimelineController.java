@@ -1,6 +1,5 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -8,15 +7,15 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeApplication.singleton.StatisticsContainer;
-import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.ConfigurePlots;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.YearSet;
-import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.time.LocalDate;
@@ -26,8 +25,6 @@ import java.util.List;
 
 public class TimelineController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final StatisticsContainer statisticsContainer = singletonDao.getStatisticsContainer();
 
@@ -147,15 +144,15 @@ public class TimelineController implements Controller{
                 for(XYChart.Data<String, Number> data : series.getData()){
                     String styleString = "-fx-background-color: "
                             +(typeToggleButton.isSelected() ?
-                            UtilityMethods.getStringOfColor(((Pair)data.getExtraValue()).getAnime().getFocusedOccurrence().getImageAverageColor()) :
-                            UtilityMethods.getStringOfColor(((Pair)data.getExtraValue()).getOccurrence().getImageAverageColor()))
+                            UtilityMethods.getStringOfColor(((Pair)data.getExtraValue()).anime().getFocusedOccurrence().getImageAverageColor()) :
+                            UtilityMethods.getStringOfColor(((Pair)data.getExtraValue()).occurrence().getImageAverageColor()))
                             +";";
                     data.getNode().setStyle(styleString);
                     data.getNode().setOnMouseEntered(event -> {
                         data.getNode().getStyleClass().add("onHover");
                         hoverLabel.setText(typeToggleButton.isSelected() ?
-                                ((Pair)data.getExtraValue()).getAnime().getName() :
-                                ((Pair)data.getExtraValue()).getOccurrence().getName());
+                                ((Pair)data.getExtraValue()).anime().getName() :
+                                ((Pair)data.getExtraValue()).occurrence().getName());
                     });
                     data.getNode().setOnMouseExited(event -> {
                         data.getNode().getStyleClass().remove("onHover");
@@ -163,9 +160,9 @@ public class TimelineController implements Controller{
                     });
                     data.getNode().setOnMouseClicked(mouseEvent -> {
                         if(typeToggleButton.isSelected()){
-                            singletonDao.setCurrentAnime(((Pair)data.getExtraValue()).getAnime(), null);
+                            singletonDao.setCurrentAnime(((Pair)data.getExtraValue()).anime(), null);
                         }else{
-                            singletonDao.setCurrentAnime(((Pair)data.getExtraValue()).getAnime(), ((Pair)data.getExtraValue()).getOccurrence());
+                            singletonDao.setCurrentAnime(((Pair)data.getExtraValue()).anime(), ((Pair)data.getExtraValue()).occurrence());
                         }
                         application.changeScene("anime.fxml");
                     });

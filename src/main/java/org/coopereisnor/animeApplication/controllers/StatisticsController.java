@@ -4,7 +4,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -12,11 +15,9 @@ import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeApplication.singleton.StatisticsContainer;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.animeDao.AnimeDao;
-import org.coopereisnor.manipulation.Wildcard;
-import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.manipulation.Count;
 import org.coopereisnor.manipulation.TimeSpentCalculated;
+import org.coopereisnor.manipulation.Wildcard;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
@@ -24,8 +25,6 @@ import java.util.ArrayList;
 
 public class StatisticsController implements Controller {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
-    private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final StatisticsContainer statisticsContainer = singletonDao.getStatisticsContainer();
 
@@ -149,7 +148,7 @@ public class StatisticsController implements Controller {
         ArrayList<Wildcard> wildcards = statisticsContainer.getWildcards();
         for(Wildcard wildcard : wildcards){
             addWildcardStatistics(wildcard.getDescription(), wildcard.getValue(), mouseEvent -> {
-                singletonDao.setCurrentAnime(wildcard.getPair().getAnime(), wildcard.getPair().getOccurrence());
+                singletonDao.setCurrentAnime(wildcard.getPair().anime(), wildcard.getPair().occurrence());
                 application.changeScene("anime.fxml");
             });
         }

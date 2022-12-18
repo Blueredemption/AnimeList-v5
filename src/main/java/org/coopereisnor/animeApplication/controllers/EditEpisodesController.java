@@ -16,20 +16,18 @@ import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.settingsDao.SettingsDao;
 
 import java.time.LocalDate;
 
 public class EditEpisodesController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
-    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
     private final Anime anime = singletonDao.getCurrentAnime();
     private final Occurrence occurrence = singletonDao.getCurrentOccurrence();
     private final Episode[] currentEpisodes = occurrence.getEpisodesWatched();
 
-    private int maxValue = 10000;
+    private final int maxValue = 10000;
 
     @FXML
     private Spinner<Integer> episodesTotalSpinner;
@@ -48,8 +46,8 @@ public class EditEpisodesController {
     @FXML
     private Button confirmButton;
 
-    private final ChangeListener episodesTotalListener = (observableValue, o, t1) -> revalidateAddSpinner();
-    private final ChangeListener addEpisodesListener = (observableValue, o, t1) -> revalidateTotalSpinner();
+    private final ChangeListener<Integer> episodesTotalListener = (observableValue, o, t1) -> revalidateAddSpinner();
+    private final ChangeListener<Integer> addEpisodesListener = (observableValue, o, t1) -> revalidateTotalSpinner();
 
     public void initialize() {
         episodesTotalSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maxValue));

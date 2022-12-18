@@ -25,7 +25,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> types = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            types.add(pair.getOccurrence().getType());
+            types.add(pair.occurrence().getType());
         }
 
         return UtilityMethods.convertToStringArray(types);
@@ -35,7 +35,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> statuses = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            statuses.add(pair.getOccurrence().getStatus());
+            statuses.add(pair.occurrence().getStatus());
         }
 
         return UtilityMethods.convertToStringArray(statuses);
@@ -45,7 +45,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> seasons = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            seasons.add(pair.getOccurrence().getPremieredSeason());
+            seasons.add(pair.occurrence().getPremieredSeason());
         }
 
         return UtilityMethods.convertToStringArray(seasons);
@@ -55,7 +55,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> genres = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            genres.addAll(Arrays.asList(pair.getOccurrence().getGenres()));
+            genres.addAll(Arrays.asList(pair.occurrence().getGenres()));
         }
 
         return UtilityMethods.convertToStringArray(genres);
@@ -65,7 +65,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> themes = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            themes.addAll(Arrays.asList(pair.getOccurrence().getThemes()));
+            themes.addAll(Arrays.asList(pair.occurrence().getThemes()));
         }
 
         return UtilityMethods.convertToStringArray(themes);
@@ -75,7 +75,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> ratings = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            ratings.add(pair.getOccurrence().getRating());
+            ratings.add(pair.occurrence().getRating());
         }
 
         return UtilityMethods.convertToStringArray(ratings);
@@ -85,7 +85,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> sources = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            sources.add(pair.getOccurrence().getSource());
+            sources.add(pair.occurrence().getSource());
         }
 
         return UtilityMethods.convertToStringArray(sources);
@@ -96,7 +96,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> studios = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            studios.addAll(Arrays.asList(pair.getOccurrence().getStudios()));
+            studios.addAll(Arrays.asList(pair.occurrence().getStudios()));
         }
 
         return UtilityMethods.convertToStringArray(studios);
@@ -106,7 +106,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> producers = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            producers.addAll(Arrays.asList(pair.getOccurrence().getProducers()));
+            producers.addAll(Arrays.asList(pair.occurrence().getProducers()));
         }
 
         return UtilityMethods.convertToStringArray(producers);
@@ -116,7 +116,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> licensors = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            licensors.addAll(Arrays.asList(pair.getOccurrence().getLicensors()));
+            licensors.addAll(Arrays.asList(pair.occurrence().getLicensors()));
         }
 
         return UtilityMethods.convertToStringArray(licensors);
@@ -126,7 +126,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> watchStatuses = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            watchStatuses.add(pair.getOccurrence().getWatchStatus());
+            watchStatuses.add(pair.occurrence().getWatchStatus());
         }
 
         return UtilityMethods.convertToStringArray(watchStatuses);
@@ -136,7 +136,7 @@ public class AnimeAggregate {
         LinkedHashSet<String> languages = new LinkedHashSet<>();
 
         for(Pair pair : allPairs){
-            languages.addAll(Arrays.asList(pair.getOccurrence().getLanguages()));
+            languages.addAll(Arrays.asList(pair.occurrence().getLanguages()));
         }
 
         return UtilityMethods.convertToStringArray(languages);
