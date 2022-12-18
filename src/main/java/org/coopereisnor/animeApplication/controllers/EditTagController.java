@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.singleton.FilterContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -24,6 +25,7 @@ public class EditTagController {
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
+    private final FilterContainer filterContainer = singletonDao.getFilterContainer();
     private final Anime anime = singletonDao.getCurrentAnime();
     private final Occurrence occurrence = singletonDao.getCurrentOccurrence();
 
@@ -70,11 +72,11 @@ public class EditTagController {
 
     private void setParamOptions(){
         switch (paramType) {
-            case "Type" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getTypes()));
-            case "Status" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getStatuses()));
-            case "Content Rating" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getRatings()));
-            case "Source" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getSources()));
-            case "Watch Status" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getWatchStatuses()));
+            case "Type" -> paramOptions = new ArrayList<>(List.of(filterContainer.getTypes()));
+            case "Status" -> paramOptions = new ArrayList<>(List.of(filterContainer.getStatuses()));
+            case "Content Rating" -> paramOptions = new ArrayList<>(List.of(filterContainer.getRatings()));
+            case "Source" -> paramOptions = new ArrayList<>(List.of(filterContainer.getSources()));
+            case "Watch Status" -> paramOptions = new ArrayList<>(List.of(filterContainer.getWatchStatuses()));
             default -> Program.logger.error("Reached Default in EditTagController setParamOptions");
         }
 

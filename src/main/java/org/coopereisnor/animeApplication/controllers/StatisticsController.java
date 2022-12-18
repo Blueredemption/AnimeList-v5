@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+import org.coopereisnor.animeApplication.singleton.StatisticsContainer;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Wildcard;
@@ -26,6 +27,7 @@ public class StatisticsController implements Controller {
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
+    private final StatisticsContainer statisticsContainer = singletonDao.getStatisticsContainer();
 
     @FXML
     private GridPane gridPane;
@@ -67,7 +69,7 @@ public class StatisticsController implements Controller {
     }
 
     private void loadTopRankedAnime(){
-        ArrayList<Anime> animeOrderedByRank = singletonDao.getStatisticsContainer().getAnimeOrderedByRank();
+        ArrayList<Anime> animeOrderedByRank = statisticsContainer.getAnimeOrderedByRank();
 
         for(int i = Math.min(animeOrderedByRank.size() - 1, 2); i >= 0; i--){
             addImageComponent(UtilityMethods.toBufferedImage(animeOrderedByRank.get(i).getFocusedOccurrence().getImageIcon().getImage()), animeOrderedByRank.get(i), i);
@@ -130,21 +132,21 @@ public class StatisticsController implements Controller {
     }
 
     private void loadStatistics(){
-        addStatisticsComponentGrid("Type", singletonDao.getStatisticsContainer().getTypeCounts());
-        addStatisticsComponentGrid("Status", singletonDao.getStatisticsContainer().getStatusCounts());
-        addStatisticsComponentGrid("Season", singletonDao.getStatisticsContainer().getSeasonCounts());
-        addStatisticsComponentGrid("Genre", singletonDao.getStatisticsContainer().getGenreCounts());
-        addStatisticsComponentGrid("Theme", singletonDao.getStatisticsContainer().getThemeCounts());
-        addStatisticsComponentGrid("Rating", singletonDao.getStatisticsContainer().getRatingCounts());
-        addStatisticsComponentGrid("Source", singletonDao.getStatisticsContainer().getSourceCounts());
-        addStatisticsComponentGrid("Studio", singletonDao.getStatisticsContainer().getStudioCounts());
-        addStatisticsComponentGrid("Producer", singletonDao.getStatisticsContainer().getProducerCounts());
-        addStatisticsComponentGrid("Licensor", singletonDao.getStatisticsContainer().getLicensorCounts());
-        addStatisticsComponentGrid("Watch Status", singletonDao.getStatisticsContainer().getWatchStatusCounts());
-        addStatisticsComponentGrid("Language", singletonDao.getStatisticsContainer().getLanguageCounts());
+        addStatisticsComponentGrid("Type", statisticsContainer.getTypeCounts());
+        addStatisticsComponentGrid("Status", statisticsContainer.getStatusCounts());
+        addStatisticsComponentGrid("Season", statisticsContainer.getSeasonCounts());
+        addStatisticsComponentGrid("Genre", statisticsContainer.getGenreCounts());
+        addStatisticsComponentGrid("Theme", statisticsContainer.getThemeCounts());
+        addStatisticsComponentGrid("Rating", statisticsContainer.getRatingCounts());
+        addStatisticsComponentGrid("Source", statisticsContainer.getSourceCounts());
+        addStatisticsComponentGrid("Studio", statisticsContainer.getStudioCounts());
+        addStatisticsComponentGrid("Producer", statisticsContainer.getProducerCounts());
+        addStatisticsComponentGrid("Licensor", statisticsContainer.getLicensorCounts());
+        addStatisticsComponentGrid("Watch Status", statisticsContainer.getWatchStatusCounts());
+        addStatisticsComponentGrid("Language", statisticsContainer.getLanguageCounts());
 
         addStatisticsHeader("Wildcards");
-        ArrayList<Wildcard> wildcards = singletonDao.getStatisticsContainer().getWildcards();
+        ArrayList<Wildcard> wildcards = statisticsContainer.getWildcards();
         for(Wildcard wildcard : wildcards){
             addWildcardStatistics(wildcard.getDescription(), wildcard.getValue(), mouseEvent -> {
                 singletonDao.setCurrentAnime(wildcard.getPair().getAnime(), wildcard.getPair().getOccurrence());
@@ -270,7 +272,7 @@ public class StatisticsController implements Controller {
     }
 
     private void populateTimeSpent(){
-        TimeSpentCalculated timeSpentCalculated = singletonDao.getStatisticsContainer().getTimeSpentCalculated();
+        TimeSpentCalculated timeSpentCalculated = statisticsContainer.getTimeSpentCalculated();
 
         animeLabel.setText(timeSpentCalculated.getAnimeCount() +"");
         occurrencesLabel.setText(timeSpentCalculated.getOccurrencesCount() +"");

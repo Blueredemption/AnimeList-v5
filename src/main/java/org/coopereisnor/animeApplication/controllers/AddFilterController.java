@@ -12,6 +12,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.singleton.FilterContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Tag;
@@ -24,6 +25,7 @@ public class AddFilterController {
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
+    private final FilterContainer filterContainer = singletonDao.getFilterContainer();;
 
     private final ArrayList<Tag> currentTags = new ArrayList<>();
 
@@ -105,18 +107,18 @@ public class AddFilterController {
 
     private void populateAttributeComboBox(){
         switch (filterComboBox.getValue()) {
-            case "Type" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getTypes()));
-            case "Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getStatuses()));
-            case "Season" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getSeasons()));
-            case "Genre" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getGenres()));
-            case "Theme" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getThemes()));
-            case "Rating" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getRatings()));
-            case "Source" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getSources()));
-            case "Studio" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getStudios()));
-            case "Producer" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getProducers()));
-            case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLicensors()));
-            case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getWatchStatuses()));
-            case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(singletonDao.getFilterContainer().getLanguages()));
+            case "Type" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getTypes()));
+            case "Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getStatuses()));
+            case "Season" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getSeasons()));
+            case "Genre" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getGenres()));
+            case "Theme" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getThemes()));
+            case "Rating" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getRatings()));
+            case "Source" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getSources()));
+            case "Studio" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getStudios()));
+            case "Producer" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getProducers()));
+            case "Licensor" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getLicensors()));
+            case "Watch Status" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getWatchStatuses()));
+            case "Language" -> attributeComboBox.setItems(FXCollections.observableArrayList(filterContainer.getLanguages()));
             default -> Program.logger.error("Reached Default in AddFilterController populateAttributeComboBox");
         }
     }

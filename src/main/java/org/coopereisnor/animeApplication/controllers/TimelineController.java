@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+import org.coopereisnor.animeApplication.singleton.StatisticsContainer;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.ConfigurePlots;
 import org.coopereisnor.manipulation.Pair;
@@ -28,6 +29,7 @@ public class TimelineController implements Controller{
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
+    private final StatisticsContainer statisticsContainer = singletonDao.getStatisticsContainer();
 
     private StackedBarChart<String, Number> stackedBarChart;
     int activeYearSetIndex;
@@ -56,7 +58,7 @@ public class TimelineController implements Controller{
         singletonDao.setCurrentController(this);
         Common.configureNavigation(gridPane, this.getClass());
 
-        ArrayList<YearSet> yearSets = singletonDao.getStatisticsContainer().getConfigurePlots().getYearSets();
+        ArrayList<YearSet> yearSets = statisticsContainer.getConfigurePlots().getYearSets();
         activeYearSetIndex = yearSets.isEmpty() ? -1 : yearSets.size() - 1;
 
         loadFXMLActions();
@@ -99,7 +101,7 @@ public class TimelineController implements Controller{
     }
 
     private void updateYearControls(){
-        ArrayList<YearSet> yearSets = singletonDao.getStatisticsContainer().getConfigurePlots().getYearSets();
+        ArrayList<YearSet> yearSets = statisticsContainer.getConfigurePlots().getYearSets();
         yearLabel.setText(yearSets.isEmpty() ? LocalDate.now().getYear() +"" : yearSets.get(activeYearSetIndex).getYear() +"");
         leftYearButton.setText(yearSets.isEmpty() ? "" : (yearSets.get(activeYearSetIndex).getYear() - 1) +"");
         leftYearButton.setDisable(yearSets.isEmpty() || activeYearSetIndex == 0);
@@ -117,7 +119,7 @@ public class TimelineController implements Controller{
         stackedBarChart.getData().clear();
 
         // retrieve new data
-        ArrayList<YearSet> yearSets = singletonDao.getStatisticsContainer().getConfigurePlots().getYearSets();
+        ArrayList<YearSet> yearSets = statisticsContainer.getConfigurePlots().getYearSets();
 
         if(!yearSets.isEmpty()){
             List<String> list = List.of();

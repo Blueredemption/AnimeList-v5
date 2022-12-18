@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class StatisticsContainer {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
+    private final FilterContainer filterContainer = singletonDao.getFilterContainer();
 
     public static final double MAX_THREADS = 15;
 
@@ -52,51 +53,51 @@ public class StatisticsContainer {
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    typeCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Type", singletonDao.getFilterContainer().getTypes());
+                    typeCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Type", filterContainer.getTypes());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    statusCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Status", singletonDao.getFilterContainer().getStatuses());
+                    statusCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Status", filterContainer.getStatuses());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    seasonCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Season", singletonDao.getFilterContainer().getSeasons());
+                    seasonCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Season", filterContainer.getSeasons());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    genreCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Genre", singletonDao.getFilterContainer().getGenres());
+                    genreCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Genre", filterContainer.getGenres());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    themeCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Theme", singletonDao.getFilterContainer().getThemes());
+                    themeCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Theme", filterContainer.getThemes());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    ratingCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Rating", singletonDao.getFilterContainer().getRatings());
+                    ratingCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Rating", filterContainer.getRatings());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    sourceCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Source", singletonDao.getFilterContainer().getSources());
+                    sourceCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Source", filterContainer.getSources());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    studioCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Studio", singletonDao.getFilterContainer().getStudios());
+                    studioCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Studio", filterContainer.getStudios());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    producerCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Producer", singletonDao.getFilterContainer().getProducers());
+                    producerCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Producer", filterContainer.getProducers());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    licensorCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Licensor", singletonDao.getFilterContainer().getLicensors());
+                    licensorCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Licensor", filterContainer.getLicensors());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    watchStatusCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Watch Status", singletonDao.getFilterContainer().getWatchStatuses());
+                    watchStatusCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Watch Status", filterContainer.getWatchStatuses());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {
-                    languageCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Language", singletonDao.getFilterContainer().getLanguages());
+                    languageCounts = OccurrenceStatistics.getCounts(singletonDao.getListContainer(), pairs, collection, "Language", filterContainer.getLanguages());
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
                 });
                 executor.execute(() -> {

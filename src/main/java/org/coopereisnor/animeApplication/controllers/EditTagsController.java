@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
+import org.coopereisnor.animeApplication.singleton.FilterContainer;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
@@ -24,6 +25,7 @@ public class EditTagsController {
     private final AnimeDao animeDao = singletonDao.getAnimeDao();
     private final SettingsDao settingsDao = singletonDao.getSettingsDao();
     private final Application application = singletonDao.getApplication();
+    private final FilterContainer filterContainer = singletonDao.getFilterContainer();
     private final Anime anime = singletonDao.getCurrentAnime();
     private final Occurrence occurrence = singletonDao.getCurrentOccurrence();
 
@@ -71,12 +73,12 @@ public class EditTagsController {
 
     private void setParamOptions(){
         switch (paramType) {
-            case "Genres" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getGenres()));
-            case "Themes" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getThemes()));
-            case "Studios" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getStudios()));
-            case "Producers" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getProducers()));
-            case "Licensors" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLicensors()));
-            case "Languages" -> paramOptions = new ArrayList<>(List.of(singletonDao.getFilterContainer().getLanguages()));
+            case "Genres" -> paramOptions = new ArrayList<>(List.of(filterContainer.getGenres()));
+            case "Themes" -> paramOptions = new ArrayList<>(List.of(filterContainer.getThemes()));
+            case "Studios" -> paramOptions = new ArrayList<>(List.of(filterContainer.getStudios()));
+            case "Producers" -> paramOptions = new ArrayList<>(List.of(filterContainer.getProducers()));
+            case "Licensors" -> paramOptions = new ArrayList<>(List.of(filterContainer.getLicensors()));
+            case "Languages" -> paramOptions = new ArrayList<>(List.of(filterContainer.getLanguages()));
             default -> Program.logger.error("Reached Default in EditTagsController setParamOptions");
         }
 
