@@ -218,6 +218,11 @@
     -fx-font-weight: normal;
 }
 
+/** TOOLTIPS **/
+.onHover{
+    -fx-opacity: .8;
+}
+
 /** SCROLLBAR RELATED **/
 .scroll-pane{
     -fx-background: background-color-three;
@@ -521,3 +526,23 @@
 .menu-item:focused {
     -fx-background-color: button-color;
 }
+
+/* AXIS */
+
+.axis:left{
+    -fx-border-color:  transparent text-color transparent transparent;;
+}
+.axis:bottom{
+    -fx-border-color: text-color transparent transparent;
+}
+
+.axis-tick-mark {
+    -fx-stroke: text-color;
+}
+
+.axis-minor-tick-mark {
+    -fx-stroke: text-color;
+}
+
+
+

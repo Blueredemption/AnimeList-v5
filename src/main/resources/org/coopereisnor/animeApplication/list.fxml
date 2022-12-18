@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.ListController">
+<VBox id="background" fx:id="bottomVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.ListController">
     <children>
         <GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="60.0" VBox.vgrow="ALWAYS">
             <columnConstraints>
@@ -194,7 +194,7 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </GridPane>
-                  <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="10" GridPane.vgrow="NEVER">
+                  <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="10" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets right="10.0" top="10.0" />
                      </GridPane.margin>

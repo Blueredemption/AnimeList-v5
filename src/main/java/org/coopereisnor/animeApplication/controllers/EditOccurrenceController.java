@@ -47,6 +47,7 @@ public class EditOccurrenceController {
         currentURL = occurrence.getUrl();
         nameTextField.setText(occurrence.getName());
         urlTextField.setText(occurrence.getUrl() == null ? "" : occurrence.getUrl().toString());
+        setValid();
 
         nameTextField.setOnKeyTyped(keyEvent -> setValid());
 
@@ -82,8 +83,8 @@ public class EditOccurrenceController {
     }
 
     private void setValid(){
-        confirmButton.setDisable(currentURL == null || nameTextField.getText().trim().equals(""));
-        refreshButton.setDisable(confirmButton.isDisable());
+        confirmButton.setDisable(false);
+        refreshButton.setDisable(currentURL == null || nameTextField.getText().trim().equals(""));
     }
 
     private void endEvent(Event event){

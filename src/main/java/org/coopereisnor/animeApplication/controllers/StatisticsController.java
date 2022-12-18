@@ -14,8 +14,8 @@ import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.manipulation.Wildcard;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.statistics.Count;
-import org.coopereisnor.statistics.TimeSpentCalculated;
+import org.coopereisnor.manipulation.Count;
+import org.coopereisnor.manipulation.TimeSpentCalculated;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
@@ -239,20 +239,20 @@ public class StatisticsController implements Controller {
         }
 
         for(int i = 0; i < counts.size(); i++){
-            Label label = makeSimpleLabel(counts.get(i).getValue(), mouseEvent -> {});
+            Label label = makeSimpleLabel(counts.get(i).value(), mouseEvent -> {});
             containerPane.add(label, (i/rowCount)*columnCount, i%rowCount + 1);
             GridPane.setMargin(label, insets);
 
             int index = i;
-            label = makeSimpleLabel(counts.get(i).getCollection().size() + "", mouseEvent -> {
-                singletonDao.setMiniListItems(counts.get(index).getCollection());
+            label = makeSimpleLabel(counts.get(i).collection().size() + "", mouseEvent -> {
+                singletonDao.setMiniListItems(counts.get(index).collection());
                 Common.popup("miniList.fxml");
             });
             containerPane.add(label, 1 + (i/rowCount)*columnCount, i%rowCount + 1);
             GridPane.setMargin(label, insets);
 
-            label = makeSimpleLabel(counts.get(i).getPairs().size() + "", mouseEvent -> {
-                singletonDao.setMiniListItems(counts.get(index).getPairs());
+            label = makeSimpleLabel(counts.get(i).pairs().size() + "", mouseEvent -> {
+                singletonDao.setMiniListItems(counts.get(index).pairs());
                 Common.popup("miniList.fxml");
             });
             containerPane.add(label, 2 + (i/rowCount)*columnCount, i%rowCount + 1);

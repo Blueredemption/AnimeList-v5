@@ -17,6 +17,9 @@ public class ListContainer {
 
     private String sortBy;
     private String order;
+    private String aggregate;
+    private boolean type;
+
     private String search = "";
     private ArrayList<Tag> tags = new ArrayList<>(); // starts as empty
 
@@ -28,6 +31,8 @@ public class ListContainer {
 
         sortBy = settingsDao.getSettings().getDefaultAttributeState();
         order = settingsDao.getSettings().getDefaultDirectionState();
+        aggregate = settingsDao.getSettings().getDefaultAggregateState();
+        type = settingsDao.getSettings().isDefaultTypeState();
     }
 
     public String getSortBy() {
@@ -46,6 +51,22 @@ public class ListContainer {
     public void setOrder(String order) {
         this.order = order;
         silentUpdate();
+    }
+
+    public String getAggregate() {
+        return aggregate;
+    }
+
+    public void setAggregate(String aggregate) {
+        this.aggregate = aggregate;
+    }
+
+    public boolean isType() {
+        return type;
+    }
+
+    public void setType(boolean type) {
+        this.type = type;
     }
 
     public String getSearch() {
@@ -72,8 +93,6 @@ public class ListContainer {
     public ArrayList<Pair> getFilteredAndSortedOccurrences() {
         return filteredAndSortedOccurrences;
     }
-
-
 
     // update methods
     public void silentUpdate(){

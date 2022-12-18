@@ -111,6 +111,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                         <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="5.0" prefHeight="5.0" vgrow="NEVER" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                     </rowConstraints>
                      <children>
                         <Label id="headerLabel" text="Color Settings" />
@@ -261,12 +263,18 @@
                            </GridPane.margin></Label>
                         <ColorPicker fx:id="borderColorPicker" layoutX="738.0" layoutY="53.0" maxWidth="-Infinity" prefWidth="100.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                         <Button fx:id="borderColorDefault" layoutX="888.0" layoutY="53.0" mnemonicParsing="false" prefWidth="70.0" text="Default" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-                        <Label layoutX="509.0" layoutY="507.0" text="Default State of List Page" GridPane.columnIndex="3" GridPane.rowIndex="23">
+                        <Label layoutX="509.0" layoutY="507.0" text="List Page Defaults" GridPane.columnIndex="3" GridPane.rowIndex="23">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Label>
                         <Button fx:id="listStateSave" layoutX="908.0" layoutY="593.0" mnemonicParsing="false" prefWidth="70.0" text="Save" GridPane.columnIndex="5" GridPane.rowIndex="23" />
+                        <Label layoutX="20.0" layoutY="597.0" text="Timeline Page Defaults" GridPane.columnIndex="3" GridPane.rowIndex="25">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Button fx:id="timelineStateSave" layoutX="895.0" layoutY="593.0" mnemonicParsing="false" prefWidth="70.0" text="Save" GridPane.columnIndex="5" GridPane.rowIndex="25" />
                      </children>
                   </GridPane>
                </content>

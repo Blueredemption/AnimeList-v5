@@ -1,6 +1,6 @@
 package org.coopereisnor.animeDao;
 
-import org.coopereisnor.statistics.OccurrenceStatistics;
+import org.coopereisnor.manipulation.OccurrenceStatistics;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

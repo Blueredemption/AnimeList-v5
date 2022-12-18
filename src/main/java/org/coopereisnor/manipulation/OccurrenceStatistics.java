@@ -1,12 +1,9 @@
-package org.coopereisnor.statistics;
+package org.coopereisnor.manipulation;
 
 import org.coopereisnor.animeApplication.singleton.ListContainer;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.manipulation.Pair;
-import org.coopereisnor.manipulation.Tag;
-import org.coopereisnor.manipulation.Wildcard;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.time.LocalDate;
@@ -110,7 +107,7 @@ public class OccurrenceStatistics {
             ArrayList<Anime> filteredAnime = listContainer.getAnime((ArrayList<Anime>) collection.clone(), filteredPairs);
             counts.add(new Count(attribute, filteredAnime, filteredPairs));
         }
-        counts.sort(Comparator.comparingInt((Count o) -> o.getCollection().size()).reversed());
+        counts.sort(Comparator.comparingInt((Count o) -> o.collection().size()).reversed());
         return counts;
     }
 

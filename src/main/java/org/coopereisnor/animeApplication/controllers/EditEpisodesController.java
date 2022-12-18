@@ -163,7 +163,8 @@ public class EditEpisodesController {
             }
             for(Node node : flowPane.getChildren()){
                 Episode newEpisode = new Episode();
-                newEpisode.setWatchDate(((DatePicker)node.getUserData()).getValue());
+                LocalDate localDate = ((DatePicker)node.getUserData()).getValue();
+                newEpisode.setWatchDate(localDate == null ? LocalDate.now() : localDate);
                 occurrence.addEpisodeWatched(newEpisode);
             }
             applyStartAndEndConditionally(occurrence);

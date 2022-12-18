@@ -1,9 +1,7 @@
-package org.coopereisnor.statistics;
+package org.coopereisnor.manipulation;
 
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.manipulation.Pair;
-import org.coopereisnor.manipulation.Wildcard;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.time.LocalDate;

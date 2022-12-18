@@ -2,7 +2,6 @@ package org.coopereisnor.manipulation;
 
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.statistics.OccurrenceStatistics;
 
 import java.time.LocalDate;
 import java.util.Comparator;

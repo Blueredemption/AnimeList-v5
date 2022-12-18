@@ -121,6 +121,8 @@ public class SettingsController {
     private Button progressBarFullColorDefault;
     @FXML
     private Button listStateSave;
+    @FXML
+    private Button timelineStateSave;
 
 
     // other
@@ -140,6 +142,7 @@ public class SettingsController {
 
         configureTracking();
         configureListDefaults();
+        configureTimelineDefaults();
     }
 
     private void simpleModifications() {
@@ -384,8 +387,17 @@ public class SettingsController {
     private void configureListDefaults(){
         listStateSave.setOnAction(actionEvent -> {
             settingsDao.getSettings().setDefaultDirectionState(singletonDao.getListContainer().getOrder());
+            settingsDao.getSettings().setDefaultDataTypeState(singletonDao.getType());
             settingsDao.getSettings().setDefaultAttributeState(singletonDao.getListContainer().getSortBy());
             settingsDao.getSettings().setDefaultListState(singletonDao.getListFXML());
+            settingsDao.save();
+        });
+    }
+
+    private void configureTimelineDefaults(){
+        timelineStateSave.setOnAction(actionEvent -> {
+            settingsDao.getSettings().setDefaultAggregateState(singletonDao.getListContainer().getAggregate());
+            settingsDao.getSettings().setDefaultTypeState(singletonDao.getListContainer().isType());
             settingsDao.save();
         });
     }

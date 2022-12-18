@@ -2,6 +2,7 @@ package org.coopereisnor.utility;
 
 import org.coopereisnor.Program;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -128,4 +129,33 @@ public class UtilityMethods {
         }
         return Path.of(workingDirectory);
     }
+
+
+    public static Color averageColor(ImageIcon imageIcon) {
+        BufferedImage bi = toBufferedImage(imageIcon.getImage());
+
+        int step = 5;
+
+        int sampled = 0;
+        long sumr = 0, sumg = 0, sumb = 0;
+        for (int x = 0; x < bi.getWidth(); x++) {
+            for (int y = 0; y < bi.getHeight(); y++) {
+                if (x % step == 0 && y % step == 0) {
+                    Color pixel = new Color(bi.getRGB(x, y));
+                    sumr += pixel.getRed();
+                    sumg += pixel.getGreen();
+                    sumb += pixel.getBlue();
+                    sampled++;
+                }
+            }
+        }
+        int dim = bi.getWidth()*bi.getHeight();
+        return new Color(Math.round(sumr / sampled), Math.round(sumg / sampled), Math.round(sumb / sampled));
+    }
+
+    public static String capitalize(String str) {
+        if(str == null || str.length()<=1) return str;
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
 }

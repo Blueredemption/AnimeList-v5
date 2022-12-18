@@ -1,4 +1,4 @@
-package org.coopereisnor.statistics;
+package org.coopereisnor.manipulation;
 
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.Occurrence;

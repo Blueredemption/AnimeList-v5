@@ -1,14 +1,7 @@
 package org.coopereisnor.animeApplication.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
@@ -16,13 +9,10 @@ import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.settingsDao.SettingsDao;
-import org.coopereisnor.statistics.AnimeStatistics;
-import org.coopereisnor.statistics.OccurrenceStatistics;
+import org.coopereisnor.manipulation.AnimeStatistics;
+import org.coopereisnor.manipulation.OccurrenceStatistics;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 

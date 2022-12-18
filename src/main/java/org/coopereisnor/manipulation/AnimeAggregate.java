@@ -6,7 +6,6 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
 
 // this class is for methods that collect various things (like all existing genres, for example)

@@ -2,12 +2,7 @@ package org.coopereisnor.animeApplication.singleton;
 
 import org.coopereisnor.Program;
 import org.coopereisnor.animeDao.Anime;
-import org.coopereisnor.manipulation.Pair;
-import org.coopereisnor.manipulation.Wildcard;
-import org.coopereisnor.statistics.AnimeStatistics;
-import org.coopereisnor.statistics.Count;
-import org.coopereisnor.statistics.OccurrenceStatistics;
-import org.coopereisnor.statistics.TimeSpentCalculated;
+import org.coopereisnor.manipulation.*;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -17,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class StatisticsContainer {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
 
-    public static final double MAX_THREADS = 14;
+    public static final double MAX_THREADS = 15;
 
     private final ArrayList<Anime> collection;
     private final ArrayList<Pair> pairs;
@@ -37,6 +32,7 @@ public class StatisticsContainer {
     private ArrayList<Count> watchStatusCounts;
     private ArrayList<Count> languageCounts;
     private final ArrayList<Wildcard> wildcards = new ArrayList<>();
+    private ConfigurePlots configurePlots;
 
     public StatisticsContainer(){
         Program.logger.debug("Statistics Container");
@@ -115,6 +111,9 @@ public class StatisticsContainer {
                     wildcards.add(AnimeStatistics.getLongestSpan((ArrayList<Anime>) collection.clone()));
                     wildcards.add(AnimeStatistics.getShortestSpan((ArrayList<Anime>) collection.clone()));
                     singletonDao.updateProgressBar(getClass(), executor.getActiveCount());
+                });
+                executor.execute(() -> {
+                    configurePlots = new ConfigurePlots(collection);
                 });
 
                 executor.shutdown();
@@ -198,5 +197,9 @@ public class StatisticsContainer {
 
     public ArrayList<Wildcard> getWildcards() {
         return wildcards;
+    }
+
+    public ConfigurePlots getConfigurePlots() {
+        return configurePlots;
     }
 }

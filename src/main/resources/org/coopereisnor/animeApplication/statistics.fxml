@@ -129,22 +129,22 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="250.0" />
                     </columnConstraints>
                     <rowConstraints>
-                  <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="ALWAYS" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="20.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="30.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="30.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="100.0" prefHeight="20.0" vgrow="NEVER" />
-                        <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="20.0" vgrow="ALWAYS" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="70.0" prefHeight="20.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="25.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="70.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="70.0" prefHeight="20.0" vgrow="NEVER" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="NEVER" />
+                  <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="ALWAYS" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="45.0" prefHeight="45.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="20.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="45.0" prefHeight="45.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="NEVER" />
                   <RowConstraints maxHeight="-Infinity" minHeight="45.0" prefHeight="45.0" vgrow="NEVER" />
                   <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="45.0" prefHeight="45.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="45.0" prefHeight="45.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="-Infinity" minHeight="20.0" prefHeight="20.0" vgrow="NEVER" />
-                  <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="ALWAYS" />
+                  <RowConstraints vgrow="ALWAYS" />
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="ALWAYS" />
                     </rowConstraints>
                     <children>
@@ -164,7 +164,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="16" GridPane.vgrow="NEVER">
+                        <ProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="200.0" progress="0.0" visible="false" GridPane.hgrow="NEVER" GridPane.rowIndex="16" GridPane.vgrow="NEVER">
                             <GridPane.margin>
                                 <Insets left="10.0" top="10.0" />
                             </GridPane.margin>
@@ -261,9 +261,6 @@
                     <HBox.margin>
                         <Insets />
                     </HBox.margin>
-                    <padding>
-                        <Insets bottom="2.0" />
-                    </padding>
                 </GridPane>
             </children>
             <padding>

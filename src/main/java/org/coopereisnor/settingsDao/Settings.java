@@ -57,8 +57,11 @@ public class Settings implements java.io.Serializable {
     private String notesString;
     private boolean tracking;
     private String defaultListState;
+    private String defaultDataTypeState;
     private String defaultAttributeState;
     private String defaultDirectionState;
+    private String defaultAggregateState;
+    private boolean defaultTypeState;
 
 
     public Settings(){ // constructor
@@ -89,8 +92,11 @@ public class Settings implements java.io.Serializable {
         notesString = "";
         tracking = true;
         defaultListState = "list.fxml"; // list over image
+        defaultDataTypeState = "Anime";
         defaultAttributeState = "Added";
         defaultDirectionState = "Descending"; // ascending over descending
+        defaultAggregateState = "Month";
+        defaultTypeState = true;
     }
 
     // getters and setters
@@ -310,6 +316,14 @@ public class Settings implements java.io.Serializable {
         this.defaultListState = defaultListState;
     }
 
+    public String getDefaultDataTypeState() {
+        return defaultDataTypeState;
+    }
+
+    public void setDefaultDataTypeState(String defaultDataTypeState) {
+        this.defaultDataTypeState = defaultDataTypeState;
+    }
+
     public String getDefaultAttributeState() {
         return defaultAttributeState;
     }
@@ -324,5 +338,21 @@ public class Settings implements java.io.Serializable {
 
     public void setDefaultDirectionState(String defaultDirectionState) {
         this.defaultDirectionState = defaultDirectionState;
+    }
+
+    public String getDefaultAggregateState() {
+        return defaultAggregateState;
+    }
+
+    public void setDefaultAggregateState(String defaultAggregateState) {
+        this.defaultAggregateState = defaultAggregateState;
+    }
+
+    public boolean isDefaultTypeState() {
+        return defaultTypeState;
+    }
+
+    public void setDefaultTypeState(boolean defaultTypeState) {
+        this.defaultTypeState = defaultTypeState;
     }
 }

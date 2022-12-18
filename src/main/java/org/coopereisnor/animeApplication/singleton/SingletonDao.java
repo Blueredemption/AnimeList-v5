@@ -19,7 +19,7 @@ public final class SingletonDao {
     private Controller currentController = null;
 
     private String listFXML;
-    private String type = "Anime";
+    private String type;
     private Anime currentAnime = null;
     private Occurrence currentOccurrence = null;
     private String currentField = "";
@@ -34,6 +34,7 @@ public final class SingletonDao {
     private SingletonDao() {
         animeDao = new AnimeDao();
         settingsDao = new SettingsDao();
+        type = settingsDao.getSettings().getDefaultDataTypeState();
         listFXML = settingsDao.getSettings().getDefaultListState();
         listContainer = new ListContainer(animeDao, settingsDao);
     }

@@ -4,6 +4,7 @@ import org.coopereisnor.utility.UtilityMethods;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +34,7 @@ public class Occurrence implements java.io.Serializable {
     private LocalDate finishedWatching;
 
     private ImageIcon imageIcon;
+    private Color imageAverageColor;
     private final LinkedHashSet<Episode> episodesWatched;
     private boolean focused;
     private boolean tracked;
@@ -65,6 +67,7 @@ public class Occurrence implements java.io.Serializable {
 
         watchStatus = "";
         imageIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/Default.png")));
+        imageAverageColor = UtilityMethods.averageColor(imageIcon);
         episodesWatched = new LinkedHashSet<>();
         focused = false;
         tracked = true;
@@ -162,6 +165,10 @@ public class Occurrence implements java.io.Serializable {
         return imageIcon;
     }
 
+    public Color getImageAverageColor(){
+        return imageAverageColor;
+    }
+
     public Episode[] getEpisodesWatched() {
         Episode[] episodes = new Episode[episodesWatched.size()];
         return episodesWatched.toArray(episodes);
@@ -244,6 +251,7 @@ public class Occurrence implements java.io.Serializable {
 
     public void setImageIcon(ImageIcon imageIcon) {
         this.imageIcon = imageIcon;
+        this.imageAverageColor = UtilityMethods.averageColor(imageIcon);
     }
 
     public void setFocused(boolean focused) {
