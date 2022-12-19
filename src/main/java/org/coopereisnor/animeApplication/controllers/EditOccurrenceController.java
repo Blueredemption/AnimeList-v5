@@ -71,7 +71,11 @@ public class EditOccurrenceController {
             }
         } );
 
-        deleteButton.setOnAction(this::deleteEvent);
+        deleteButton.setOnAction(event -> {
+            singletonDao.setCurrentField("Occurrence");
+            singletonDao.setPopupStage(((Stage)((Node)event.getSource()).getScene().getWindow()));
+            Common.popup("confirmation.fxml");
+        });
 
         refreshButton.setOnAction(this::refreshEvent);
 
@@ -99,24 +103,6 @@ public class EditOccurrenceController {
         animeDao.save(anime);
         application.changeScene("anime.fxml");
         singletonDao.update();
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-    }
-
-    private void deleteEvent(Event event){
-        boolean focused = occurrence.isFocused();
-        singletonDao.setCurrentAnime(anime, null);
-        anime.removeOccurrence(occurrence);
-        if(anime.getOccurrences().size() == 0){
-            animeDao.remove(anime);
-            singletonDao.update();
-            application.changeScene(singletonDao.getListFXML());
-
-        }else{
-            if(!anime.getOccurrences().get(0).isFocused()) anime.getOccurrences().get(0).setFocused(focused);
-            singletonDao.update();
-            application.changeScene("anime.fxml");
-        }
-
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }

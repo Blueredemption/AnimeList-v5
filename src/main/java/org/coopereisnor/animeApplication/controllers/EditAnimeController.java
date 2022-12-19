@@ -1,7 +1,6 @@
 package org.coopereisnor.animeApplication.controllers;
 
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.Node;
@@ -48,7 +47,11 @@ public class EditAnimeController {
 
         cancelButton.setOnAction(event -> ((Stage)((Node)event.getSource()).getScene().getWindow()).close());
 
-        deleteButton.setOnAction(this::deleteEvent);
+        deleteButton.setOnAction(event -> {
+            singletonDao.setCurrentField("Anime");
+            singletonDao.setPopupStage(((Stage)((Node)event.getSource()).getScene().getWindow()));
+            Common.popup("confirmation.fxml");
+        });
 
         confirmButton.setOnAction(this::endAction);
 
@@ -101,13 +104,6 @@ public class EditAnimeController {
         animeDao.save(anime);
         application.changeScene("anime.fxml");
         singletonDao.update();
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
-    }
-
-    private void deleteEvent(Event event){
-        animeDao.remove(anime);
-        singletonDao.update();
-        application.changeScene(singletonDao.getListFXML());
         ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
     }
 }

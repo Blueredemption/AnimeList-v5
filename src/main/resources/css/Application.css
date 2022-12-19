@@ -103,11 +103,8 @@
 }
 
 .button:pressed, .toggle-button:pressed, .date-picker > .arrow-button:pressed {
-
+    -fx-background-color: button-color-pressed;
 }
-
-
-
 
 #toggleButtonColored {
     unselected-color: rejection-color;

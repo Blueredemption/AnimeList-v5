@@ -2,6 +2,7 @@ package org.coopereisnor.animeApplication.singleton;
 
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Stage;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.controllers.Controller;
 import org.coopereisnor.animeDao.Anime;
@@ -17,6 +18,7 @@ public final class SingletonDao {
     private final SettingsDao settingsDao;
     private Application application;
     private Controller currentController = null;
+    private Stage popupStage = null;
 
     private String listFXML;
     private String type;
@@ -65,6 +67,14 @@ public final class SingletonDao {
 
     public void setCurrentController(Controller currentController) {
         this.currentController = currentController;
+    }
+
+    public Stage getPopupStage() {
+        return popupStage;
+    }
+
+    public void setPopupStage(Stage popupStage) {
+        this.popupStage = popupStage;
     }
 
     public String getListFXML() {

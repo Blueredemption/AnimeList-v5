@@ -61,13 +61,14 @@ public class EditRankController {
     }
 
     public void shiftRanks(){
-        ArrayList<Anime> sortedAnime = singletonDao.getListContainer().sortAnime(animeDao.getCollection());
-        sortedAnime.remove(anime);
-        sortedAnime.add(valueFactory.getValue() - 1, anime);
-        for(int i = 0; i < sortedAnime.size(); i++){
-            if(sortedAnime.get(i).getRank() != i + 1){
-                sortedAnime.get(i).setRank(i + 1);
-                animeDao.save(sortedAnime.get(i));
+        ArrayList<Anime> collection = animeDao.getCollection();
+        collection.sort(Anime.SORT_BY_RANK);
+        collection.remove(anime);
+        collection.add(valueFactory.getValue() - 1, anime);
+        for(int i = 0; i < collection.size(); i++){
+            if(collection.get(i).getRank() != i + 1){
+                collection.get(i).setRank(i + 1);
+                animeDao.save(collection.get(i));
             }
         }
         animeDao.save(anime);

@@ -212,10 +212,8 @@ public class ListController implements Controller{
         imagePane.setPrefSize(width, height);
         imagePane.setMaxSize(width, height);
         imagePane.setOnMouseClicked(event -> {
-            if(event.getButton() == MouseButton.PRIMARY){
-                singletonDao.setCurrentAnime(anime, occurrence);
-                application.changeScene("anime.fxml");
-            }
+            singletonDao.setCurrentAnime(anime, occurrence);
+            application.changeScene("anime.fxml");
         });
 
         imageFlowPane.getChildren().add(imagePane);
