@@ -265,7 +265,7 @@ public class ListController implements Controller{
     }
 
     private void loadSortComponents(){
-        ObservableList<String> sortStrings = FXCollections.observableArrayList("Added", "Score", "Name", "Rank", "Started", "Finished", "Eps. Watched", "Eps. Total", "Year", "Progress");
+        ObservableList<String> sortStrings = FXCollections.observableArrayList("Added", "Score", "Name", "Rank", "Started", "Finished", "Eps. Watched", "Eps. Total", "Released", "Progress");
         comboBox.setItems(sortStrings);
         comboBox.setValue(singletonDao.getListContainer().getSortBy());
         comboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {

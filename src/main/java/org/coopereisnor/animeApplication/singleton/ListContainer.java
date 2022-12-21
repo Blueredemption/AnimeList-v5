@@ -136,7 +136,7 @@ public class ListContainer {
             case "Finished" -> collection.sort(Anime.SORT_BY_FINISHED_WATCHING_DATE);
             case "Eps. Watched" -> collection.sort(Anime.SORT_BY_EPISODES_WATCHED);
             case "Eps. Total" -> collection.sort(Anime.SORT_BY_EPISODES_TOTAL);
-            case "Year" -> collection.sort(Anime.SORT_BY_YEAR);
+            case "Released" -> collection.sort(Anime.SORT_BY_RELEASE_DATE);
             case "Progress" -> collection.sort(Anime.SORT_BY_PROGRESS);
             default -> Program.logger.error("Reached Default in ListContainer sortAnime : " +sort);
         }
@@ -165,7 +165,7 @@ public class ListContainer {
             case "Finished" -> pairs.sort(Pair.SORT_BY_FINISHED_WATCHING_DATE);
             case "Eps. Watched" -> pairs.sort(Pair.SORT_BY_EPISODES_WATCHED);
             case "Eps. Total" -> pairs.sort(Pair.SORT_BY_EPISODES_TOTAL);
-            case "Year" -> pairs.sort(Pair.SORT_BY_YEAR);
+            case "Released" -> pairs.sort(Pair.SORT_BY_RELEASE_DATE);
             case "Progress" -> pairs.sort(Pair.SORT_BY_PROGRESS);
             default -> Program.logger.error("Reached Default in ListContainer sortPairs : " +sortBy);
         }

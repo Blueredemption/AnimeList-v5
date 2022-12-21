@@ -57,10 +57,14 @@ public record Pair(Anime anime, Occurrence occurrence) {
         Integer episodesTwo = pairTwo.occurrence().getEpisodes();
         return episodesOne.compareTo(episodesTwo);
     };
-    public static Comparator<Pair> SORT_BY_YEAR = (pairOne, pairTwo) -> {
-        Integer yearOne = pairOne.occurrence().getPremieredYear();
-        Integer yearTwo = pairTwo.occurrence().getPremieredYear();
-        return yearOne.compareTo(yearTwo);
+    public static Comparator<Pair> SORT_BY_RELEASE_DATE = (pairOne, pairTwo) -> {
+        LocalDate dateOne = pairOne.occurrence().getAiredStartDate();
+        LocalDate dateTwo = pairTwo.occurrence().getAiredStartDate();
+
+        if (dateOne == null) dateOne = LocalDate.MIN;
+        if (dateTwo == null) dateTwo = LocalDate.MIN;
+
+        return dateOne.compareTo(dateTwo);
     };
     public static Comparator<Pair> SORT_BY_PROGRESS = (pairOne, pairTwo) -> {
         Double progressOne = ((double) pairOne.occurrence().getEpisodesWatched().length) / ((double) pairOne.occurrence().getEpisodes());

@@ -3,6 +3,7 @@ package org.coopereisnor.animeApplication.controllers;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
@@ -84,6 +85,7 @@ public class StatisticsController implements Controller {
         double height = 202;
 
         Pane imagePane = Common.getImagePaneFor(null, bufferedImage, UtilityMethods.medalColors[index]);
+        imagePane.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         imagePane.setMinSize(width, height);
         imagePane.setPrefSize(width, height);
         imagePane.setMaxSize(width, height);

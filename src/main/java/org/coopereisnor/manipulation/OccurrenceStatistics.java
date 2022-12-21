@@ -41,14 +41,6 @@ public class OccurrenceStatistics {
         return total;
     }
 
-    public static int getEarliestYear(ArrayList<Occurrence> occurrences) {
-        int earliestYear = Integer.MAX_VALUE;
-        for(Occurrence occurrence : occurrences){
-            if (earliestYear > occurrence.getPremieredYear() && occurrence.getPremieredYear() > 0) earliestYear = occurrence.getPremieredYear();
-        }
-        return earliestYear;
-    }
-
     public static LocalDate getEarliestStartedWatching(ArrayList<Occurrence> occurrences){
         LocalDate date = LocalDate.MAX;
         for(Occurrence occurrence : occurrences){
@@ -78,12 +70,12 @@ public class OccurrenceStatistics {
         return latestDate;
     }
 
-    public static LocalDate getEarliestStartDate(ArrayList<Occurrence> occurrences) {
+    public static LocalDate getEarliestAiredDate(ArrayList<Occurrence> occurrences) {
         LocalDate earliestDate = LocalDate.MAX;
         for(Occurrence occurrence : occurrences){
-            if(occurrence.getStartedWatching() == null) return null;
-            else if(occurrence.getStartedWatching().isBefore(earliestDate)){
-                earliestDate = occurrence.getStartedWatching();
+            if(occurrence.getAiredStartDate() == null) return null;
+            else if(occurrence.getAiredStartDate().isBefore(earliestDate)){
+                earliestDate = occurrence.getAiredStartDate();
             }
         }
         return earliestDate;

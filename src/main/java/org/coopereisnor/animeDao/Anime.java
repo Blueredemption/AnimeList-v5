@@ -115,10 +115,14 @@ public class Anime implements java.io.Serializable {
         Integer episodesTwo = OccurrenceStatistics.getTotalEpisodes(animeTwo.getOccurrences());
         return episodesOne.compareTo(episodesTwo);
     };
-    public static Comparator<Anime> SORT_BY_YEAR = (animeOne, animeTwo) -> {
-        Integer yearOne = OccurrenceStatistics.getEarliestYear(animeOne.getOccurrences());
-        Integer yearTwo = OccurrenceStatistics.getEarliestYear(animeTwo.getOccurrences());
-        return yearOne.compareTo(yearTwo);
+    public static Comparator<Anime> SORT_BY_RELEASE_DATE = (animeOne, animeTwo) -> {
+        LocalDate dateOne = OccurrenceStatistics.getEarliestAiredDate(animeOne.getOccurrences());
+        LocalDate dateTwo = OccurrenceStatistics.getEarliestAiredDate(animeTwo.getOccurrences());
+
+        if (dateOne == null) dateOne = LocalDate.MIN;
+        if (dateTwo == null) dateTwo = LocalDate.MIN;
+        
+        return dateOne.compareTo(dateTwo);
     };
     public static Comparator<Anime> SORT_BY_PROGRESS = (animeOne, animeTwo) -> {
         Double progressOne = ((double)OccurrenceStatistics.getTotalEpisodesWatched(animeOne.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(animeOne.getOccurrences()));

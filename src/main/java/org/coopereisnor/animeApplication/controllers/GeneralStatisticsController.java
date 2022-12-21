@@ -50,7 +50,7 @@ public class GeneralStatisticsController {
     }
 
     private String getSpanOfDays(){
-        LocalDate start = OccurrenceStatistics.getEarliestStartDate(anime.getOccurrences());
+        LocalDate start = OccurrenceStatistics.getEarliestStartedWatching(anime.getOccurrences());
         LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
 
         if(start == null || end == null){

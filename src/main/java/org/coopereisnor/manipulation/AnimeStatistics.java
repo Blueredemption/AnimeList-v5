@@ -144,7 +144,7 @@ public class AnimeStatistics {
         Anime keepAnime = null;
         long keepDays = Integer.MIN_VALUE;
         for(Anime anime : collection){
-            LocalDate start = OccurrenceStatistics.getEarliestStartDate(anime.getOccurrences());
+            LocalDate start = OccurrenceStatistics.getEarliestStartedWatching(anime.getOccurrences());
             LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
             if(start == null || end == null) continue;
             long totalDays = DAYS.between(start, end);
@@ -161,7 +161,7 @@ public class AnimeStatistics {
         Anime keepAnime = null;
         long keepDays = Integer.MAX_VALUE;
         for(Anime anime : collection){
-            LocalDate start = OccurrenceStatistics.getEarliestStartDate(anime.getOccurrences());
+            LocalDate start = OccurrenceStatistics.getEarliestStartedWatching(anime.getOccurrences());
             LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
             if(start == null || end == null) continue;
             long totalDays = DAYS.between(start, end);
