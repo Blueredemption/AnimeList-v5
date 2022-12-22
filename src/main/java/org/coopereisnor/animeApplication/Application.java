@@ -16,7 +16,8 @@ import java.util.Objects;
 
 
 public class Application extends javafx.application.Application {
-    private static final String TITLE = "AnimeList-v5";
+    private static final String VERSION = "5.0.3";
+    private static final String TITLE = "AnimeList-v" +VERSION;
     private Stage stage;
 
     @Override

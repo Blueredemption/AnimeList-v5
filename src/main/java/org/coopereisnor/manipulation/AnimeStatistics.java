@@ -163,7 +163,7 @@ public class AnimeStatistics {
         for(Anime anime : collection){
             LocalDate start = OccurrenceStatistics.getEarliestStartedWatching(anime.getOccurrences());
             LocalDate end = OccurrenceStatistics.getLatestEndDate(anime.getOccurrences());
-            if(start == null || end == null) continue;
+            if(start == null || start == LocalDate.MAX || end == null) continue;
             long totalDays = DAYS.between(start, end);
             if(totalDays < keepDays){
                 keepAnime = anime;
@@ -171,6 +171,6 @@ public class AnimeStatistics {
             }
         }
         String resultString = keepAnime != null ? keepAnime.getName() +" (" + keepDays +" Days)" : "";
-        return new Wildcard("Most Recently Started Occurrence: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
+        return new Wildcard("Shortest Span: ", resultString, keepAnime != null ? new Pair(keepAnime, null) : null);
     }
 }
