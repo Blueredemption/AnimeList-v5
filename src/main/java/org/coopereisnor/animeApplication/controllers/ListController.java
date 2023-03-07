@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.customJavaFXObjects.PercentProgressBar;
@@ -88,9 +87,10 @@ public class ListController implements Controller{
                 String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
                 String season = anime.getFocusedOccurrence().getPremieredSeason();
                 String year = anime.getFocusedOccurrence().getPremieredYear() == -1 ? "" : anime.getFocusedOccurrence().getPremieredYear() +"";
-                double progress = ((double)OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences()))/((double)OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()));
+                int part = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
+                int whole = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
 
-                addListComponent(number, name, episodes, season, year, progress, anime, null);
+                addListComponent(number, name, episodes, season, year, part, whole, anime, null);
             }
         }else{
             for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
@@ -99,14 +99,15 @@ public class ListController implements Controller{
                 String episodes = pair.occurrence().getEpisodes() == 0 ? "" : pair.occurrence().getEpisodes() +"";
                 String season = pair.occurrence().getPremieredSeason();
                 String year = pair.occurrence().getPremieredYear() == -1 ? "" : pair.occurrence().getPremieredYear() +"";
-                double progress = ((double)pair.occurrence().getEpisodesWatched().length)/((double)pair.occurrence().getEpisodes());
+                int part = pair.occurrence().getEpisodesWatched().length;
+                int whole = pair.occurrence().getEpisodes();
 
-                addListComponent(number, name,episodes, season, year, progress, pair.anime(), pair.occurrence());
+                addListComponent(number, name,episodes, season, year, part, whole, pair.anime(), pair.occurrence());
             }
         }
     }
 
-    private void addListComponent(String number, String name, String episodes, String season, String year, double progress, Anime anime, Occurrence occurrence){
+    private void addListComponent(String number, String name, String episodes, String season, String year, int part, int whole, Anime anime, Occurrence occurrence){
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -169,7 +170,7 @@ public class ListController implements Controller{
         containerPane.add(label, i++, 0);
         GridPane.setMargin(label, insets);
 
-        PercentProgressBar progressBar = new PercentProgressBar(progress);
+        PercentProgressBar progressBar = new PercentProgressBar(part, whole);
         progressBar.setMinWidth(110);
         progressBar.setPrefHeight(containerPane.getPrefHeight() - containerPane.getInsets().getBottom() - containerPane.getInsets().getTop() - 4);
         containerPane.add(progressBar, i++, 0);

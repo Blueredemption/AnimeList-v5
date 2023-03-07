@@ -13,10 +13,12 @@ import org.coopereisnor.animeApplication.customJavaFXObjects.PercentProgressBar;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
+import org.coopereisnor.animeDao.Episode;
 import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 
 public class AnimeController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -219,11 +221,12 @@ public class AnimeController implements Controller{
                         singletonDao.setCurrentField("Type");
                         Common.popup("editTag.fxml");
                     });
-            createDataLabels(counter++, gridPane, "Episodes:",
+            createDataLabelsAndAddEpisodeButton(counter++, gridPane, "Episodes:",
                     occurrence.getEpisodes() == 0 && occurrence.getEpisodesWatched().length == 0 ? "" : occurrence.getEpisodesWatched().length +" / " +occurrence.getEpisodes() +" Episodes",
                     mouseEvent -> {
                         Common.popup("editEpisodes.fxml");
-                    });
+                    },
+                    occurrence);
             createDataLabels(counter++, gridPane, "Status:",
                     occurrence.getStatus(),
                     mouseEvent -> {
@@ -345,7 +348,7 @@ public class AnimeController implements Controller{
             notesLabel.setPadding(new Insets(0,0,0,5));
             gridPane2.add(notesLabel, 0, 0);
 
-            PercentProgressBar progressBar  = new PercentProgressBar(((double)occurrence.getEpisodesWatched().length)/((double)occurrence.getEpisodes()));
+            PercentProgressBar progressBar  = new PercentProgressBar(occurrence.getEpisodesWatched().length,occurrence.getEpisodes());
             progressBar.setPrefWidth(imageWidth);
             progressBar.setPrefHeight(20);
             gridPane2.add(progressBar, 1, 0);
@@ -397,6 +400,35 @@ public class AnimeController implements Controller{
         parent.add(valueLabel, 1, index);
 
         gridPane.getRowConstraints().add(rowConstraints);
+    }
+
+    public void createDataLabelsAndAddEpisodeButton(int index, GridPane parent, String textOne, String textTwo, EventHandler<MouseEvent> eventHandler, Occurrence occurrence){
+        createDataLabels(index, parent, textOne, textTwo, eventHandler);
+
+        Button addButton = new Button("+");
+        addButton.setMinWidth(25);
+        addButton.setPrefWidth(25);
+        if(occurrence.getEpisodesWatched().length != occurrence.getEpisodes()){
+            addButton.setOnAction(actionEvent -> {
+                // create and add episode object
+                Episode newEpisode = new Episode();
+                LocalDate localDate = LocalDate.now();
+                newEpisode.setWatchDate(localDate);
+                occurrence.addEpisodeWatched(newEpisode);
+
+                // perform changes that might need to happen to startDate and/or endDate
+                EditEpisodesController.applyStartAndEndConditionally(occurrence);
+
+                // save anime, refresh page, run update function
+                animeDao.save(anime);
+                application.changeScene("anime.fxml");
+                singletonDao.update();
+            });
+        }else{
+            addButton.setVisible(false);
+        }
+
+        parent.add(addButton, 2, index);
     }
 
     @Override

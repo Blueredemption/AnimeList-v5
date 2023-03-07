@@ -176,7 +176,7 @@ public class EditEpisodesController {
         }
     }
 
-    private void applyStartAndEndConditionally(Occurrence occurrence) {
+    protected static void applyStartAndEndConditionally(Occurrence occurrence) {
         if(occurrence.isTracked()){
             if(occurrence.getStartedWatching() == null && occurrence.getEpisodesWatched().length != 0){
                 occurrence.setStartedWatching(occurrence.getEpisodesWatched()[0].getWatchDate());

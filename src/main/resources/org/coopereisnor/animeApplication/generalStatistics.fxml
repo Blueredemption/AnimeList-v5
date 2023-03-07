@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.GeneralStatisticsController">
+<VBox id="background" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.coopereisnor.animeApplication.controllers.GeneralStatisticsController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -16,6 +16,8 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -24,30 +26,32 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label maxWidth="1.7976931348623157E308" text="Time Spent Watching: " GridPane.rowIndex="1">
+            <Label maxWidth="1.7976931348623157E308" text="Time Spent Watching: " GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="numberOfMinutesLabel" text="# Minutes" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="numberOfMinutesLabel" text="# Minutes" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="numberOfHoursLabel" text="# Hours" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label fx:id="numberOfHoursLabel" text="# Hours" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="numberOfDaysLabel" text="# Days" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="numberOfDaysLabel" text="# Days" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets bottom="5.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label maxWidth="1.7976931348623157E308" text="Over a Span of:" GridPane.rowIndex="5" />
-            <Label fx:id="spanOfDaysLabel" text="Unkown Days" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <Label maxWidth="1.7976931348623157E308" text="\% of Total Watch Time:" GridPane.rowIndex="6" />
-            <Label fx:id="percentOfTotalLabel" text="#.#%" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label maxWidth="1.7976931348623157E308" text="Over a Span of:" GridPane.rowIndex="7" />
+            <Label fx:id="spanOfDaysLabel" text="Unkown Days" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label maxWidth="1.7976931348623157E308" text="\% of Total Watch Time:" GridPane.rowIndex="8" />
+            <Label fx:id="percentOfTotalLabel" text="#.#%" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label layoutX="10.0" layoutY="103.0" maxWidth="1.7976931348623157E308" text="Episodes:" GridPane.rowIndex="1" />
+            <Label fx:id="numberOfEpisodesWatchedLabel" layoutX="250.0" layoutY="103.0" text="# Episodes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
     </children>

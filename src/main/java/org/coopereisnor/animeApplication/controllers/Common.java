@@ -3,6 +3,8 @@ package org.coopereisnor.animeApplication.controllers;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
+import javafx.scene.robot.Robot;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.Application;
@@ -25,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Common {
@@ -206,6 +211,28 @@ public class Common {
                 if(escape.match(event)) popup.close();
             });
 
+            // get mouse location
+            Robot robot = new Robot();
+            Point2D mousePosition = robot.getMousePosition();
+
+            // get which screen the mouse is in
+            List<Screen> windowScreens = Screen.getScreens();
+            Screen activeScreen = Screen.getPrimary();
+            for(Screen screen : windowScreens){
+                if(screen.getBounds().contains(mousePosition)){
+                    activeScreen = screen;
+                }
+            }
+
+            // get "center" coords of that screen
+            Rectangle2D bounds = activeScreen.getBounds();
+            double x = bounds.getMinX() + (bounds.getWidth() / 2) - bounds.getWidth()*.15;
+            double y = bounds.getMinY() + (bounds.getHeight() / 2) - bounds.getHeight()*.20;
+            Point2D center = new Point2D(x, y);
+
+            // place popup in that location of that screen
+            popup.setX(center.getX());
+            popup.setY(center.getY());
             popup.setScene(scene);
             popup.show();
 

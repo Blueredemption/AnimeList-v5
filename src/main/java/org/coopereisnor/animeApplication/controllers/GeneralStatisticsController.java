@@ -16,6 +16,8 @@ public class GeneralStatisticsController {
     private final Anime anime = singletonDao.getCurrentAnime();
 
     @FXML
+    private Label numberOfEpisodesWatchedLabel;
+    @FXML
     private Label numberOfDaysLabel;
     @FXML
     private Label numberOfHoursLabel;
@@ -28,6 +30,9 @@ public class GeneralStatisticsController {
 
 
     public void initialize() {
+        int episodesWatched = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
+        int episodesTotal = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
+
         int totalTimeInSeconds = AnimeStatistics.getTotalTimeInSeconds(singletonDao.getAnimeDao().getCollection()); // we don't want this to be the filtered list
         int animeTimeInSeconds = OccurrenceStatistics.getTotalTimeInSeconds(anime.getOccurrences());
 
@@ -36,6 +41,8 @@ public class GeneralStatisticsController {
         int displayedDays = hours/24;
         int displayedHours = hours - displayedDays*24;
         int displayedMinutes = minutes - displayedHours*60 - displayedDays*24*60;
+
+        numberOfEpisodesWatchedLabel.setText(episodesWatched +" / " +episodesTotal  +" Episodes");
 
         numberOfDaysLabel.setText(displayedDays +" Days");
         numberOfHoursLabel.setText(displayedHours + " Hours");
