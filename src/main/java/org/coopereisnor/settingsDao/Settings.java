@@ -29,6 +29,7 @@ public class Settings implements java.io.Serializable {
     public static final Color defaultProgressBarColor = new Color(50, 50, 50);
     public static final Color defaultProgressBarColorFull = new Color(80, 80, 80);
     public static final Color defaultTextColor = new Color(255, 255, 255);
+    public static final Dimension defaultWindowSize = new Dimension(1227, 806);
 
     private ImageIcon homeImage;
     private Color buttonColor;
@@ -62,6 +63,7 @@ public class Settings implements java.io.Serializable {
     private String defaultDirectionState;
     private String defaultAggregateState;
     private boolean defaultTypeState;
+    private Dimension dimension;
 
 
     public Settings(){ // constructor
@@ -97,6 +99,7 @@ public class Settings implements java.io.Serializable {
         defaultDirectionState = "Descending"; // ascending over descending
         defaultAggregateState = "Month";
         defaultTypeState = true;
+        dimension = defaultWindowSize;
     }
 
     // getters and setters
@@ -354,5 +357,13 @@ public class Settings implements java.io.Serializable {
 
     public void setDefaultTypeState(boolean defaultTypeState) {
         this.defaultTypeState = defaultTypeState;
+    }
+
+    public Dimension getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(Dimension dimension) {
+        this.dimension = dimension;
     }
 }

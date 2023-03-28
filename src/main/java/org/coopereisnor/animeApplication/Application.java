@@ -1,5 +1,6 @@
 package org.coopereisnor.animeApplication;
 
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,7 +9,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.coopereisnor.Program;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
+import org.coopereisnor.settingsDao.Settings;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -16,24 +19,12 @@ import java.util.Objects;
 
 
 public class Application extends javafx.application.Application {
-    private static final String VERSION = "5.1.0";
+    private static final String VERSION = "5.1.1";
     private static final String TITLE = "AnimeList-v" +VERSION;
     private Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
-        int height;
-        int width;
-
-        if(System.getProperty("os.name").toUpperCase().contains("WINDOWS")){
-            width = 1227;
-            height = 806;
-        }else{
-            width = 1212;
-            height = 798;
-        }
-
-
         SingletonDao.getInstance().setApplication(this);
         SingletonDao.getInstance().update();
 
@@ -48,11 +39,19 @@ public class Application extends javafx.application.Application {
 
         // with all the initialization over, we can create the GUI:
         this.stage = stage;
-        stage.setMinWidth(width);
-        stage.setMinHeight(height);
-        stage.setWidth(width);
-        stage.setHeight(height);
+        stage.setMinWidth(Settings.defaultWindowSize.getWidth());
+        stage.setMinHeight(Settings.defaultWindowSize.getHeight());
+        stage.setWidth(SingletonDao.getInstance().getSettingsDao().getSettings().getDimension().getWidth());
+        stage.setHeight(SingletonDao.getInstance().getSettingsDao().getSettings().getDimension().getHeight());
         stage.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("/images/Icon.png"))));
+
+        ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) -> {
+            SingletonDao.getInstance().getSettingsDao().getSettings().setDimension(new Dimension((int)stage.getWidth(), (int)stage.getHeight()));
+            SingletonDao.getInstance().getSettingsDao().save();
+        };
+
+        stage.widthProperty().addListener(stageSizeListener);
+        stage.heightProperty().addListener(stageSizeListener);
 
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("home.fxml"));
 
