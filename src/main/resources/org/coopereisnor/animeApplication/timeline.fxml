@@ -138,6 +138,11 @@
                         <Insets left="10.0" top="15.0" />
                      </GridPane.margin>
                   </ToggleButton>
+                  <Label fx:id="totalLabel" text="Total Watched: " GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
             </GridPane>
          </children>

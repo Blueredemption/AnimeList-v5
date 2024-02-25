@@ -49,6 +49,8 @@ public class TimelineController implements Controller{
     private Label hoverLabel;
     @FXML
     private ProgressBar progressBar;
+    @FXML
+    private Label totalLabel;
 
     @FXML
     public void initialize() {
@@ -168,6 +170,10 @@ public class TimelineController implements Controller{
                     });
                 }
             }
+
+            totalLabel.setText("Total Watched:  " +yearSets.get(activeYearSetIndex).getCount());
+        } else {
+            totalLabel.setText("Total Watched:  0");
         }
     }
 
