@@ -34,6 +34,9 @@ public class EditDatesController {
 
     @FXML
     public void initialize() {
+        datePickerOne.setEditable(false);
+        datePickerTwo.setEditable(false);
+
         cancelButton.setOnAction(event -> ((Stage)((Node)event.getSource()).getScene().getWindow()).close());
 
         if(singletonDao.getCurrentField().equals("AiredDates")) {

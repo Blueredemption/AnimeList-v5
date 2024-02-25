@@ -24,7 +24,7 @@ public class EditScoreController {
 
 
     @FXML
-    private Spinner spinner;
+    private Spinner<Double> spinner;
     @FXML
     private Button cancelButton;
     @FXML
@@ -35,7 +35,6 @@ public class EditScoreController {
         valueFactory.setWrapAround(true);
         valueFactory.setAmountToStepBy(0.1);
         spinner.setValueFactory(valueFactory);
-        spinner.setEditable(true);
 
         cancelButton.setOnAction(event -> ((Stage)((Node)event.getSource()).getScene().getWindow()).close());
 

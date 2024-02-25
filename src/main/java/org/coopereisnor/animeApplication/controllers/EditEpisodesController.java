@@ -53,6 +53,7 @@ public class EditEpisodesController {
         episodesTotalSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maxValue));
         episodesTotalSpinner.getValueFactory().setValue(occurrence.getEpisodes());
 
+        datePicker.setEditable(false);
         datePicker.setValue(LocalDate.now());
 
         initializeEpisodes();

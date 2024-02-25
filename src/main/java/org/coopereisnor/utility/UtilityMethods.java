@@ -118,15 +118,7 @@ public class UtilityMethods {
     }
 
     public static Path getLocalDataDirectory(){
-        String workingDirectory;
-        if (System.getProperty("os.name").toUpperCase().contains("WINDOWS"))
-        {
-            workingDirectory = System.getenv("AppData");
-        } else
-        {
-            workingDirectory = System.getProperty("user.home");
-        }
-        return Path.of(workingDirectory);
+        return Path.of(System.getProperty("user.dir"));
     }
 
 
