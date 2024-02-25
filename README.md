@@ -27,7 +27,7 @@ collect data. Of course, the user still has full control over their data if they
 
 ## Installation
 
-Click [here](https://github.com/Blueredemption/AnimeList-v5/releases/tag/5.1.0) to download the executable jar. The user will need Java 19 or newer JRE installed
+Click [here](https://github.com/Blueredemption/AnimeList-v5/releases/tag/5.1.1) to download the executable jar. The user will need Java 19 or newer JRE installed
 on their PC for the application to run. A proper installer for this application is something that *might* come in the future.
 ## Usage
 
