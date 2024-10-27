@@ -47,6 +47,7 @@ public class AddFilterController {
         addActionListeners();
         populateFilterComboBox();
         initializeContainers();
+        validateAdd();
     }
 
 
