@@ -14,8 +14,9 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.malScrape.MALScrape;
+import org.coopereisnor.malScrape.MalParser;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -55,7 +56,7 @@ public class EditOccurrenceController {
             }
         } );
 
-        urlTextField.setOnKeyTyped(keyEvent -> {
+        urlTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 currentURL = new URL(urlTextField.getText());
             } catch (MalformedURLException ex) {
@@ -99,10 +100,14 @@ public class EditOccurrenceController {
     }
 
     private void refreshEvent(Event event){
-        MALScrape.refreshOccurrenceFromURL(urlTextField.getText().trim(), occurrence);
-        animeDao.save(anime);
-        application.changeScene("anime.fxml");
-        singletonDao.update();
-        ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+        try {
+            new MalParser(urlTextField.getText().trim()).updateOccurrence(occurrence);
+            animeDao.save(anime);
+            application.changeScene("anime.fxml");
+            singletonDao.update();
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).close();
+        }  catch (IOException e) {
+            Program.logger.error("IOException", e);
+        }
     }
 }

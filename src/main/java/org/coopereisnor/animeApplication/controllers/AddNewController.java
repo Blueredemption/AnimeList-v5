@@ -12,8 +12,10 @@ import org.coopereisnor.animeApplication.singleton.SingletonDao;
 import org.coopereisnor.animeDao.Anime;
 import org.coopereisnor.animeDao.AnimeDao;
 import org.coopereisnor.animeDao.Occurrence;
-import org.coopereisnor.malScrape.MALScrape;
+import org.coopereisnor.malScrape.MalParser;
 import org.coopereisnor.settingsDao.SettingsDao;
+
+import java.io.IOException;
 
 public class AddNewController {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -54,8 +56,15 @@ public class AddNewController {
     public void createAnimeAndNavigate(Event event){
         Occurrence occurrence;
 
-        if(!textField.getText().trim().equals("")) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
-        else occurrence = new Occurrence(System.currentTimeMillis());
+        if(!textField.getText().trim().isEmpty()) {
+            try {
+                occurrence = new MalParser(textField.getText().trim()).getNewOccurrence();
+            } catch (IOException exception) {
+                occurrence = new Occurrence(System.currentTimeMillis());
+            }
+        } else {
+            occurrence = new Occurrence(System.currentTimeMillis());
+        }
 
         // the first occurrence in an anime is set to focused by default
         occurrence.setFocused(true);
@@ -90,8 +99,15 @@ public class AddNewController {
     public void createOccurrenceAndNavigate(Event event){
         Occurrence occurrence;
 
-        if(MALScrape.checkLink(textField.getText().trim())) occurrence = MALScrape.getOccurrenceFromURL(textField.getText().trim());
-        else occurrence = new Occurrence(System.currentTimeMillis());
+        if(!textField.getText().trim().isEmpty()) {
+            try {
+                occurrence = new MalParser(textField.getText().trim()).getNewOccurrence();
+            } catch (IOException exception) {
+                occurrence = new Occurrence(System.currentTimeMillis());
+            }
+        } else {
+            occurrence = new Occurrence(System.currentTimeMillis());
+        }
 
         occurrence.setTracked(settingsDao.getSettings().isTracking());
 
