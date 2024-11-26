@@ -123,6 +123,10 @@ public class UtilityMethods {
 
 
     public static Color averageColor(ImageIcon imageIcon) {
+        if(imageIcon == null) {
+            return Color.BLACK;
+        }
+
         BufferedImage bi = toBufferedImage(imageIcon.getImage());
         int step = 5;
         int sampled = 0;

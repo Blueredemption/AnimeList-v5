@@ -28,7 +28,7 @@ public class NotesController {
         textArea.setUserData(true);
         textArea.setId("transparent");
         textArea.setText(settingsDao.getSettings().getNotesString());
-        textArea.setOnKeyTyped(keyEvent -> {
+        textArea.textProperty().addListener((observableValue, oldValue, newValue) -> {
             settingsDao.getSettings().setNotesString(textArea.getText());
             settingsDao.save();
         });

@@ -61,7 +61,7 @@ public class EditImageController {
             checkFilePath();
         });
 
-        urlTextField.setOnKeyTyped(keyEvent -> {
+        urlTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             try {
                 URL currentURL = new URL(urlTextField.getText());
                 currentImageIcon = new ImageIcon(ImageIO.read(currentURL));
@@ -76,8 +76,7 @@ public class EditImageController {
             setValid();
         });
 
-
-        fileLocationTextField.setOnKeyTyped(keyEvent -> {
+        fileLocationTextField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             checkFilePath();
         });
 

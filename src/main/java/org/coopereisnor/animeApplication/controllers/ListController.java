@@ -225,7 +225,7 @@ public class ListController implements Controller{
     private void loadToggleComponents(){
         // search area
         searchField.setText(singletonDao.getListContainer().getSearch());
-        searchField.setOnKeyTyped(keyEvent -> {
+        searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
             singletonDao.getListContainer().setSearch(searchField.getText());
             loadTypeComponents();
         });
