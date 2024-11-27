@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -275,6 +276,16 @@
                            </GridPane.margin>
                         </Label>
                         <Button fx:id="timelineStateSave" layoutX="895.0" layoutY="593.0" mnemonicParsing="false" prefWidth="70.0" text="Save" GridPane.columnIndex="5" GridPane.rowIndex="25" />
+                        <Label layoutX="20.0" layoutY="597.0" text="Images Per Row" GridPane.rowIndex="25">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Spinner fx:id="imagesPerRowSpinner" GridPane.columnIndex="2" GridPane.rowIndex="25">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </Spinner>
                      </children>
                   </GridPane>
                </content>

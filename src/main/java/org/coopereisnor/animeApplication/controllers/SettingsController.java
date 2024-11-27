@@ -1,10 +1,7 @@
 package org.coopereisnor.animeApplication.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.coopereisnor.animeApplication.Application;
 import org.coopereisnor.animeApplication.singleton.SingletonDao;
@@ -122,11 +119,11 @@ public class SettingsController {
     @FXML
     private Button timelineStateSave;
 
-
     // other
     @FXML
     private ToggleButton trackingToggleButton;
-
+    @FXML
+    private Spinner<Integer> imagesPerRowSpinner;
 
     @FXML
     public void initialize() {
@@ -141,6 +138,7 @@ public class SettingsController {
         configureTracking();
         configureListDefaults();
         configureTimelineDefaults();
+        configureImagesPerRow();
     }
 
     private void simpleModifications() {
@@ -270,95 +268,95 @@ public class SettingsController {
 
         // default buttons
         backgroundColorThreeDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setBackgroundColorThree(Settings.defaultBackgroundColorThree);
+            settingsDao.getSettings().setBackgroundColorThree(Settings.DEFAULT_BACKGROUND_COLOR_THREE);
             saveFunction();
         });
         backgroundColorTwoDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setBackgroundColorTwo(Settings.defaultBackgroundColorTwo);
+            settingsDao.getSettings().setBackgroundColorTwo(Settings.DEFAULT_BACKGROUND_COLOR_TWO);
             saveFunction();
         });
         backgroundColorOneDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setBackgroundColorOne(Settings.defaultBackgroundColorOne);
+            settingsDao.getSettings().setBackgroundColorOne(Settings.DEFAULT_BACKGROUND_COLOR_ONE);
             saveFunction();
         });
         borderColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setBorderColor(Settings.defaultBorderColor);
+            settingsDao.getSettings().setBorderColor(Settings.DEFAULT_BORDER_COLOR);
             saveFunction();
         });
         buttonColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setButtonColor(Settings.defaultButtonColor);
+            settingsDao.getSettings().setButtonColor(Settings.DEFAULT_BUTTON_COLOR);
             saveFunction();
         });
         buttonHoveredColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setButtonColorHovered(Settings.defaultButtonColorHovered);
+            settingsDao.getSettings().setButtonColorHovered(Settings.DEFAULT_BUTTON_COLOR_HOVERED);
             saveFunction();
         });
         buttonPressedColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setButtonColorPressed(Settings.defaultButtonColorPressed);
+            settingsDao.getSettings().setButtonColorPressed(Settings.DEFAULT_BUTTON_COLOR_PRESSED);
             saveFunction();
         });
         rejectionButtonColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setRejectionColor(Settings.defaultRejectionColor);
+            settingsDao.getSettings().setRejectionColor(Settings.DEFAULT_REJECTION_COLOR);
             saveFunction();
         });
         rejectionButtonHoveredColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setRejectionColorHovered(Settings.defaultRejectionColorHovered);
+            settingsDao.getSettings().setRejectionColorHovered(Settings.DEFAULT_REJECTION_COLOR_HOVERED);
             saveFunction();
         });
         rejectionButtonPressedColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setRejectionColorPressed(Settings.defaultRejectionColorPressed);
+            settingsDao.getSettings().setRejectionColorPressed(Settings.DEFAULT_REJECTION_COLOR_PRESSED);
             saveFunction();
         });
         rejectionButtonBorderColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setRejectionColorBorder(Settings.defaultRejectionColorBorder);
+            settingsDao.getSettings().setRejectionColorBorder(Settings.DEFAULT_REJECTION_COLOR_BORDER);
             saveFunction();
         });
         acceptanceButtonColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setAcceptanceColor(Settings.defaultAcceptanceColor);
+            settingsDao.getSettings().setAcceptanceColor(Settings.DEFAULT_ACCEPTANCE_COLOR);
             saveFunction();
         });
         acceptanceButtonHoveredColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setAcceptanceColorHovered(Settings.defaultAcceptanceColorHovered);
+            settingsDao.getSettings().setAcceptanceColorHovered(Settings.DEFAULT_ACCEPTANCE_COLOR_HOVERED);
             saveFunction();
         });
         acceptanceButtonPressedColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setAcceptanceColorPressed(Settings.defaultAcceptanceColorPressed);
+            settingsDao.getSettings().setAcceptanceColorPressed(Settings.DEFAULT_ACCEPTANCE_COLOR_PRESSED);
             saveFunction();
         });
         acceptanceButtonBorderColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setAcceptanceColorBorder(Settings.defaultAcceptanceColorBorder);
+            settingsDao.getSettings().setAcceptanceColorBorder(Settings.DEFAULT_ACCEPTANCE_COLOR_BORDER);
             saveFunction();
         });
         neutralButtonColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setNeutralColor(Settings.defaultNeutralColor);
+            settingsDao.getSettings().setNeutralColor(Settings.DEFAULT_NEUTRAL_COLOR);
             saveFunction();
         });
         neutralButtonHoveredColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setNeutralColorHovered(Settings.defaultNeutralColorHovered);
+            settingsDao.getSettings().setNeutralColorHovered(Settings.DEFAULT_NEUTRAL_COLOR_HOVERED);
             saveFunction();
         });
         neutralButtonPressedColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setNeutralColorPressed(Settings.defaultNeutralColorPressed);
+            settingsDao.getSettings().setNeutralColorPressed(Settings.DEFAULT_NEUTRAL_COLOR_PRESSED);
             saveFunction();
         });
         neutralButtonBorderColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setNeutralColorBorder(Settings.defaultNeutralColorBorder);
+            settingsDao.getSettings().setNeutralColorBorder(Settings.DEFAULT_NEUTRAL_COLOR_BORDER);
             saveFunction();
         });
         textColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setTextColor(Settings.defaultTextColor);
+            settingsDao.getSettings().setTextColor(Settings.DEFAULT_TEXT_COLOR);
             saveFunction();
         });
         textAreaColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setTextAreaColor(Settings.defaultTextAreaColor);
+            settingsDao.getSettings().setTextAreaColor(Settings.DEFAULT_TEXT_AREA_COLOR);
             saveFunction();
         });
         progressBarEmptyColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setProgressBarColor(Settings.defaultProgressBarColor);
+            settingsDao.getSettings().setProgressBarColor(Settings.DEFAULT_PROGRESS_BAR_COLOR);
             saveFunction();
         });
         progressBarFullColorDefault.setOnAction(actionEvent -> {
-            settingsDao.getSettings().setProgressBarColorFull(Settings.defaultProgressBarColorFull);
+            settingsDao.getSettings().setProgressBarColorFull(Settings.DEFAULT_PROGRESS_BAR_COLOR_FULL);
             saveFunction();
         });
     }
@@ -396,6 +394,16 @@ public class SettingsController {
         timelineStateSave.setOnAction(actionEvent -> {
             settingsDao.getSettings().setDefaultAggregateState(singletonDao.getListContainer().getAggregate());
             settingsDao.getSettings().setDefaultTypeState(singletonDao.getListContainer().isType());
+            settingsDao.save();
+        });
+    }
+
+    private void configureImagesPerRow() {
+        SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(4,40, 1);
+        imagesPerRowSpinner.setValueFactory(factory);
+        factory.setValue(settingsDao.getSettings().getImagesPerRow());
+        imagesPerRowSpinner.valueProperty().addListener((observable, oldValue, newValue) -> {
+            settingsDao.getSettings().setImagesPerRow(newValue);
             settingsDao.save();
         });
     }

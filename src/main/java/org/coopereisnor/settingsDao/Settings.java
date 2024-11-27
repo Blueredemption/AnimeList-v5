@@ -5,31 +5,32 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Settings implements java.io.Serializable {
-    public static final ImageIcon defaultHomeImage = new ImageIcon(Objects.requireNonNull(Settings.class.getResource("/images/Background.png")));
-    public static final Color defaultButtonColor = new Color(50, 50, 50);
-    public static final Color defaultButtonColorHovered = new Color(60, 60, 60);
-    public static final Color defaultButtonColorPressed = new Color(70, 70, 70);
-    public static final Color defaultBorderColor = new Color(80, 80, 80);
-    public static final Color defaultBackgroundColorThree = new Color(50, 50, 50);
-    public static final Color defaultBackgroundColorTwo = new Color(40, 40, 40);
-    public static final Color defaultBackgroundColorOne = new Color(30, 30, 30);
-    public static final Color defaultTextAreaColor = new Color(60, 60, 60);
-    public static final Color defaultRejectionColor = new Color(112, 64, 64);
-    public static final Color defaultRejectionColorHovered = new Color(138, 79, 79);
-    public static final Color defaultRejectionColorPressed = new Color(157, 90, 90);
-    public static final Color defaultRejectionColorBorder = new Color(136, 81, 81);
-    public static final Color defaultAcceptanceColor = new Color(65, 112, 64);
-    public static final Color defaultAcceptanceColorHovered = new Color(79, 136, 78);
-    public static final Color defaultAcceptanceColorPressed = new Color(91, 155, 90);
-    public static final Color defaultAcceptanceColorBorder = new Color(85, 138, 84);
-    public static final Color defaultNeutralColor = new Color(64, 112, 106);
-    public static final Color defaultNeutralColorHovered = new Color(75, 131, 124);
-    public static final Color defaultNeutralColorPressed = new Color(91, 159, 150);
-    public static final Color defaultNeutralColorBorder = new Color(83, 141, 134);
-    public static final Color defaultProgressBarColor = new Color(50, 50, 50);
-    public static final Color defaultProgressBarColorFull = new Color(80, 80, 80);
-    public static final Color defaultTextColor = new Color(255, 255, 255);
-    public static final Dimension defaultWindowSize = new Dimension(1227, 806);
+    public static final ImageIcon DEFAULT_HOME_IMAGE = new ImageIcon(Objects.requireNonNull(Settings.class.getResource("/images/Background.png")));
+    public static final Color DEFAULT_BUTTON_COLOR = new Color(50, 50, 50);
+    public static final Color DEFAULT_BUTTON_COLOR_HOVERED = new Color(60, 60, 60);
+    public static final Color DEFAULT_BUTTON_COLOR_PRESSED = new Color(70, 70, 70);
+    public static final Color DEFAULT_BORDER_COLOR = new Color(80, 80, 80);
+    public static final Color DEFAULT_BACKGROUND_COLOR_THREE = new Color(50, 50, 50);
+    public static final Color DEFAULT_BACKGROUND_COLOR_TWO = new Color(40, 40, 40);
+    public static final Color DEFAULT_BACKGROUND_COLOR_ONE = new Color(30, 30, 30);
+    public static final Color DEFAULT_TEXT_AREA_COLOR = new Color(60, 60, 60);
+    public static final Color DEFAULT_REJECTION_COLOR = new Color(112, 64, 64);
+    public static final Color DEFAULT_REJECTION_COLOR_HOVERED = new Color(138, 79, 79);
+    public static final Color DEFAULT_REJECTION_COLOR_PRESSED = new Color(157, 90, 90);
+    public static final Color DEFAULT_REJECTION_COLOR_BORDER = new Color(136, 81, 81);
+    public static final Color DEFAULT_ACCEPTANCE_COLOR = new Color(65, 112, 64);
+    public static final Color DEFAULT_ACCEPTANCE_COLOR_HOVERED = new Color(79, 136, 78);
+    public static final Color DEFAULT_ACCEPTANCE_COLOR_PRESSED = new Color(91, 155, 90);
+    public static final Color DEFAULT_ACCEPTANCE_COLOR_BORDER = new Color(85, 138, 84);
+    public static final Color DEFAULT_NEUTRAL_COLOR = new Color(64, 112, 106);
+    public static final Color DEFAULT_NEUTRAL_COLOR_HOVERED = new Color(75, 131, 124);
+    public static final Color DEFAULT_NEUTRAL_COLOR_PRESSED = new Color(91, 159, 150);
+    public static final Color DEFAULT_NEUTRAL_COLOR_BORDER = new Color(83, 141, 134);
+    public static final Color DEFAULT_PROGRESS_BAR_COLOR = new Color(50, 50, 50);
+    public static final Color DEFAULT_PROGRESS_BAR_COLOR_FULL = new Color(80, 80, 80);
+    public static final Color DEFAULT_TEXT_COLOR = new Color(255, 255, 255);
+    public static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(1227, 806);
+    public static final int DEFAULT_IMAGES_PER_ROW = 6;
 
     private ImageIcon homeImage;
     private Color buttonColor;
@@ -64,33 +65,34 @@ public class Settings implements java.io.Serializable {
     private String defaultAggregateState;
     private boolean defaultTypeState;
     private Dimension dimension;
+    private int imagesPerRow;
 
 
     public Settings(){ // constructor
-        homeImage = defaultHomeImage;
-        buttonColor = defaultButtonColor;
-        buttonColorHovered = defaultButtonColorHovered;
-        buttonColorPressed = defaultButtonColorPressed;
-        borderColor = defaultBorderColor;
-        backgroundColorThree = defaultBackgroundColorThree;
-        backgroundColorTwo = defaultBackgroundColorTwo;
-        backgroundColorOne = defaultBackgroundColorOne;
-        textAreaColor = defaultTextAreaColor;
-        rejectionColor = defaultRejectionColor;
-        rejectionColorHovered = defaultRejectionColorHovered;
-        rejectionColorPressed = defaultRejectionColorPressed;
-        rejectionColorBorder = defaultRejectionColorBorder;
-        acceptanceColor = defaultAcceptanceColor;
-        acceptanceColorHovered = defaultAcceptanceColorHovered;
-        acceptanceColorPressed = defaultAcceptanceColorPressed;
-        acceptanceColorBorder = defaultAcceptanceColorBorder;
-        neutralColor = defaultNeutralColor;
-        neutralColorHovered = defaultNeutralColorHovered;
-        neutralColorPressed = defaultNeutralColorPressed;
-        neutralColorBorder = defaultNeutralColorBorder;
-        progressBarColor = defaultProgressBarColor;
-        progressBarColorFull = defaultProgressBarColorFull;
-        textColor = defaultTextColor;
+        homeImage = DEFAULT_HOME_IMAGE;
+        buttonColor = DEFAULT_BUTTON_COLOR;
+        buttonColorHovered = DEFAULT_BUTTON_COLOR_HOVERED;
+        buttonColorPressed = DEFAULT_BUTTON_COLOR_PRESSED;
+        borderColor = DEFAULT_BORDER_COLOR;
+        backgroundColorThree = DEFAULT_BACKGROUND_COLOR_THREE;
+        backgroundColorTwo = DEFAULT_BACKGROUND_COLOR_TWO;
+        backgroundColorOne = DEFAULT_BACKGROUND_COLOR_ONE;
+        textAreaColor = DEFAULT_TEXT_AREA_COLOR;
+        rejectionColor = DEFAULT_REJECTION_COLOR;
+        rejectionColorHovered = DEFAULT_REJECTION_COLOR_HOVERED;
+        rejectionColorPressed = DEFAULT_REJECTION_COLOR_PRESSED;
+        rejectionColorBorder = DEFAULT_REJECTION_COLOR_BORDER;
+        acceptanceColor = DEFAULT_ACCEPTANCE_COLOR;
+        acceptanceColorHovered = DEFAULT_ACCEPTANCE_COLOR_HOVERED;
+        acceptanceColorPressed = DEFAULT_ACCEPTANCE_COLOR_PRESSED;
+        acceptanceColorBorder = DEFAULT_ACCEPTANCE_COLOR_BORDER;
+        neutralColor = DEFAULT_NEUTRAL_COLOR;
+        neutralColorHovered = DEFAULT_NEUTRAL_COLOR_HOVERED;
+        neutralColorPressed = DEFAULT_NEUTRAL_COLOR_PRESSED;
+        neutralColorBorder = DEFAULT_NEUTRAL_COLOR_BORDER;
+        progressBarColor = DEFAULT_PROGRESS_BAR_COLOR;
+        progressBarColorFull = DEFAULT_PROGRESS_BAR_COLOR_FULL;
+        textColor = DEFAULT_TEXT_COLOR;
         notesString = "";
         tracking = true;
         defaultListState = "list.fxml"; // list over image
@@ -99,7 +101,8 @@ public class Settings implements java.io.Serializable {
         defaultDirectionState = "Descending"; // ascending over descending
         defaultAggregateState = "Month";
         defaultTypeState = true;
-        dimension = defaultWindowSize;
+        dimension = DEFAULT_WINDOW_SIZE;
+        imagesPerRow = DEFAULT_IMAGES_PER_ROW;
     }
 
     // getters and setters
@@ -365,5 +368,13 @@ public class Settings implements java.io.Serializable {
 
     public void setDimension(Dimension dimension) {
         this.dimension = dimension;
+    }
+
+    public int getImagesPerRow() {
+        return imagesPerRow;
+    }
+
+    public void setImagesPerRow(int imagesPerRow) {
+        this.imagesPerRow = imagesPerRow;
     }
 }

@@ -2,8 +2,6 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -18,9 +16,9 @@ import org.coopereisnor.animeDao.Occurrence;
 import org.coopereisnor.manipulation.OccurrenceStatistics;
 import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
+import org.coopereisnor.settingsDao.SettingsDao;
 import org.coopereisnor.utility.UtilityMethods;
 
-import javax.swing.event.ChangeEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,7 @@ import java.util.List;
 public class ListController implements Controller {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final Application application = singletonDao.getApplication();
+    private final SettingsDao settingsDao = singletonDao.getSettingsDao();
 
     @FXML
     private GridPane gridPane;
@@ -60,7 +59,7 @@ public class ListController implements Controller {
         Common.configureNavigation(gridPane, this.getClass());
         Common.setFasterScrollBar(scrollPane);
 
-        if(imageFlowPane != null){
+        if (imageFlowPane != null) {
             imageFlowPane.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
                 resizeImages(newSceneWidth.intValue());
             });
@@ -210,7 +209,7 @@ public class ListController implements Controller {
             }
         }
 
-        resizeImages((int)imageFlowPane.getWidth());
+        resizeImages((int) imageFlowPane.getWidth());
     }
 
     private void addImageComponent(BufferedImage bufferedImage, Anime anime, Occurrence occurrence) {
@@ -224,7 +223,7 @@ public class ListController implements Controller {
     }
 
     private void resizeImages(int parentSize) {
-        int componentsPerRow = 6; // todo: get from a setting
+        int componentsPerRow = settingsDao.getSettings().getImagesPerRow();
         int layoutHorizontalPadding = 5;
         int componentWidth = (parentSize - (layoutHorizontalPadding * (componentsPerRow + 1))) / componentsPerRow;
         int componentMod = parentSize % componentsPerRow;

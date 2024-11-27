@@ -39,8 +39,8 @@ public class Application extends javafx.application.Application {
 
         // with all the initialization over, we can create the GUI:
         this.stage = stage;
-        stage.setMinWidth(Settings.defaultWindowSize.getWidth());
-        stage.setMinHeight(Settings.defaultWindowSize.getHeight());
+        stage.setMinWidth(Settings.DEFAULT_WINDOW_SIZE.getWidth());
+        stage.setMinHeight(Settings.DEFAULT_WINDOW_SIZE.getHeight());
         stage.setWidth(SingletonDao.getInstance().getSettingsDao().getSettings().getDimension().getWidth());
         stage.setHeight(SingletonDao.getInstance().getSettingsDao().getSettings().getDimension().getHeight());
         stage.getIcons().add(new Image(Objects.requireNonNull(Application.class.getResourceAsStream("/images/Icon.png"))));
