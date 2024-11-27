@@ -68,6 +68,9 @@ public abstract class AbstractParser {
     getProducers().forEach(oldOccurrence::addProducer);
     getLicensors().forEach(oldOccurrence::addLicensor);
     getStudios().forEach(oldOccurrence::addStudio);
+
+    oldOccurrence.setSource(getSource());
+
     getGenres().forEach(oldOccurrence::addGenre);
     getThemes().forEach(oldOccurrence::addTheme);
   }
