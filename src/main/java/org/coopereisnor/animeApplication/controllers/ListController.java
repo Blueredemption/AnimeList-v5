@@ -2,8 +2,11 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.coopereisnor.animeApplication.Application;
@@ -17,10 +20,12 @@ import org.coopereisnor.manipulation.Pair;
 import org.coopereisnor.manipulation.Tag;
 import org.coopereisnor.utility.UtilityMethods;
 
+import javax.swing.event.ChangeEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListController implements Controller{
+public class ListController implements Controller {
     private final SingletonDao singletonDao = SingletonDao.getInstance();
     private final Application application = singletonDao.getApplication();
 
@@ -54,60 +59,63 @@ public class ListController implements Controller{
         singletonDao.setCurrentController(this);
         Common.configureNavigation(gridPane, this.getClass());
         Common.setFasterScrollBar(scrollPane);
+
+        if(imageFlowPane != null){
+            imageFlowPane.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+                resizeImages(newSceneWidth.intValue());
+            });
+        }
+
         loadToggleComponents();
         loadTypeComponents();
         loadSortComponents();
         loadFilterComponents();
     }
 
-
-
-    private void loadTypeComponents(){
+    private void loadTypeComponents() {
         typeButton.setText(singletonDao.getType());
         orderButton.setText(singletonDao.getListContainer().getOrder());
 
-        if(singletonDao.getListFXML().equals("list.fxml")){
+        if (singletonDao.getListFXML().equals("list.fxml")) {
             loadListComponents();
-        }else {
+        } else {
             loadImageComponents();
         }
     }
 
-
-
-    private void loadListComponents(){
+    private void loadListComponents() {
         // first remove everything to start fresh
         insideScrollPane.getChildren().clear();
 
         int iterator = 0;
-        if(singletonDao.getType().equals("Anime")) {
-            for(Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())){
-                String number = ++iterator +":";
+        if (singletonDao.getType().equals("Anime")) {
+            for (Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())) {
+                String number = ++iterator + ":";
                 String name = anime.getName();
-                String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) +"";
+                String episodes = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) == 0 ? "" : OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences()) + "";
                 String season = anime.getFocusedOccurrence().getPremieredSeason();
-                String year = anime.getFocusedOccurrence().getPremieredYear() == -1 ? "" : anime.getFocusedOccurrence().getPremieredYear() +"";
+                String year = anime.getFocusedOccurrence().getPremieredYear() == -1 ? "" : anime.getFocusedOccurrence().getPremieredYear() + "";
                 int part = OccurrenceStatistics.getTotalEpisodesWatched(anime.getOccurrences());
                 int whole = OccurrenceStatistics.getTotalEpisodes(anime.getOccurrences());
 
                 addListComponent(number, name, episodes, season, year, part, whole, anime, null);
             }
-        }else{
-            for(Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())){
-                String number = ++iterator +":";
+        } else {
+            for (Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())) {
+                String number = ++iterator + ":";
                 String name = pair.occurrence().getName();
-                String episodes = pair.occurrence().getEpisodes() == 0 ? "" : pair.occurrence().getEpisodes() +"";
+                String episodes = pair.occurrence().getEpisodes() == 0 ? "" : pair.occurrence().getEpisodes() + "";
                 String season = pair.occurrence().getPremieredSeason();
-                String year = pair.occurrence().getPremieredYear() == -1 ? "" : pair.occurrence().getPremieredYear() +"";
+                String year = pair.occurrence().getPremieredYear() == -1 ? "" : pair.occurrence().getPremieredYear() + "";
                 int part = pair.occurrence().getEpisodesWatched().length;
                 int whole = pair.occurrence().getEpisodes();
 
-                addListComponent(number, name,episodes, season, year, part, whole, pair.anime(), pair.occurrence());
+                addListComponent(number, name, episodes, season, year, part, whole, pair.anime(), pair.occurrence());
             }
         }
     }
 
-    private void addListComponent(String number, String name, String episodes, String season, String year, int part, int whole, Anime anime, Occurrence occurrence){
+    private void addListComponent(String number, String name, String episodes, String season, String year, int part, int whole, Anime anime, Occurrence occurrence) {
         GridPane containerPane = new GridPane();
         GridPane.setFillHeight(containerPane, true);
         containerPane.setMinWidth(HBox.USE_COMPUTED_SIZE);
@@ -116,7 +124,7 @@ public class ListController implements Controller{
         containerPane.setPrefHeight(37);
         containerPane.setMaxWidth(HBox.USE_COMPUTED_SIZE);
         containerPane.setMaxHeight(HBox.USE_COMPUTED_SIZE);
-        containerPane.setPadding(new Insets(5,5,5,5));
+        containerPane.setPadding(new Insets(5, 5, 5, 5));
         containerPane.setId("containerBackground");
         insideScrollPane.getChildren().add(containerPane);
 
@@ -188,30 +196,25 @@ public class ListController implements Controller{
     }
 
 
-
-    private void loadImageComponents(){
+    private void loadImageComponents() {
         // first remove everything to start fresh
         imageFlowPane.getChildren().clear();
 
-        if(singletonDao.getType().equals("Anime")){
+        if (singletonDao.getType().equals("Anime")) {
             for (Anime anime : ListContainer.searchedAnime(singletonDao.getListContainer().getFilteredAndSortedAnime(), searchField.getText())) {
                 addImageComponent(UtilityMethods.toBufferedImage(anime.getFocusedOccurrence().getImageIcon().getImage()), anime, null);
             }
-        } else{
+        } else {
             for (Pair pair : ListContainer.searchedPairs(singletonDao.getListContainer().getFilteredAndSortedOccurrences(), searchField.getText())) {
                 addImageComponent(UtilityMethods.toBufferedImage(pair.occurrence().getImageIcon().getImage()), pair.anime(), pair.occurrence());
             }
         }
+
+        resizeImages((int)imageFlowPane.getWidth());
     }
 
-    private void addImageComponent(BufferedImage bufferedImage, Anime anime, Occurrence occurrence){
-        double width = 157;
-        double height = 225;
-
+    private void addImageComponent(BufferedImage bufferedImage, Anime anime, Occurrence occurrence) {
         Pane imagePane = Common.getImagePaneFor(null, bufferedImage);
-        imagePane.setMinSize(width, height);
-        imagePane.setPrefSize(width, height);
-        imagePane.setMaxSize(width, height);
         imagePane.setOnMouseClicked(event -> {
             singletonDao.setCurrentAnime(anime, occurrence);
             application.changeScene("anime.fxml");
@@ -220,9 +223,31 @@ public class ListController implements Controller{
         imageFlowPane.getChildren().add(imagePane);
     }
 
+    private void resizeImages(int parentSize) {
+        int componentsPerRow = 6; // todo: get from a setting
+        int layoutHorizontalPadding = 5;
+        int componentWidth = (parentSize - (layoutHorizontalPadding * (componentsPerRow + 1))) / componentsPerRow;
+        int componentMod = parentSize % componentsPerRow;
+        double componentHeight = componentWidth * (225d / 157d);
+        int pseudoIndex = componentMod >= layoutHorizontalPadding ?
+            componentMod - layoutHorizontalPadding :
+            componentMod - layoutHorizontalPadding + componentsPerRow;
+
+        List<Node> children = imageFlowPane.getChildren();
+        for (int i = 0; i < children.size(); i++) {
+            Node child = children.get(i);
+            int chunkFactor = i % componentsPerRow < pseudoIndex ? 1 : 0;
+            int childWidth = componentWidth + chunkFactor;
+            if (child instanceof Pane) {
+                ((Pane) child).setMinSize(childWidth, componentHeight);
+                ((Pane) child).setPrefSize(childWidth, componentHeight);
+                ((Pane) child).setMaxSize(childWidth, componentHeight);
+            }
+        }
+    }
 
 
-    private void loadToggleComponents(){
+    private void loadToggleComponents() {
         // search area
         searchField.setText(singletonDao.getListContainer().getSearch());
         searchField.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -231,18 +256,18 @@ public class ListController implements Controller{
         });
 
         // view button
-        if(singletonDao.getListFXML().equals("list.fxml")){ // these don't need to updated higher up since the page refreshes
+        if (singletonDao.getListFXML().equals("list.fxml")) { // these don't need to updated higher up since the page refreshes
             viewButton.setText("List");
             viewButton.setSelected(true);
-        }else{
+        } else {
             viewButton.setText("Image");
             viewButton.setSelected(false);
         }
 
         viewButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-            if(newValue){
+            if (newValue) {
                 singletonDao.setListFXML("list.fxml");
-            } else{
+            } else {
                 singletonDao.setListFXML("listImages.fxml");
             }
             application.changeScene(singletonDao.getListFXML());
@@ -251,11 +276,12 @@ public class ListController implements Controller{
         // type button
         typeButton.setSelected(!singletonDao.getType().equals("Anime"));
         typeButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-            if(oldValue){
+            if (oldValue) {
                 singletonDao.setType("Anime");
-            } else{
+            } else {
                 singletonDao.setType("Occurrence");
             }
+
             loadTypeComponents();
         }));
 
@@ -265,7 +291,7 @@ public class ListController implements Controller{
         });
     }
 
-    private void loadSortComponents(){
+    private void loadSortComponents() {
         ObservableList<String> sortStrings = FXCollections.observableArrayList("Added", "Score", "Name", "Rank", "Started", "Finished", "Eps. Watched", "Eps. Total", "Released", "Progress");
         comboBox.setItems(sortStrings);
         comboBox.setValue(singletonDao.getListContainer().getSortBy());
@@ -276,24 +302,24 @@ public class ListController implements Controller{
 
         orderButton.setSelected(!singletonDao.getListContainer().getOrder().equals("Ascending"));
         orderButton.selectedProperty().addListener(((observable, oldValue, newValue) -> {
-            if(oldValue){
+            if (oldValue) {
                 singletonDao.getListContainer().setOrder("Ascending");
-            } else{
+            } else {
                 singletonDao.getListContainer().setOrder("Descending");
             }
             loadTypeComponents();
         }));
     }
 
-    private void loadFilterComponents(){
-        for(Tag tag : singletonDao.getListContainer().getTags()){
+    private void loadFilterComponents() {
+        for (Tag tag : singletonDao.getListContainer().getTags()) {
             Button tagButton = new Button(tag.getAttribute());
             tagButton.setPrefHeight(25);
             tagButton.setUserData(tag);
             tagButton.setId(tag.isType() ? "filterButtonWant" : "filterButtonAvoid");
             tagButton.setOnAction(actionEvent -> {
                 ArrayList<Tag> currentTags = singletonDao.getListContainer().getTags();
-                currentTags.remove((Tag)tagButton.getUserData());
+                currentTags.remove((Tag) tagButton.getUserData());
                 singletonDao.getListContainer().setTags(currentTags);
                 flowPane.getChildren().remove(tagButton);
                 loadTypeComponents();
