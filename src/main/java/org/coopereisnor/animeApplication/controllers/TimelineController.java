@@ -2,6 +2,7 @@ package org.coopereisnor.animeApplication.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
@@ -19,9 +20,7 @@ import org.coopereisnor.manipulation.YearSet;
 import org.coopereisnor.utility.UtilityMethods;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class TimelineController implements Controller{
     private final SingletonDao singletonDao = SingletonDao.getInstance();
@@ -169,6 +168,21 @@ public class TimelineController implements Controller{
                         application.changeScene("anime.fxml");
                     });
                 }
+            }
+
+            stackedBarChart.applyCss();
+            stackedBarChart.layout();
+
+            NumberAxis yAxis = (NumberAxis) stackedBarChart.getYAxis();
+            double defaultUpperBound = yAxis.getUpperBound();
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(0);
+            if(scaleComboBox.getSelectionModel().getSelectedItem().equals("Month")){
+                yAxis.setUpperBound(Math.max(50, defaultUpperBound));
+            }else if(scaleComboBox.getSelectionModel().getSelectedItem().equals("Week")){
+                yAxis.setUpperBound(Math.max(20, defaultUpperBound));
+            }else if(scaleComboBox.getSelectionModel().getSelectedItem().equals("Day")){
+                yAxis.setUpperBound(Math.max(5, defaultUpperBound));
             }
 
             totalLabel.setText("Total Watched:  " +yearSets.get(activeYearSetIndex).getCount());
