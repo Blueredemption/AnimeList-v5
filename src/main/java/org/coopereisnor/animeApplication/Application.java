@@ -19,7 +19,7 @@ import java.util.Objects;
 
 
 public class Application extends javafx.application.Application {
-    private static final String VERSION = "5.1.5";
+    private static final String VERSION = "5.2.0";
     private static final String TITLE = "AnimeList-v" +VERSION;
     private Stage stage;
 
