@@ -60,9 +60,7 @@ public class ListController implements Controller {
         Common.setFasterScrollBar(scrollPane);
 
         if (imageFlowPane != null) {
-            imageFlowPane.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-                resizeImages(newSceneWidth.intValue());
-            });
+            imageFlowPane.widthProperty().addListener((observableValue, oldWidth, newWidth) -> resizeImages(newWidth.intValue()));
         }
 
         loadToggleComponents();

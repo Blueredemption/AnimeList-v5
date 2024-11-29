@@ -124,9 +124,6 @@ public class AnimeController implements Controller{
     }
 
     public void populateControls(){
-        double imageWidth = 314;
-        double imageHeight = 450;
-
         // the anime level information
         nameLabel.setText(anime.getName());
         nameLabel.setOnMouseClicked(mouseEvent -> {
@@ -320,9 +317,6 @@ public class AnimeController implements Controller{
 
             BufferedImage bufferedImage = UtilityMethods.toBufferedImage(occurrence.getImageIcon().getImage());
             Pane imagePane = Common.getImagePaneFor(null, bufferedImage);
-            imagePane.setMinSize(imageWidth, imageHeight);
-            imagePane.setPrefSize(imageWidth, imageHeight);
-            imagePane.setMaxSize(imageWidth, imageHeight);
             imagePane.setPadding(new Insets(5,0,0,5));
             imagePane.setOnMouseClicked(mouseEvent -> {
                 Common.popup("editImage.fxml");
@@ -348,16 +342,14 @@ public class AnimeController implements Controller{
             notesLabel.setPadding(new Insets(0,0,0,5));
             gridPane2.add(notesLabel, 0, 0);
 
-            PercentProgressBar progressBar  = new PercentProgressBar(occurrence.getEpisodesWatched().length,occurrence.getEpisodes());
-            progressBar.setPrefWidth(imageWidth);
-            progressBar.setPrefHeight(20);
-            gridPane2.add(progressBar, 1, 0);
+            PercentProgressBar percentProgressBar  = new PercentProgressBar(occurrence.getEpisodesWatched().length,occurrence.getEpisodes());
+            percentProgressBar.setPrefHeight(20);
+            gridPane2.add(percentProgressBar, 1, 0);
 
             // text area
             TextArea textArea = new TextArea();
             textArea.setBackground(Background.EMPTY);
             textArea.setPadding(new Insets(5,5,5,5));
-            textArea.setPrefHeight(0);
             textArea.setWrapText(true);
             textArea.setText(occurrence.getNotes());
             textArea.setOnKeyTyped(keyEvent -> saveNotes(occurrence, textArea));
@@ -366,10 +358,30 @@ public class AnimeController implements Controller{
             VBox.setVgrow(textArea, Priority.ALWAYS);
             vBox.getChildren().add(textArea);
 
+            // dynamic
+            tabPane.widthProperty().addListener((observableValue, oldWidth, newWidth) -> {
+                resizeComponents(newWidth.intValue(), percentProgressBar, imagePane, textArea);
+            });
+
             tabPane.getTabs().add(tab);
         }
 
         tabPane.getSelectionModel().select(focusedTab);
+    }
+
+    private void resizeComponents(int newWidth, PercentProgressBar percentProgressBar, Pane imagePane, TextArea textArea) {
+        double imageRatio = 225d / 157d;
+        double windowRatio = 2d/7.5d;
+        double width = windowRatio * newWidth;
+        double height = width * imageRatio;
+
+        imagePane.setMinSize(width, height);
+        imagePane.setPrefSize(width, height);
+        imagePane.setMaxSize(width, height);
+
+        textArea.setMinHeight(height / 6);
+
+        percentProgressBar.setPrefWidth(width);
     }
 
     private void saveNotes(Occurrence occurrence, TextArea textArea){
